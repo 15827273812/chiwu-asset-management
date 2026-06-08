@@ -1322,7 +1322,10 @@ body {
         </div>
         <div class="form-group">
           <label>购买日期</label>
-          <input type="date" v-model="formData.purchase_date">
+          <div style="position:relative">
+            <input type="text" readonly :value="formData.purchase_date || '点击选择日期'" style="cursor:default;background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box">
+            <input id="purchaseDatePicker" type="date" v-model="formData.purchase_date" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;cursor:pointer;z-index:5;border:none;padding:0">
+          </div>
         </div>
       </div>
       <div class="form-row">
@@ -1395,7 +1398,10 @@ body {
         </div>
         <div class="form-group">
           <label>目标日期</label>
-          <input type="date" v-model="wishForm.target_date">
+          <div style="position:relative">
+            <input type="text" readonly :value="wishForm.target_date || '点击选择日期'" style="cursor:default;background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box">
+            <input id="wishDatePicker" type="date" v-model="wishForm.target_date" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;cursor:pointer;z-index:5;border:none;padding:0">
+          </div>
         </div>
       </div>
       <div class="form-group">
@@ -1422,7 +1428,10 @@ body {
       <div class="form-row">
         <div class="form-group">
           <label>日期</label>
-          <input type="date" v-model="maintForm.date">
+          <div style="position:relative">
+            <input type="text" readonly :value="maintForm.date || '点击选择日期'" style="cursor:default;background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box">
+            <input id="maintDatePicker" type="date" v-model="maintForm.date" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;cursor:pointer;z-index:5;border:none;padding:0">
+          </div>
         </div>
         <div class="form-group">
           <label>费用 (¥)</label>
@@ -1782,6 +1791,7 @@ const app = createApp({
     });
 
     // ===== API Helper =====
+    // Date picker helper: click text input → trigger hidden date input
     async function api(path, opts = {}) {
       const res = await fetch(API_BASE + '/api' + path, {
         headers: { 'Content-Type': 'application/json', ...opts.headers },
@@ -2059,13 +2069,11 @@ const app = createApp({
 
     function closeDetail() {
       showDetail.value = false;
+    }
 
     function purchaseDateForForm() {
       const d = new Date();
       return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
-    }
-      detailAsset.value = null;
-      assetMaintenances.value = [];
     }
 
     // ===== Asset Form =====
