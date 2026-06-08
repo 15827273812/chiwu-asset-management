@@ -23,6 +23,7 @@ class AssetCreate(BaseModel):
     notes: Optional[str] = None
     warranty_months: Optional[int] = None
     warranty_start_date: Optional[str] = None
+    warranty_end_date: Optional[str] = None
 
 class AssetUpdate(BaseModel):
     name: Optional[str] = None
@@ -37,6 +38,7 @@ class AssetUpdate(BaseModel):
     notes: Optional[str] = None
     warranty_months: Optional[int] = None
     warranty_start_date: Optional[str] = None
+    warranty_end_date: Optional[str] = None
 
 class MaintenanceCreate(BaseModel):
     asset_id: int
@@ -88,6 +90,7 @@ def asset_to_dict(a: Asset, db: Session):
         "daily_cost": a.daily_cost,
         "warranty_months": a.warranty_months,
         "warranty_start_date": a.warranty_start_date.isoformat() if a.warranty_start_date else None,
+        "warranty_end_date": a.warranty_end_date.isoformat() if a.warranty_end_date else None,
         "warranty_status": a.warranty_status,
         "maintenance_count": len(a.maintenances),
         "created_at": a.created_at.isoformat() if a.created_at else None,
@@ -169,6 +172,8 @@ def update_asset(asset_id: int, data: AssetUpdate, db: Session = Depends(get_db)
             setattr(a, key, datetime.date.fromisoformat(val))
         elif key == "warranty_start_date" and val:
             a.warranty_start_date = datetime.date.fromisoformat(val)
+        elif key == "warranty_end_date" and val:
+            a.warranty_end_date = datetime.date.fromisoformat(val)
         elif val is not None:
             setattr(a, key, val)
     db.commit()

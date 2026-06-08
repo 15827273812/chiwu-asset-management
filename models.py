@@ -28,6 +28,7 @@ class Asset(Base):
     notes = Column(Text, nullable=True)
     warranty_months = Column(Integer, nullable=True)  # 保质期月数
     warranty_start_date = Column(Date, nullable=True) # 保质期起始日（默认=购买日）
+    warranty_end_date = Column(Date, nullable=True)   # 保障到期日（前端计算）
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
     updated_at = Column(DateTime, default=datetime.datetime.utcnow, onupdate=datetime.datetime.utcnow)
 
@@ -62,10 +63,20 @@ class Asset(Base):
         """warranty_status: 'warrantying' (保障中), 'expired' (已过保), 'none' (无保修)"""
         if not self.warranty_months or self.warranty_months <= 0:
             return 'none'
+        # 优先用前端传入的 warranty_end_date
+        if self.warranty_end_date:
+            if datetime.date.today() <= self.warranty_end_date:
+                return 'warrantying'
+            return 'expired'
         start = self.warranty_start_date or self.purchase_date
         if not start:
             return 'none'
-        end = start + datetime.timedelta(days=self.warranty_months * 30)
+        # 精确月份计算（与前端的 setMonth 一致）
+        m = self.warranty_months
+        y = start.year + (start.month - 1 + m) // 12
+        mo = (start.month - 1 + m) % 12 + 1
+        d = min(start.day, __import__('calendar').monthrange(y, mo)[1])
+        end = datetime.date(y, mo, d)
         if datetime.date.today() <= end:
             return 'warrantying'
         return 'expired'

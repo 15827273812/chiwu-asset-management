@@ -1177,7 +1177,7 @@ body {
           <div class="label">保修期限</div>
           <div class="value" style="display:flex;align-items:center;gap:6px">
             <span>{{ detailAsset.warranty_months }}个月</span>
-            <span v-if="detailAsset.warranty_start_date" style="font-size:12px;color:var(--text-secondary);margin-left:4px">({{ detailAsset.warranty_start_date }})</span><span v-else style="font-size:12px;color:var(--text-secondary);margin-left:4px">(起始日未设)</span>
+            <span v-if="detailAsset.warranty_end_date" style="font-size:12px;color:var(--text-secondary);margin-left:4px">至 {{ detailAsset.warranty_end_date }}</span>
             <span class="tag" :class="'tag-' + (detailAsset.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:11px">{{ detailAsset.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
           </div>
         </div>
@@ -1305,8 +1305,8 @@ body {
               <input type="number" v-model="formData.warranty_months" placeholder="如 12" min="0" style="display:block;width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;box-sizing:border-box">
             </div>
             <div style="flex:1">
-              <label>保修起始日</label>
-              <input type="text" readonly placeholder="YYYY-MM-DD" :value="formData.warranty_start_date" @click="openDatePicker($event, 'formData.warranty_start_date')" style="display:block;width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;box-sizing:border-box">
+              <label>保障到期</label>
+              <input type="text" readonly placeholder="自动计算" :value="formWarrantyEnd" style="display:block;width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;box-sizing:border-box">
             </div>
           </div>
         </div>
@@ -1736,17 +1736,26 @@ const app = createApp({
       const today = new Date();
       rawAssets.forEach(a => {
         if (a.warranty_months && a.warranty_months > 0) {
-          let start;
-          if (a.warranty_start_date) {
-            start = new Date(a.warranty_start_date);
-          } else if (a.purchase_date) {
-            start = new Date(a.purchase_date);
-            a.warranty_start_date = a.purchase_date;
+          // 优先用后端返回的 warranty_end_date
+          let end = a.warranty_end_date ? new Date(a.warranty_end_date) : null;
+          if (!end) {
+            // 前端自己算
+            let start;
+            if (a.warranty_start_date) {
+              start = new Date(a.warranty_start_date);
+            } else if (a.purchase_date) {
+              start = new Date(a.purchase_date);
+              a.warranty_start_date = a.purchase_date;
+            }
+            if (start) {
+              end = new Date(start);
+              end.setMonth(end.getMonth() + Number(a.warranty_months));
+            }
           }
-          if (start) {
-            const end = new Date(start);
-            end.setMonth(end.getMonth() + a.warranty_months);
-            a.warranty_status = today >= start && today <= end ? 'active' : 'expired';
+          if (end) {
+            const ey = end.getFullYear(), em = String(end.getMonth()+1).padStart(2,'0'), ed = String(end.getDate()).padStart(2,'0');
+            a.warranty_end_date = ey + '-' + em + '-' + ed;
+            a.warranty_status = today <= end ? 'active' : 'expired';
           }
         }
       });
@@ -1878,6 +1887,22 @@ const app = createApp({
       try {
         const detail = await api('/assets/' + asset.id);
         detailAsset.value = detail;
+        if (detail.warranty_months && Number(detail.warranty_months) > 0) {
+          if (!detail.warranty_end_date) {
+            const base = detail.warranty_start_date || detail.purchase_date;
+            if (base) {
+              const d = new Date(base);
+              d.setMonth(d.getMonth() + Number(detail.warranty_months));
+              const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0');
+              detail.warranty_end_date = y + '-' + m + '-' + dd;
+            }
+          }
+          // 用到期日判断保修状态
+          const endD = detail.warranty_end_date ? new Date(detail.warranty_end_date) : null;
+          if (endD) {
+            detail.warranty_status = new Date() <= endD ? 'active' : 'expired';
+          }
+        }
         assetMaintenances.value = detail.maintenances || [];
         maintenancesLoading.value = false;
       } catch (e) {
@@ -1903,8 +1928,10 @@ const app = createApp({
     const formData = reactive({
       name: '', category_id: null, channel_id: null,
       purchase_price: null, purchase_date: '',
-      current_value: null, status: 'active', notes: '', image: ''
+      current_value: null, status: 'active', notes: '', image: '',
+      warranty_months: null, warranty_start_date: ''
     });
+    watch(() => [formData.purchase_date, formData.warranty_months, formData.warranty_start_date], () => { calcWarrantyEnd(); }, { deep: true });
     const showSuggest = ref(false);
     const suggestResults = ref([]);
     let suggestTimer = null;
@@ -1963,6 +1990,7 @@ const app = createApp({
         formData.warranty_months = null;
         formData.warranty_start_date = '';
       }
+      calcWarrantyEnd();
       showAssetForm.value = true;
       showSuggest.value = false;
     }
@@ -1981,6 +2009,7 @@ const app = createApp({
         image: formData.image || null,
         warranty_months: formData.warranty_months || null,
         warranty_start_date: formData.warranty_start_date || null,
+        warranty_end_date: formWarrantyEnd.value || null,
       };
       try {
         if (formEditId.value) {
@@ -2196,12 +2225,27 @@ const app = createApp({
       }
     });
 
-    
-    // Detail swipe back
+    const formWarrantyEnd = ref('');
     const DT = { x: 0 };
     function dtTouchStart(e) { DT.x = e.touches[0].clientX; }
     function dtTouchEnd(e) { const dx = e.changedTouches[0].clientX - DT.x; if (dx > 60) closeDetail(); }
-return {
+    function calcWarrantyEnd() {
+      const mon = formData.warranty_months;
+      if (mon && Number(mon) > 0) {
+        const base = formData.purchase_date || formData.warranty_start_date;
+        if (base) {
+          const d = new Date(base);
+          d.setMonth(d.getMonth() + Number(mon));
+          const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0'), dd = String(d.getDate()).padStart(2,'0');
+          formWarrantyEnd.value = y + '-' + m + '-' + dd;
+          return;
+        }
+      }
+      formWarrantyEnd.value = formData.warranty_start_date || '';
+    }
+
+
+    return {
       // Tab
       activeTab, tabs, switchTab,
       // Dark mode
@@ -2211,6 +2255,9 @@ return {
       // Assets
       assets, assetsLoading, assetSearch, assetStatusFilter, statusFilters,
       filteredAssets, loadAssets, filterAssets,
+      formWarrantyEnd,
+      calcWarrantyEnd,
+      dtTouchStart, dtTouchEnd,
       // Layout & Advanced Filter
       layoutView, toggleLayout,
       showAdvFilter, advFilterCat, advFilterChannel,
@@ -2254,7 +2301,6 @@ return {
       deleteCategory, deleteChannel, exportJSON,
       // Helpers
       statusLabel, formatK,
-      dtTouchStart, dtTouchEnd,
     };
   }
 });
