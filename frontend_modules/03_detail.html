@@ -1,0 +1,531 @@
+<!-- ChiWu 资产详情页模块 -->
+<!-- 由 setupDetailModule() 初始化，监听 detailAsset 变化 -->
+<style>
+/* ===== Detail Layout ===== */
+.detail-section {
+  margin: 8px 16px;
+}
+.detail-section-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 8px;
+  padding: 0 4px;
+}
+
+/* ===== Asset Name ===== */
+.detail-asset-name {
+  font-size: 22px;
+  font-weight: 700;
+  padding: 4px 20px;
+  line-height: 1.3;
+}
+.detail-asset-meta {
+  font-size: 13px;
+  color: var(--text-secondary);
+  padding: 0 20px 8px;
+}
+
+/* ===== Amount Card ===== */
+.detail-amount-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 8px;
+}
+.detail-amount-item {
+  text-align: center;
+  padding: 12px 4px;
+}
+.detail-amount-item .label {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+.detail-amount-item .value {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--primary);
+}
+.detail-amount-item .value.warn {
+  color: var(--danger);
+}
+.detail-amount-item .value.success {
+  color: var(--success);
+}
+
+/* ===== Holding Days ===== */
+.detail-hold-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+}
+.detail-hold-box .hold-left {
+  display: flex;
+  flex-direction: column;
+}
+.detail-hold-box .hold-days {
+  font-size: 28px;
+  font-weight: 800;
+  color: var(--primary);
+  line-height: 1.1;
+}
+.detail-hold-box .hold-label {
+  font-size: 12px;
+  color: var(--text-secondary);
+}
+.detail-hold-box .hold-cost {
+  text-align: right;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.detail-hold-box .hold-cost small {
+  font-size: 11px;
+  font-weight: 400;
+  color: var(--text-secondary);
+  display: block;
+}
+
+/* ===== Status Tag (detail) ===== */
+.detail-status-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 20px;
+  margin-bottom: 8px;
+}
+
+/* ===== Notes ===== */
+.detail-notes {
+  font-size: 14px;
+  color: var(--text);
+  line-height: 1.5;
+  white-space: pre-wrap;
+  padding: 0 4px;
+}
+
+/* ===== Maintenance Timeline ===== */
+.maint-list {
+  list-style: none;
+  padding: 0;
+}
+.maint-item {
+  position: relative;
+  padding: 12px 0 12px 20px;
+  border-left: 2px solid var(--border);
+  margin-left: 8px;
+}
+.maint-item::before {
+  content: '';
+  position: absolute;
+  left: -5px;
+  top: 18px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+}
+.maint-item:last-child {
+  border-left-color: transparent;
+}
+.maint-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.maint-item-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+}
+.maint-item-date {
+  font-size: 11px;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+.maint-item-amount {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--danger);
+}
+.maint-item-amount::before {
+  content: '¥';
+  font-size: 11px;
+}
+.maint-item-note {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-top: 4px;
+  line-height: 1.4;
+}
+.maint-item-actions {
+  margin-top: 6px;
+  display: flex;
+  gap: 8px;
+}
+.maint-delete-btn {
+  font-size: 12px;
+  color: var(--danger);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 2px 6px;
+  border-radius: 4px;
+}
+.maint-delete-btn:hover {
+  background: rgba(255,59,48,0.1);
+}
+.maint-empty {
+  text-align: center;
+  padding: 24px 0;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* ===== Detail Edit Button ===== */
+.detail-edit-btn-wrap {
+  padding: 16px 20px 24px;
+}
+.detail-edit-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+.detail-edit-btn:active {
+  opacity: 0.8;
+}
+
+/* ===== Loading in detail ===== */
+.detail-loading {
+  text-align: center;
+  padding: 40px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+</style>
+
+<template id="detail-module-template">
+  <div>
+    <div class="detail-asset-name" id="detail-display-name"></div>
+    <div class="detail-asset-meta" id="detail-display-meta"></div>
+
+    <!-- Status -->
+    <div class="detail-status-row" id="detail-status-row"></div>
+
+    <!-- Amount Card -->
+    <div class="card detail-section">
+      <div class="detail-amount-grid">
+        <div class="detail-amount-item">
+          <div class="label">购买价</div>
+          <div class="value" id="detail-purchase-price">—</div>
+        </div>
+        <div class="detail-amount-item">
+          <div class="label">当前价值</div>
+          <div class="value" id="detail-current-value">—</div>
+        </div>
+        <div class="detail-amount-item">
+          <div class="label">TCO</div>
+          <div class="value" id="detail-tco">—</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Holding Days -->
+    <div class="card detail-section">
+      <div class="detail-hold-box">
+        <div class="hold-left">
+          <span class="hold-days" id="detail-hold-days">—</span>
+          <span class="hold-label">持有天数</span>
+        </div>
+        <div class="hold-cost">
+          <span id="detail-daily-cost">—</span>
+          <small>日均成本</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Notes -->
+    <div class="card detail-section" id="detail-notes-section" style="display:none">
+      <div class="detail-section-title">备注</div>
+      <div class="detail-notes" id="detail-notes-text"></div>
+    </div>
+
+    <!-- Maintenance Timeline -->
+    <div class="card detail-section">
+      <div class="detail-section-title">维护记录</div>
+      <div id="detail-maint-list" class="maint-list">
+        <div class="maint-empty">暂无维护记录</div>
+      </div>
+    </div>
+
+    <!-- Edit Button -->
+    <div class="detail-edit-btn-wrap">
+      <button class="detail-edit-btn" id="detail-edit-btn">编辑资产</button>
+    </div>
+  </div>
+</template>
+
+<script>
+(function() {
+  'use strict';
+
+  function setupDetailModule() {
+    const els = {};
+    let currentAsset = null;
+    let maintenances = [];
+
+    function q(id) { return document.getElementById(id); }
+    function escHtml(s) {
+      if (s == null) return '';
+      return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+    }
+    function fmtYuan(v) {
+      if (v == null || isNaN(v)) return '—';
+      return '¥' + Number(v).toLocaleString('zh-CN', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    // Status label mappings
+    const STATUS_MAP = {
+      active:     { label: '使用中', className: 'status-active' },
+      sold:       { label: '已转卖', className: 'status-sold' },
+      discarded:  { label: '已报废', className: 'status-discarded' },
+      lost:       { label: '已丢失', className: 'status-lost' }
+    };
+
+    function statusHtml(status) {
+      const s = STATUS_MAP[status] || { label: status || '未知', className: 'status-active' };
+      return '<span class="status-tag ' + s.className + '">' + escHtml(s.label) + '</span>';
+    }
+
+    // Calculate holding days
+    function calcHoldingDays(purchaseDate) {
+      if (!purchaseDate) return 0;
+      const d = new Date(purchaseDate);
+      const today = new Date();
+      const diff = today.getTime() - d.getTime();
+      return Math.max(0, Math.floor(diff / (1000 * 60 * 60 * 24)));
+    }
+
+    // Calculate daily cost
+    function calcDailyCost(purchasePrice, maintTotal, days) {
+      if (!days || days <= 0) return 0;
+      const total = (purchasePrice || 0) + (maintTotal || 0);
+      return total / days;
+    }
+
+    // Render the detail page
+    function renderDetail(asset) {
+      if (!asset) return;
+      currentAsset = asset;
+
+      const days = calcHoldingDays(asset.purchase_date);
+      const maintTotal = maintenances.reduce((sum, m) => sum + (Number(m.amount) || 0), 0);
+      const dailyCost = calcDailyCost(asset.purchase_price, maintTotal, days);
+      const tco = (Number(asset.purchase_price) || 0) + maintTotal;
+
+      // Name
+      q('detail-display-name').textContent = asset.name || '未命名资产';
+
+      // Meta: category + channel
+      const catName = asset.category_name || '';
+      const chName = asset.channel_name || '';
+      const metaParts = [];
+      if (catName) metaParts.push(catName);
+      if (chName) metaParts.push(chName);
+      q('detail-display-meta').textContent = metaParts.join(' · ') || '';
+
+      // Status
+      q('detail-status-row').innerHTML = statusHtml(asset.status);
+
+      // Amounts
+      q('detail-purchase-price').textContent = fmtYuan(asset.purchase_price);
+      q('detail-current-value').textContent = fmtYuan(asset.current_value);
+
+      // TCO - if purchase price has maintenance, show breakdown
+      const tcoEl = q('detail-tco');
+      tcoEl.textContent = fmtYuan(tco);
+
+      // Holding days
+      q('detail-hold-days').textContent = days + ' 天';
+      q('detail-daily-cost').innerHTML = fmtYuan(dailyCost);
+
+      // Notes
+      const notesEl = q('detail-notes-section');
+      const notesTextEl = q('detail-notes-text');
+      if (asset.notes) {
+        notesEl.style.display = 'block';
+        notesTextEl.textContent = asset.notes;
+      } else {
+        notesEl.style.display = 'none';
+      }
+
+      // Maintenance
+      renderMaintenances();
+
+      // Edit button
+      const editBtn = q('detail-edit-btn');
+      editBtn.onclick = function() {
+        if (window.__chiwu_api && window.__chiwu_api.openAssetForm) {
+          window.__chiwu_api.openAssetForm(asset.id);
+        }
+      };
+    }
+
+    // Render maintenance list
+    function renderMaintenances() {
+      const container = q('detail-maint-list');
+      if (!container) return;
+
+      if (!maintenances.length) {
+        container.innerHTML = '<div class="maint-empty">暂无维护记录</div>';
+        return;
+      }
+
+      // Sort by date descending
+      const sorted = [...maintenances].sort((a, b) => {
+        return new Date(b.date || b.created_at) - new Date(a.date || a.created_at);
+      });
+
+      container.innerHTML = sorted.map(function(m) {
+        var title = escHtml(m.title || '维护');
+        var date = m.date || m.created_at || '';
+        var dateDisplay = date ? escHtml(date.slice(0, 10)) : '';
+        var amount = fmtYuan(m.amount);
+        var note = m.notes ? escHtml(m.notes) : '';
+        var noteHtml = note ? '<div class="maint-item-note">' + note + '</div>' : '';
+
+        return '<div class="maint-item" data-maint-id="' + m.id + '">' +
+          '<div class="maint-item-header">' +
+            '<div>' +
+              '<div class="maint-item-title">' + title + '</div>' +
+              '<div class="maint-item-date">' + dateDisplay + '</div>' +
+            '</div>' +
+            '<div class="maint-item-amount">' + amount + '</div>' +
+          '</div>' +
+          noteHtml +
+          '<div class="maint-item-actions">' +
+            '<button class="maint-delete-btn" data-maint-id="' + m.id + '">删除</button>' +
+          '</div>' +
+        '</div>';
+      }).join('');
+
+      // Attach delete handlers
+      container.querySelectorAll('.maint-delete-btn').forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+          e.stopPropagation();
+          var id = this.getAttribute('data-maint-id');
+          if (id && confirm('确定删除这条维护记录？')) {
+            deleteMaintenance(id);
+          }
+        });
+      });
+    }
+
+    // Delete a maintenance record
+    async function deleteMaintenance(maintId) {
+      try {
+        var api = window.__chiwu_api;
+        if (!api) return;
+        if (!api.api) {
+          // Fallback fetch
+          await fetch(window.location.origin + '/api/maintenances/' + maintId, {
+            method: 'DELETE'
+          });
+        } else {
+          await api.api('/maintenances/' + maintId, { method: 'DELETE' });
+        }
+        // Remove from local list and re-render
+        maintenances = maintenances.filter(function(m) {
+          return String(m.id) !== String(maintId);
+        });
+        // Also re-render the amount card TCO / daily cost changes
+        if (currentAsset) renderDetail(currentAsset);
+      } catch (err) {
+        console.error('删除维护记录失败:', err);
+        alert('删除失败: ' + err.message);
+      }
+    }
+
+    // Load maintenance records
+    async function loadMaintenances(assetId) {
+      if (!assetId) return;
+      var container = q('detail-maint-list');
+      if (container) {
+        container.innerHTML = '<div class="detail-loading">加载中…</div>';
+      }
+      try {
+        var api = window.__chiwu_api;
+        if (!api) return;
+        var data;
+        if (api.api) {
+          data = await api.api('/maintenances/' + assetId);
+        } else {
+          var res = await fetch(window.location.origin + '/api/maintenances/' + assetId);
+          data = await res.json();
+        }
+        maintenances = Array.isArray(data) ? data : (data.data || data.records || []);
+        if (currentAsset) renderDetail(currentAsset);
+      } catch (err) {
+        console.error('加载维护记录失败:', err);
+        maintenances = [];
+        var c = q('detail-maint-list');
+        if (c) c.innerHTML = '<div class="maint-empty">加载失败</div>';
+      }
+    }
+
+    // Watch for detailAsset changes
+    (function watchDetailAsset() {
+      var api = window.__chiwu_api;
+      if (!api) {
+        // Retry after a short delay
+        setTimeout(watchDetailAsset, 100);
+        return;
+      }
+
+      // Use Vue watch if available via the detailAsset ref
+      var detailRef = api.detailAsset;
+      if (detailRef && detailRef.__v_isRef) {
+        Vue.watch(detailRef, function(newVal, oldVal) {
+          if (newVal && newVal.id) {
+            renderDetail(newVal);
+            loadMaintenances(newVal.id);
+          } else {
+            // Detail closed
+            currentAsset = null;
+            maintenances = [];
+          }
+        }, { immediate: false });
+      }
+
+      // Also handle initial render if already set
+      if (detailRef && detailRef.value && detailRef.value.id) {
+        renderDetail(detailRef.value);
+        loadMaintenances(detailRef.value.id);
+      }
+    })();
+
+    // Also handle the close button — ensure cleanup
+    console.log('[ChiWu] Detail module initialized');
+  }
+
+  // Export
+  window.setupDetailModule = setupDetailModule;
+
+  // Auto-init when DOM is ready
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupDetailModule);
+  } else {
+    setupDetailModule();
+  }
+})();
+</script>

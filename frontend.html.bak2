@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>持物 ChiWu</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.min.css">
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --bg: #f5f5f7;
+  --card-bg: #ffffff;
+  --text: #1d1d1f;
+  --text-secondary: #86868b;
+  --border: #e5e5ea;
+  --tab-bar: rgba(255,255,255,0.92);
+  --primary: #3A7C6C;
+  --primary-light: #4A9C8C;
+  --danger: #ff3b30;
+  --success: #34c759;
+  --warning: #ff9500;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --radius: 12px;
+}
+html.dark {
+  --bg: #1c1c1e;
+  --card-bg: #2c2c2e;
+  --text: #f5f5f7;
+  --text-secondary: #98989d;
+  --border: #38383a;
+  --tab-bar: rgba(28,28,30,0.92);
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg); color: var(--text);
+  max-width: 480px; margin: 0 auto; min-height: 100vh;
+  padding-bottom: 80px; position: relative;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ===== Tab Bar ===== */
+.tab-bar {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  background: var(--tab-bar); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-around; align-items: center;
+  height: 64px; padding-bottom: env(safe-area-inset-bottom, 8px); z-index: 100;
+}
+.tab-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-size: 10px; color: var(--text-secondary); cursor: pointer;
+  padding: 6px 16px; border: none; background: none; transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab-item.active { color: var(--primary); }
+.tab-item .tab-icon { font-size: 22px; line-height: 1; }
+.tab-item .tab-label { font-size: 10px; }
+
+/* ===== Header ===== */
+.page-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px 8px; position: sticky; top: 0; z-index: 10;
+  background: var(--bg);
+}
+.page-header h1 { font-size: 28px; font-weight: 700; }
+.header-actions { display: flex; gap: 12px; align-items: center; }
+.header-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--primary); color: #fff;
+  border: none; font-size: 22px; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  line-height: 1; transition: opacity 0.2s;
+}
+.header-btn:active { opacity: 0.7; }
+
+/* ===== Cards ===== */
+.card {
+  background: var(--card-bg); border-radius: var(--radius);
+  box-shadow: var(--shadow); padding: 16px; margin: 0 16px 8px;
+  transition: transform 0.15s;
+}
+.card:active { transform: scale(0.98); }
+.card-flex { display: flex; justify-content: space-between; align-items: center; }
+
+/* ===== Tags ===== */
+.status-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+.tag-active { color: var(--success); background: rgba(52,199,89,0.12); }
+.tag-sold { color: var(--text-secondary); background: rgba(134,134,139,0.12); }
+.tag-discarded { color: var(--warning); background: rgba(255,149,0,0.12); }
+.tag-lost { color: var(--danger); background: rgba(255,59,48,0.12); }
+
+/* ===== Price ===== */
+.price { color: var(--primary); font-weight: 600; font-size: 15px; }
+.price::before { content: '¥'; font-size: 12px; }
+.price-sm { font-size: 13px; color: var(--text-secondary); }
+.price-sm::before { content: '¥'; font-size: 11px; }
+
+/* ===== Bottom Sheet ===== */
+.sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+.sheet {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto;
+  background: var(--card-bg); border-radius: 16px 16px 0 0; z-index: 201;
+  padding: 20px; animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateX(-50%) translateY(100%); } to { transform: translateX(-50%) translateY(0); } }
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--border); margin: 0 auto 16px; }
+.sheet h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.form-group { margin-bottom: 14px; }
+.form-group label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; font-weight: 500; }
+.form-group input, .form-group select, .form-group textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 15px; background: var(--bg); color: var(--text); outline: none; font-family: inherit;
+}
+.form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--primary); }
+.form-group textarea { min-height: 60px; resize: vertical; }
+.form-row { display: flex; gap: 12px; }
+.form-row .form-group { flex: 1; }
+.form-actions { display: flex; gap: 10px; margin-top: 20px; }
+.btn {
+  flex: 1; padding: 12px; border-radius: 10px; border: none;
+  font-size: 15px; font-weight: 600; cursor: pointer; transition: opacity 0.2s;
+}
+.btn:active { opacity: 0.7; }
+.btn-primary { background: var(--primary); color: #fff; }
+.btn-danger { background: var(--danger); color: #fff; }
+.btn-secondary { background: var(--border); color: var(--text); }
+
+/* ===== Search Bar ===== */
+.search-bar {
+  margin: 0 16px 12px; position: relative;
+}
+.search-bar input {
+  width: 100%; padding: 10px 16px 10px 36px; border: none; border-radius: 10px;
+  font-size: 15px; background: var(--card-bg); color: var(--text); box-shadow: var(--shadow);
+  outline: none;
+}
+.search-bar .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 16px; }
+
+/* ===== Detail View (fullscreen overlay) ===== */
+.detail-view {
+  position: fixed; inset: 0; background: var(--bg); z-index: 50;
+  overflow-y: auto; padding-bottom: 80px;
+}
+.detail-header {
+  display: flex; align-items: center; padding: 12px 16px; gap: 12px;
+  position: sticky; top: 0; background: var(--bg); z-index: 5;
+}
+.detail-back { font-size: 24px; cursor: pointer; padding: 4px; border: none; background: none; color: var(--primary); }
+.detail-title { font-size: 17px; font-weight: 600; flex: 1; }
+.detail-section { padding: 0 16px 16px; }
+.detail-section h3 { font-size: 14px; color: var(--text-secondary); margin-bottom: 8px; padding-top: 12px; }
+.detail-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.detail-item { }
+.detail-item .label { font-size: 12px; color: var(--text-secondary); }
+.detail-item .value { font-size: 15px; font-weight: 500; margin-top: 2px; }
+.detail-actions { padding: 16px; display: flex; gap: 10px; }
+.detail-actions .btn { flex: 1; }
+
+/* ===== Status Filter Tabs ===== */
+.status-filters {
+  display: flex; gap: 6px; padding: 0 16px 12px; overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.status-filters::-webkit-scrollbar { display: none; }
+.status-filter {
+  padding: 5px 14px; border-radius: 16px; border: 1px solid var(--border);
+  background: var(--card-bg); font-size: 13px; color: var(--text-secondary);
+  cursor: pointer; white-space: nowrap; transition: all 0.2s;
+}
+.status-filter.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ===== Empty State ===== */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
+.empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+.empty-state p { font-size: 15px; }
+.empty-state .btn { display: inline-block; margin-top: 16px; padding: 10px 24px; }
+
+/* ===== Loading ===== */
+.loading { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 14px; }
+
+/* ===== Swipe delete ===== */
+.swipe-wrap { position: relative; overflow: hidden; }
+.swipe-actions {
+  position: absolute; right: 0; top: 0; height: 100%;
+  display: flex; align-items: center; gap: 0;
+  transform: translateX(100%); transition: transform 0.2s;
+}
+.swipe-wrap.show-delete .swipe-actions { transform: translateX(0); }
+.swipe-btn {
+  height: 100%; display: flex; align-items: center; padding: 0 20px;
+  font-size: 14px; color: #fff; border: none; cursor: pointer;
+}
+.swipe-btn-danger { background: var(--danger); border-radius: 0 12px 12px 0; }
+.swipe-btn-primary { background: var(--primary); border-radius: 12px 0 0 12px; }
+
+/* ===== Stats ===== */
+.stats-overview { margin: 0 16px 12px; }
+.stats-overview .card { text-align: center; }
+.stat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 12px; }
+.stat-item { text-align: center; }
+.stat-item .stat-value { font-size: 20px; font-weight: 700; color: var(--primary); }
+.stat-item .stat-label { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.stat-bar-wrap { margin: 8px 0; }
+.stat-bar-bg { height: 20px; background: var(--border); border-radius: 10px; overflow: hidden; }
+.stat-bar-fill { height: 100%; background: var(--primary); border-radius: 10px; transition: width 0.5s; }
+.stat-bar-label {
+  display: flex; justify-content: space-between; font-size: 13px;
+  margin-bottom: 4px;
+}
+
+/* ===== Wish ===== */
+.wish-checkbox {
+  width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  cursor: pointer; transition: all 0.2s; flex-shrink: 0;
+}
+.wish-checkbox.done { background: var(--success); border-color: var(--success); color: #fff; }
+.wish-info { flex: 1; min-width: 0; }
+.wish-info .wish-name { font-size: 15px; font-weight: 500; }
+.wish-info .wish-name.done-text { text-decoration: line-through; color: var(--text-secondary); }
+.wish-info .wish-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* ===== Product Suggest Dropdown ===== */
+.suggest-dropdown {
+  position: absolute; top: 100%; left: 0; right: 0; z-index: 50;
+  background: var(--card-bg); border: 1px solid var(--border);
+  border-radius: 8px; box-shadow: var(--shadow); max-height: 200px;
+  overflow-y: auto; margin-top: 2px;
+}
+.suggest-item {
+  padding: 8px 12px; display: flex; justify-content: space-between;
+  align-items: center; cursor: pointer; font-size: 14px;
+  border-bottom: 1px solid var(--border);
+}
+.suggest-item:last-child { border-bottom: none; }
+.suggest-item:active { background: var(--border); }
+.suggest-item .suggest-name { }
+.suggest-item .suggest-price { color: var(--primary); font-weight: 600; }
+.suggest-item .suggest-brand { font-size: 11px; color: var(--text-secondary); background: var(--border); padding: 1px 6px; border-radius: 4px; }
+
+/* ===== Settings ===== */
+.setting-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+}
+.setting-item:last-child { border-bottom: none; }
+.setting-item .setting-label { font-size: 15px; }
+.setting-item .setting-desc { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.toggle-switch {
+  width: 48px; height: 28px; border-radius: 14px; background: var(--border);
+  position: relative; cursor: pointer; transition: background 0.2s; flex-shrink: 0;
+}
+.toggle-switch.active { background: var(--primary); }
+.toggle-switch::after {
+  content: ''; position: absolute; top: 2px; left: 2px;
+  width: 24px; height: 24px; border-radius: 50%; background: #fff;
+  transition: transform 0.2s; box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.toggle-switch.active::after { transform: translateX(20px); }
+
+/* ===== Maintenance ===== */
+.maint-item {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 10px 0; border-bottom: 1px solid var(--border);
+}
+.maint-item:last-child { border-bottom: none; }
+.maint-item .maint-left { flex: 1; }
+.maint-item .maint-title { font-size: 14px; font-weight: 500; }
+.maint-item .maint-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.maint-item .maint-amount { font-size: 14px; font-weight: 600; color: var(--danger); }
+.maint-add-btn {
+  width: 100%; padding: 10px; border: 1px dashed var(--border);
+  border-radius: 8px; background: none; color: var(--primary); font-size: 14px;
+  cursor: pointer; margin-top: 8px;
+}
+
+/* ===== Animations ===== */
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+/* ===== Misc ===== */
+.text-green { color: var(--success); }
+.text-red { color: var(--danger); }
+.text-muted { color: var(--text-secondary); }
+.text-primary { color: var(--primary); }
+.mt-8 { margin-top: 8px; }
+.mt-12 { margin-top: 12px; }
+.mt-16 { margin-top: 16px; }
+.mb-8 { margin-bottom: 8px; }
+.flex-center { display: flex; align-items: center; gap: 8px; }
+.truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <button v-for="t in tabs" :key="t.id" class="tab-item" :class="{active: activeTab === t.id}" @click="switchTab(t.id)">
+      <span class="tab-icon">{{ t.icon }}</span>
+      <span class="tab-label">{{ t.label }}</span>
+    </button>
+  </div>
+
+  <!-- ===== Tab: Assets ===== -->
+  <div v-show="activeTab === 'assets'">
+    <div class="page-header">
+      <h1>资产</h1>
+      <div class="header-actions">
+        <button class="header-btn" @click="openAssetForm()">+</button>
+      </div>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="search" v-model="assetSearch" placeholder="搜索资产..." @input="filterAssets">
+    </div>
+    <div class="status-filters">
+      <button v-for="f in statusFilters" :key="f.key" class="status-filter" :class="{active: assetStatusFilter === f.key}" @click="assetStatusFilter = f.key; filterAssets()">{{ f.label }}</button>
+    </div>
+    <div v-if="assetsLoading" class="loading">加载中...</div>
+    <div v-else-if="filteredAssets.length === 0" class="empty-state">
+      <div class="empty-icon">📭</div>
+      <p>{{ assetSearch ? '没有找到匹配的资产' : '还没有资产，点击 + 添加第一个' }}</p>
+    </div>
+    <div v-else>
+      <div v-for="a in filteredAssets" :key="a.id" class="swipe-wrap" :id="'swipe-' + a.id">
+        <div class="swipe-actions">
+          <button class="swipe-btn swipe-btn-danger" @click="deleteAsset(a.id)">删除</button>
+        </div>
+        <div class="card" @click="openDetail(a)">
+          <div class="card-flex">
+            <div>
+              <div style="font-size:16px;font-weight:600">{{ a.name }}</div>
+              <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
+                <span class="status-tag" :class="'tag-' + a.status">{{ statusLabel(a.status) }}</span>
+                <span class="price-sm">{{ a.purchase_price }}</span>
+                <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
+              </div>
+            </div>
+            <div style="text-align:right">
+              <div class="price">{{ a.current_value || a.purchase_price || 0 }}</div>
+              <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">{{ a.holding_days }}天</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab: Stats ===== -->
+  <div v-show="activeTab === 'stats'">
+    <div class="page-header"><h1>统计</h1></div>
+    <div v-if="statsLoading" class="loading">加载中...</div>
+    <template v-else-if="stats">
+      <div class="stats-overview">
+        <div class="card">
+          <div style="font-size:32px;font-weight:700;color:var(--primary)">¥{{ stats.total_value }}</div>
+          <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">总资产价值</div>
+          <div class="stat-grid">
+            <div class="stat-item"><div class="stat-value">{{ stats.total_assets }}</div><div class="stat-label">总资产</div></div>
+            <div class="stat-item"><div class="stat-value">{{ stats.active_assets }}</div><div class="stat-label">在用</div></div>
+            <div class="stat-item"><div class="stat-value">¥{{ stats.total_maintenance }}</div><div class="stat-label">维护费</div></div>
+            <div class="stat-item"><div class="stat-value">{{ stats.monthly_trend.length }}</div><div class="stat-label">月数</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3 style="font-size:15px;margin-bottom:12px">📊 分类资产分布</h3>
+        <div v-for="c in stats.category_stats" :key="c.name" class="stat-bar-wrap">
+          <div class="stat-bar-label">
+            <span>{{ c.name }}</span>
+            <span>{{ c.count }}件 · ¥{{ c.total_price }}</span>
+          </div>
+          <div class="stat-bar-bg">
+            <div class="stat-bar-fill" :style="{width: (c.count / maxCategoryCount * 100) + '%'}"></div>
+          </div>
+        </div>
+      </div>
+      <div v-if="stats.daily_cost_top && stats.daily_cost_top.length > 0" class="card">
+        <h3 style="font-size:15px;margin-bottom:12px">📈 日均成本排行</h3>
+        <div v-for="(item, i) in stats.daily_cost_top" :key="i" style="display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--border);font-size:14px">
+          <span><span style="color:var(--text-secondary);width:20px;display:inline-block">{{ i + 1 }}</span>{{ item.name }}</span>
+          <span><span class="price-sm">{{ item.daily_cost }}</span>/天 · TCO <span class="price-sm">{{ item.tco }}</span></span>
+        </div>
+      </div>
+    </template>
+  </div>
+
+  <!-- ===== Tab: Wishes ===== -->
+  <div v-show="activeTab === 'wishes'">
+    <div class="page-header">
+      <h1>心愿</h1>
+      <div class="header-actions">
+        <button class="header-btn" @click="openWishForm()">+</button>
+      </div>
+    </div>
+    <div v-if="wishesLoading" class="loading">加载中...</div>
+    <div v-else-if="wishes.length === 0" class="empty-state">
+      <div class="empty-icon">⭐</div>
+      <p>还没有心愿，点击 + 添加第一个</p>
+    </div>
+    <div v-else>
+      <div v-for="w in wishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
+        <div class="swipe-actions">
+          <button class="swipe-btn swipe-btn-primary" v-if="!w.is_done" @click="convertWish(w)">转资产</button>
+          <button class="swipe-btn swipe-btn-danger" @click="deleteWish(w.id)">删除</button>
+        </div>
+        <div class="card" style="display:flex;align-items:flex-start;gap:12px">
+          <div class="wish-checkbox" :class="{done: w.is_done}" @click="toggleWish(w)">{{ w.is_done ? '✓' : '' }}</div>
+          <div class="wish-info">
+            <div class="wish-name" :class="{'done-text': w.is_done}">{{ w.name }}</div>
+            <div class="wish-meta">
+              <span v-if="w.target_price">目标 ¥{{ w.target_price }}</span>
+              <span v-if="w.target_date">期限 {{ w.target_date }}</span>
+              <span v-if="w.converted_asset_id" style="color:var(--success)">已转化</span>
+            </div>
+            <div v-if="w.note" style="font-size:12px;color:var(--text-secondary);margin-top:4px">{{ w.note }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Tab: Settings ===== -->
+  <div v-show="activeTab === 'settings'">
+    <div class="page-header"><h1>设置</h1></div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:8px">🎨 外观</h3>
+      <div class="setting-item">
+        <div>
+          <div class="setting-label">深色模式</div>
+          <div class="setting-desc">跟随系统或手动切换</div>
+        </div>
+        <div class="toggle-switch" :class="{active: isDark}" @click="toggleDark"></div>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:8px">📂 分类管理</h3>
+      <div v-for="cat in categories" :key="cat.id" class="setting-item">
+        <div>
+          <div class="setting-label">{{ cat.icon }} {{ cat.name }}</div>
+          <div class="setting-desc">{{ cat.asset_count }} 个资产 · {{ cat.children ? cat.children.length : 0 }} 个子分类</div>
+        </div>
+        <button style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer" @click="deleteCategory(cat.id)">删除</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:8px">🛒 渠道管理</h3>
+      <div v-for="ch in channels" :key="ch.id" class="setting-item">
+        <div>
+          <div class="setting-label">{{ ch.name }}</div>
+          <div class="setting-desc">{{ ch.is_preset ? '预设' : '自定义' }}</div>
+        </div>
+        <button style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer" @click="deleteChannel(ch.id)">删除</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:8px">💾 数据</h3>
+      <div class="setting-item">
+        <div>
+          <div class="setting-label">导出数据</div>
+          <div class="setting-desc">下载所有资产为 JSON / CSV</div>
+        </div>
+        <button class="btn btn-primary" style="flex:none;padding:8px 16px;font-size:13px" @click="exportJSON">JSON</button>
+      </div>
+    </div>
+    <div class="card">
+      <h3 style="font-size:15px;margin-bottom:8px">ℹ️ 关于</h3>
+      <div style="font-size:14px;color:var(--text-secondary)">
+        <p>持物 ChiWu v1.0</p>
+        <p style="margin-top:4px">管理你的数字资产，掌握每一分钱的价值</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== Detail View ===== -->
+  <div v-if="showDetail" class="detail-view">
+    <div class="detail-header">
+      <button class="detail-back" @click="closeDetail">←</button>
+      <span class="detail-title">{{ detailAsset?.name }}</span>
+    </div>
+    <!-- Basic Info -->
+    <div class="detail-section">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="label">分类</div>
+          <div class="value">{{ detailAsset?.category_icon }} {{ detailAsset?.category_name || '未分类' }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">渠道</div>
+          <div class="value">{{ detailAsset?.channel_name || '未知' }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">购买日期</div>
+          <div class="value">{{ detailAsset?.purchase_date || '-' }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">持有天数</div>
+          <div class="value">{{ detailAsset?.holding_days }} 天</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">购买价格</div>
+          <div class="value"><span class="price">{{ detailAsset?.purchase_price || 0 }}</span></div>
+        </div>
+        <div class="detail-item">
+          <div class="label">当前价值</div>
+          <div class="value"><span class="price">{{ detailAsset?.current_value || '-' }}</span></div>
+        </div>
+      </div>
+      <div v-if="detailAsset?.notes" style="margin-top:12px">
+        <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
+        <div style="font-size:14px;margin-top:4px">{{ detailAsset.notes }}</div>
+      </div>
+    </div>
+    <!-- Cost Summary -->
+    <div class="detail-section">
+      <h3>💰 费用统计</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="label">维护总费用</div>
+          <div class="value">¥{{ detailAsset?.total_maintenance_cost || 0 }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">TCO 总拥有成本</div>
+          <div class="value">¥{{ detailAsset?.tco || 0 }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">日均成本</div>
+          <div class="value" style="color:var(--danger)">¥{{ detailAsset?.daily_cost || 0 }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">维护记录</div>
+          <div class="value">{{ assetMaintenances.length }} 条</div>
+        </div>
+      </div>
+    </div>
+    <!-- Maintenance -->
+    <div class="detail-section">
+      <h3>🔧 维护记录</h3>
+      <div v-if="maintenancesLoading" style="font-size:13px;color:var(--text-secondary);padding:8px 0">加载中...</div>
+      <div v-else-if="assetMaintenances.length === 0" style="font-size:13px;color:var(--text-secondary);padding:8px 0">暂无维护记录</div>
+      <div v-for="m in assetMaintenances" :key="m.id" class="maint-item">
+        <div class="maint-left">
+          <div class="maint-title">{{ m.title }}</div>
+          <div class="maint-meta">{{ m.date }}<span v-if="m.note"> · {{ m.note }}</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <div class="maint-amount" v-if="m.amount">¥{{ m.amount }}</div>
+          <button style="background:none;border:none;color:var(--danger);font-size:16px;cursor:pointer" @click="deleteMaintenance(m.id)">✕</button>
+        </div>
+      </div>
+      <button class="maint-add-btn" @click="showMaintForm = true">+ 添加维护记录</button>
+    </div>
+    <!-- Detail actions -->
+    <div class="detail-actions">
+      <button class="btn btn-secondary" @click="openAssetForm(detailAsset.id)">✏️ 编辑</button>
+      <button class="btn btn-danger" @click="deleteAsset(detailAsset.id, true)">🗑️ 删除</button>
+    </div>
+  </div>
+
+  <!-- ===== Asset Form Sheet ===== -->
+  <template v-if="showAssetForm">
+    <div class="sheet-overlay" @click="showAssetForm = false"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2>{{ formEditId ? '编辑资产' : '新建资产' }}</h2>
+      <div class="form-group" style="position:relative">
+        <label>名称 *</label>
+        <input type="text" v-model="formData.name" placeholder="输入资产名称" @input="searchProductSuggest" @focus="searchProductSuggest" @blur="hideSuggest" autocomplete="off">
+        <div v-if="showSuggest && suggestResults.length > 0" class="suggest-dropdown">
+          <div v-for="p in suggestResults" :key="p.name" class="suggest-item" @mousedown.prevent="selectSuggest(p)">
+            <div>
+              <span class="suggest-name">{{ p.name }}</span>
+              <span class="suggest-brand">{{ p.brand }}</span>
+            </div>
+            <span class="suggest-price">¥{{ p.price }}</span>
+          </div>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>分类</label>
+          <select v-model="formData.category_id">
+            <option :value="null">请选择</option>
+            <optgroup v-for="cat in categories" :key="cat.id" :label="cat.icon + ' ' + cat.name">
+              <option v-for="sub in (cat.children || [])" :key="sub.id" :value="sub.id">{{ sub.icon }} {{ sub.name }}</option>
+            </optgroup>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>渠道</label>
+          <select v-model="formData.channel_id">
+            <option :value="null">请选择</option>
+            <option v-for="ch in channels" :key="ch.id" :value="ch.id">{{ ch.name }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>购买价格 (¥)</label>
+          <input type="number" v-model.number="formData.purchase_price" placeholder="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>购买日期</label>
+          <input type="date" v-model="formData.purchase_date">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>当前价值 (¥)</label>
+          <input type="number" v-model.number="formData.current_value" placeholder="留空同购买价" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>状态</label>
+          <select v-model="formData.status">
+            <option value="active">在用</option>
+            <option value="sold">已出售</option>
+            <option value="discarded">报废/赠送</option>
+            <option value="lost">丢失</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>备注</label>
+        <textarea v-model="formData.notes" placeholder="可选备注信息"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" @click="showAssetForm = false">取消</button>
+        <button class="btn btn-primary" @click="submitAssetForm">保存</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- ===== Wish Form Sheet ===== -->
+  <template v-if="showWishForm">
+    <div class="sheet-overlay" @click="showWishForm = false"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2>新建心愿</h2>
+      <div class="form-group">
+        <label>名称 *</label>
+        <input type="text" v-model="wishForm.name" placeholder="想要什么？">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>目标价格 (¥)</label>
+          <input type="number" v-model.number="wishForm.target_price" placeholder="0" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>目标日期</label>
+          <input type="date" v-model="wishForm.target_date">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>备注</label>
+        <textarea v-model="wishForm.note" placeholder="为什么想要它？"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" @click="showWishForm = false">取消</button>
+        <button class="btn btn-primary" @click="submitWishForm">添加</button>
+      </div>
+    </div>
+  </template>
+
+  <!-- ===== Maintenance Form Sheet ===== -->
+  <template v-if="showMaintForm">
+    <div class="sheet-overlay" @click="showMaintForm = false"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2>添加维护记录</h2>
+      <div class="form-group">
+        <label>标题 *</label>
+        <input type="text" v-model="maintForm.title" placeholder="如：换电池、维修屏幕">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>日期</label>
+          <input type="date" v-model="maintForm.date">
+        </div>
+        <div class="form-group">
+          <label>费用 (¥)</label>
+          <input type="number" v-model.number="maintForm.amount" placeholder="0" step="0.01">
+        </div>
+      </div>
+      <div class="form-group">
+        <label>备注</label>
+        <textarea v-model="maintForm.note" placeholder="可选"></textarea>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" @click="showMaintForm = false">取消</button>
+        <button class="btn btn-primary" @click="submitMaintForm">保存</button>
+      </div>
+    </div>
+  </template>
+</div>
+
+
+</body>
+</html>
+
+<script>
+const { createApp, ref, reactive, computed, onMounted, watch, nextTick } = Vue;
+const API_BASE = window.location.origin;
+
+const app = createApp({
+  setup() {
+    // ===== Global State =====
+    const activeTab = ref('assets');
+    const isDark = ref(window.matchMedia('(prefers-color-scheme: dark)').matches);
+    const categories = ref([]);
+    const channels = ref([]);
+
+    // ===== Tabs =====
+    const tabs = [
+      { id: 'assets', label: '资产', icon: '📱' },
+      { id: 'stats', label: '统计', icon: '📊' },
+      { id: 'wishes', label: '心愿', icon: '⭐' },
+      { id: 'settings', label: '设置', icon: '⚙️' },
+    ];
+
+    function switchTab(tabId) { activeTab.value = tabId; }
+
+    // ===== Dark Mode =====
+    function toggleDark() { isDark.value = !isDark.value; }
+    watch(isDark, v => {
+      document.documentElement.classList.toggle('dark', v);
+    }, { immediate: true });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      isDark.value = e.matches;
+    });
+
+    // ===== API Helper =====
+    async function api(path, opts = {}) {
+      const res = await fetch(API_BASE + '/api' + path, {
+        headers: { 'Content-Type': 'application/json', ...opts.headers },
+        ...opts
+      });
+      if (!res.ok) {
+        const text = await res.text();
+        throw new Error(text || 'API Error');
+      }
+      return res.json();
+    }
+
+    // ===== Status Helpers =====
+    const statusFilters = [
+      { key: '', label: '全部' },
+      { key: 'active', label: '在用' },
+      { key: 'sold', label: '已出售' },
+      { key: 'discarded', label: '报废' },
+      { key: 'lost', label: '丢失' },
+    ];
+    function statusLabel(s) {
+      const map = { active: '在用', sold: '已出售', discarded: '报废', lost: '丢失' };
+      return map[s] || s;
+    }
+
+    // ===== Assets =====
+    const assets = ref([]);
+    const assetsLoading = ref(false);
+    const assetSearch = ref('');
+    const assetStatusFilter = ref('');
+    const filteredAssets = computed(() => {
+      let list = assets.value;
+      if (assetSearch.value) {
+        const q = assetSearch.value.toLowerCase();
+        list = list.filter(a => (a.name || '').toLowerCase().includes(q) || (a.notes || '').toLowerCase().includes(q));
+      }
+      if (assetStatusFilter.value) {
+        list = list.filter(a => a.status === assetStatusFilter.value);
+      }
+      return list;
+    });
+
+    async function loadAssets() {
+      assetsLoading.value = true;
+      try {
+        const params = new URLSearchParams();
+        if (assetSearch.value) params.set('search', assetSearch.value);
+        if (assetStatusFilter.value) params.set('status', assetStatusFilter.value);
+        const qs = params.toString();
+        assets.value = await api('/assets' + (qs ? '?' + qs : ''));
+      } catch (e) { console.error('Load assets error:', e); }
+      finally { assetsLoading.value = false; }
+    }
+
+    function filterAssets() { loadAssets(); }
+
+    // ===== Detail =====
+    const showDetail = ref(false);
+    const detailAsset = ref(null);
+    const assetMaintenances = ref([]);
+    const maintenancesLoading = ref(false);
+
+    async function openDetail(asset) {
+      detailAsset.value = null;
+      showDetail.value = true;
+      try {
+        const detail = await api('/assets/' + asset.id);
+        detailAsset.value = detail;
+        assetMaintenances.value = detail.maintenances || [];
+        maintenancesLoading.value = false;
+      } catch (e) {
+        console.error('Load detail error:', e);
+        showDetail.value = false;
+      }
+    }
+
+    function closeDetail() {
+      showDetail.value = false;
+      detailAsset.value = null;
+      assetMaintenances.value = [];
+    }
+
+    // ===== Asset Form =====
+    const showAssetForm = ref(false);
+    const formEditId = ref(null);
+    const formData = reactive({
+      name: '', category_id: null, channel_id: null,
+      purchase_price: null, purchase_date: '',
+      current_value: null, status: 'active', notes: ''
+    });
+    const showSuggest = ref(false);
+    const suggestResults = ref([]);
+    let suggestTimer = null;
+
+    async function searchProductSuggest() {
+      const q = formData.name;
+      if (!q || q.length < 1) { suggestResults.value = []; showSuggest.value = false; return; }
+      if (suggestTimer) clearTimeout(suggestTimer);
+      suggestTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(API_BASE + '/api/search-products?q=' + encodeURIComponent(q));
+          if (res.ok) {
+            suggestResults.value = await res.json();
+            showSuggest.value = suggestResults.value.length > 0;
+          }
+        } catch (e) { /* ignore */ }
+      }, 200);
+    }
+
+    function hideSuggest() {
+      setTimeout(() => { showSuggest.value = false; }, 300);
+    }
+
+    function selectSuggest(p) {
+      formData.name = p.name;
+      if (p.price) formData.purchase_price = p.price;
+      showSuggest.value = false;
+    }
+
+    async function openAssetForm(assetId) {
+      formEditId.value = assetId || null;
+      if (assetId) {
+        try {
+          const a = await api('/assets/' + assetId);
+          formData.name = a.name || '';
+          formData.category_id = a.category_id || null;
+          formData.channel_id = a.channel_id || null;
+          formData.purchase_price = a.purchase_price || null;
+          formData.purchase_date = a.purchase_date || '';
+          formData.current_value = a.current_value || null;
+          formData.status = a.status || 'active';
+          formData.notes = a.notes || '';
+        } catch (e) { console.error('Load asset for edit error:', e); }
+      } else {
+        formData.name = '';
+        formData.category_id = null;
+        formData.channel_id = null;
+        formData.purchase_price = null;
+        formData.purchase_date = '';
+        formData.current_value = null;
+        formData.status = 'active';
+        formData.notes = '';
+      }
+      showAssetForm.value = true;
+      showSuggest.value = false;
+    }
+
+    async function submitAssetForm() {
+      if (!formData.name.trim()) { alert('请输入资产名称'); return; }
+      const body = {
+        name: formData.name.trim(),
+        category_id: formData.category_id || null,
+        channel_id: formData.channel_id || null,
+        purchase_price: formData.purchase_price || null,
+        purchase_date: formData.purchase_date || null,
+        current_value: formData.current_value || null,
+        status: formData.status,
+        notes: formData.notes || null,
+      };
+      try {
+        if (formEditId.value) {
+          await api('/assets/' + formEditId.value, { method: 'PUT', body: JSON.stringify(body) });
+        } else {
+          await api('/assets', { method: 'POST', body: JSON.stringify(body) });
+        }
+        showAssetForm.value = false;
+        loadAssets();
+        if (showDetail.value && detailAsset.value) {
+          openDetail(detailAsset.value);
+        }
+      } catch (e) { alert('保存失败: ' + e.message); }
+    }
+
+    // ===== Delete Asset =====
+    async function deleteAsset(assetId, fromDetail) {
+      if (!confirm('确定删除此资产？')) return;
+      try {
+        await api('/assets/' + assetId, { method: 'DELETE' });
+        if (fromDetail) closeDetail();
+        loadAssets();
+      } catch (e) { alert('删除失败: ' + e.message); }
+    }
+
+    // ===== Maintenance =====
+    const showMaintForm = ref(false);
+    const maintForm = reactive({ title: '', date: '', amount: null, note: '' });
+
+    async function loadMaintenances(assetId) {
+      if (!assetId) return;
+      maintenancesLoading.value = true;
+      try {
+        assetMaintenances.value = await api('/maintenances/' + assetId);
+      } catch (e) { console.error('Load maintenances error:', e); }
+      finally { maintenancesLoading.value = false; }
+    }
+
+    function openMaintForm() {
+      const today = new Date().toISOString().slice(0, 10);
+      maintForm.title = '';
+      maintForm.date = today;
+      maintForm.amount = null;
+      maintForm.note = '';
+      showMaintForm.value = true;
+    }
+
+    async function submitMaintForm() {
+      if (!maintForm.title.trim()) { alert('请输入维护标题'); return; }
+      if (!detailAsset.value) return;
+      try {
+        await api('/maintenances', {
+          method: 'POST',
+          body: JSON.stringify({
+            asset_id: detailAsset.value.id,
+            title: maintForm.title.trim(),
+            date: maintForm.date || new Date().toISOString().slice(0, 10),
+            amount: maintForm.amount || null,
+            note: maintForm.note || null,
+          })
+        });
+        showMaintForm.value = false;
+        loadMaintenances(detailAsset.value.id);
+        // Refresh detail to update costs
+        const detail = await api('/assets/' + detailAsset.value.id);
+        detailAsset.value = detail;
+      } catch (e) { alert('保存维护记录失败: ' + e.message); }
+    }
+
+    async function deleteMaintenance(mId) {
+      if (!confirm('确定删除此维护记录？')) return;
+      try {
+        await api('/maintenances/' + mId, { method: 'DELETE' });
+        if (detailAsset.value) {
+          loadMaintenances(detailAsset.value.id);
+          const detail = await api('/assets/' + detailAsset.value.id);
+          detailAsset.value = detail;
+        }
+      } catch (e) { alert('删除失败: ' + e.message); }
+    }
+
+    // ===== Stats =====
+    const stats = ref(null);
+    const statsLoading = ref(false);
+    const maxCategoryCount = computed(() => {
+      if (!stats.value || !stats.value.category_stats) return 1;
+      return Math.max(1, ...stats.value.category_stats.map(c => c.count));
+    });
+
+    async function loadStats() {
+      statsLoading.value = true;
+      try { stats.value = await api('/stats'); }
+      catch (e) { console.error('Load stats error:', e); }
+      finally { statsLoading.value = false; }
+    }
+
+    // ===== Wishes =====
+    const wishes = ref([]);
+    const wishesLoading = ref(false);
+    const showWishForm = ref(false);
+    const wishForm = reactive({ name: '', target_price: null, target_date: '', note: '' });
+
+    async function loadWishes() {
+      wishesLoading.value = true;
+      try { wishes.value = await api('/wishes'); }
+      catch (e) { console.error('Load wishes error:', e); }
+      finally { wishesLoading.value = false; }
+    }
+
+    function openWishForm() {
+      wishForm.name = '';
+      wishForm.target_price = null;
+      wishForm.target_date = '';
+      wishForm.note = '';
+      showWishForm.value = true;
+    }
+
+    async function submitWishForm() {
+      if (!wishForm.name.trim()) { alert('请输入心愿名称'); return; }
+      try {
+        await api('/wishes', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: wishForm.name.trim(),
+            target_price: wishForm.target_price || null,
+            target_date: wishForm.target_date || null,
+            note: wishForm.note || null,
+          })
+        });
+        showWishForm.value = false;
+        loadWishes();
+      } catch (e) { alert('添加心愿失败: ' + e.message); }
+    }
+
+    async function deleteWish(wishId) {
+      if (!confirm('确定删除此心愿？')) return;
+      try {
+        await api('/wishes/' + wishId, { method: 'DELETE' });
+        loadWishes();
+      } catch (e) { alert('删除失败: ' + e.message); }
+    }
+
+    async function toggleWish(w) {
+      // Toggle is_done is not in API, so mark as done/un-done via delete or convert
+      // Simple: if not done, mark done by updating - but no update API.
+      // Instead: clicking just toggles visual. We use convert for done marking.
+      // Actually the checkbox just shows the state. Use convert to mark done.
+      if (!w.is_done) convertWish(w);
+    }
+
+    async function convertWish(w) {
+      if (!confirm('将此心愿转化为资产？')) return;
+      try {
+        await api('/wishes/' + w.id + '/convert', {
+          method: 'POST',
+          body: JSON.stringify({
+            name: w.name,
+            target_price: w.target_price || null,
+          })
+        });
+        loadWishes();
+        loadAssets();
+      } catch (e) { alert('转化失败: ' + e.message); }
+    }
+
+    // ===== Settings =====
+    async function deleteCategory(catId) {
+      if (!confirm('确定删除此分类？关联资产将变为未分类。')) return;
+      try {
+        await api('/categories/' + catId, { method: 'DELETE' });
+        loadCategories();
+      } catch (e) { alert('删除分类失败: ' + e.message); }
+    }
+
+    async function deleteChannel(chId) {
+      if (!confirm('确定删除此渠道？')) return;
+      try {
+        await api('/channels/' + chId, { method: 'DELETE' });
+        loadChannels();
+      } catch (e) { alert('删除渠道失败: ' + e.message); }
+    }
+
+    async function exportJSON() {
+      try {
+        const allAssets = await api('/assets');
+        const blob = new Blob([JSON.stringify(allAssets, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'chiwu_assets_' + new Date().toISOString().slice(0, 10) + '.json';
+        a.click();
+        URL.revokeObjectURL(url);
+      } catch (e) { alert('导出失败: ' + e.message); }
+    }
+
+    // ===== Data Loaders =====
+    async function loadCategories() {
+      try { categories.value = await api('/categories'); }
+      catch (e) { console.error('Load categories error:', e); }
+    }
+
+    async function loadChannels() {
+      try { channels.value = await api('/channels'); }
+      catch (e) { console.error('Load channels error:', e); }
+    }
+
+    // ===== Initialization =====
+    onMounted(async () => {
+      await Promise.all([loadCategories(), loadChannels()]);
+      await loadAssets();
+    });
+
+    // Watch tab changes to load data
+    watch(activeTab, async (tab) => {
+      if (tab === 'stats') loadStats();
+      if (tab === 'wishes') loadWishes();
+    });
+
+    return {
+      // Tab
+      activeTab, tabs, switchTab,
+      // Dark mode
+      isDark, toggleDark,
+      // Categories & Channels
+      categories, channels,
+      // Assets
+      assets, assetsLoading, assetSearch, assetStatusFilter, statusFilters,
+      filteredAssets, loadAssets, filterAssets,
+      // Detail
+      showDetail, detailAsset, assetMaintenances, maintenancesLoading,
+      openDetail, closeDetail,
+      // Asset Form
+      showAssetForm, formEditId, formData, showSuggest, suggestResults,
+      openAssetForm, submitAssetForm, searchProductSuggest, hideSuggest, selectSuggest,
+      // Delete
+      deleteAsset,
+      // Maintenance
+      showMaintForm, maintForm,
+      submitMaintForm, deleteMaintenance,
+      // Stats
+      stats, statsLoading, maxCategoryCount, loadStats,
+      // Wishes
+      wishes, wishesLoading, showWishForm, wishForm,
+      openWishForm, submitWishForm, deleteWish, toggleWish, convertWish,
+      // Settings
+      deleteCategory, deleteChannel, exportJSON,
+      // Helpers
+      statusLabel, categories, channels,
+    };
+  }
+});
+
+app.mount('#app');
+</script>
+
+</body>
+</html>

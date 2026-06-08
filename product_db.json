@@ -1,0 +1,8870 @@
+[
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "10"
+    ],
+    "name": "iPhone 10",
+    "price": 6299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "10",
+      "pro"
+    ],
+    "name": "iPhone 10 Pro",
+    "price": 8299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "10",
+      "promax"
+    ],
+    "name": "iPhone 10 Pro Max",
+    "price": 10299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "10",
+      "mini"
+    ],
+    "name": "iPhone 10 mini",
+    "price": 5499,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "11"
+    ],
+    "name": "iPhone 11",
+    "price": 6299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "11",
+      "pro"
+    ],
+    "name": "iPhone 11 Pro",
+    "price": 8299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "11",
+      "promax"
+    ],
+    "name": "iPhone 11 Pro Max",
+    "price": 10299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "11",
+      "mini"
+    ],
+    "name": "iPhone 11 mini",
+    "price": 5499,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "12"
+    ],
+    "name": "iPhone 12",
+    "price": 6299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "12",
+      "pro"
+    ],
+    "name": "iPhone 12 Pro",
+    "price": 8299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "12",
+      "promax"
+    ],
+    "name": "iPhone 12 Pro Max",
+    "price": 10299,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "12",
+      "mini"
+    ],
+    "name": "iPhone 12 mini",
+    "price": 5499,
+    "year": 2020,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "13"
+    ],
+    "name": "iPhone 13",
+    "price": 5999,
+    "year": 2021,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "13",
+      "pro"
+    ],
+    "name": "iPhone 13 Pro",
+    "price": 7999,
+    "year": 2021,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "13",
+      "promax"
+    ],
+    "name": "iPhone 13 Pro Max",
+    "price": 9999,
+    "year": 2021,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "13",
+      "mini"
+    ],
+    "name": "iPhone 13 mini",
+    "price": 5199,
+    "year": 2021,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "14"
+    ],
+    "name": "iPhone 14",
+    "price": 5999,
+    "year": 2023,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "14",
+      "pro"
+    ],
+    "name": "iPhone 14 Pro",
+    "price": 7999,
+    "year": 2023,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "14",
+      "promax"
+    ],
+    "name": "iPhone 14 Pro Max",
+    "price": 9999,
+    "year": 2023,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "14",
+      "plus"
+    ],
+    "name": "iPhone 14 Plus",
+    "price": 6999,
+    "year": 2023,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "15"
+    ],
+    "name": "iPhone 15",
+    "price": 5999,
+    "year": 2024,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "15",
+      "pro"
+    ],
+    "name": "iPhone 15 Pro",
+    "price": 7999,
+    "year": 2024,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "15",
+      "promax"
+    ],
+    "name": "iPhone 15 Pro Max",
+    "price": 9999,
+    "year": 2024,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "15",
+      "plus"
+    ],
+    "name": "iPhone 15 Plus",
+    "price": 6999,
+    "year": 2024,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "16"
+    ],
+    "name": "iPhone 16",
+    "price": 5999,
+    "year": 2025,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "16",
+      "pro"
+    ],
+    "name": "iPhone 16 Pro",
+    "price": 7999,
+    "year": 2025,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "16",
+      "promax"
+    ],
+    "name": "iPhone 16 Pro Max",
+    "price": 9999,
+    "year": 2025,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "brand": "苹果",
+    "category": "手机",
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "16",
+      "plus"
+    ],
+    "name": "iPhone 16 Plus",
+    "price": 6999,
+    "year": 2025,
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "name": "iPhone SE 3",
+    "brand": "苹果",
+    "category": "手机",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "se3"
+    ],
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "name": "iPhone SE 2",
+    "brand": "苹果",
+    "category": "手机",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": [
+      "苹果手机",
+      "iphone",
+      "se2"
+    ],
+    "icon_url": "/static/product_icons/cellphone-iphone.svg"
+  },
+  {
+    "name": "华为 Mate XT 非凡大师",
+    "brand": "华为",
+    "category": "手机",
+    "price": 19999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "xt",
+      "非凡大师"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate X6",
+    "brand": "华为",
+    "category": "手机",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "x6"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Pura 70 Ultra",
+    "brand": "华为",
+    "category": "手机",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "pura",
+      "70",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Pura 70 Pro+",
+    "brand": "华为",
+    "category": "手机",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "pura",
+      "70",
+      "pro+"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Pura 70 Pro",
+    "brand": "华为",
+    "category": "手机",
+    "price": 6499,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "pura",
+      "70",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Pura 70",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5499,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "pura",
+      "70"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate 70 Pro+",
+    "brand": "华为",
+    "category": "手机",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "70",
+      "pro+"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate 70 Pro",
+    "brand": "华为",
+    "category": "手机",
+    "price": 6499,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "70",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate 70",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5499,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "70"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate 60 Pro+",
+    "brand": "华为",
+    "category": "手机",
+    "price": 8999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "60",
+      "pro+"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate 60 Pro",
+    "brand": "华为",
+    "category": "手机",
+    "price": 6999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "60",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Mate 60",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5499,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "mate",
+      "60"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Nova 12 Ultra",
+    "brand": "华为",
+    "category": "手机",
+    "price": 4699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "nova",
+      "12",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Nova 12 Pro",
+    "brand": "华为",
+    "category": "手机",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "nova",
+      "12",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "华为 Nova 12",
+    "brand": "华为",
+    "category": "手机",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "华为手机",
+      "nova",
+      "12"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S25 Ultra",
+    "brand": "三星",
+    "category": "手机",
+    "price": 9699,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s25",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S25+",
+    "brand": "三星",
+    "category": "手机",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s25plus"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S25",
+    "brand": "三星",
+    "category": "手机",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s25"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S24 Ultra",
+    "brand": "三星",
+    "category": "手机",
+    "price": 9699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s24",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S24+",
+    "brand": "三星",
+    "category": "手机",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s24plus"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S24",
+    "brand": "三星",
+    "category": "手机",
+    "price": 5499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s24"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S23 Ultra",
+    "brand": "三星",
+    "category": "手机",
+    "price": 8999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s23",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S23+",
+    "brand": "三星",
+    "category": "手机",
+    "price": 6999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s23plus"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy S23",
+    "brand": "三星",
+    "category": "手机",
+    "price": 5299,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "s23"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy Z Fold6",
+    "brand": "三星",
+    "category": "手机",
+    "price": 13999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "z",
+      "fold6"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy Z Flip6",
+    "brand": "三星",
+    "category": "手机",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "z",
+      "flip6"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy Z Fold5",
+    "brand": "三星",
+    "category": "手机",
+    "price": 12999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "z",
+      "fold5"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy Z Flip5",
+    "brand": "三星",
+    "category": "手机",
+    "price": 7999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "z",
+      "flip5"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy A55",
+    "brand": "三星",
+    "category": "手机",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "a55"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "三星 Galaxy A35",
+    "brand": "三星",
+    "category": "手机",
+    "price": 2399,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "三星手机",
+      "a35"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米15 Ultra",
+    "brand": "小米",
+    "category": "手机",
+    "price": 6499,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米15ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米15 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 5299,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米15pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米15",
+    "brand": "小米",
+    "category": "手机",
+    "price": 4499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米15"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米14 Ultra",
+    "brand": "小米",
+    "category": "手机",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米14ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米14 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米14pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米14",
+    "brand": "小米",
+    "category": "手机",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米14"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米13 Ultra",
+    "brand": "小米",
+    "category": "手机",
+    "price": 5999,
+    "year": 2023,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米13ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米 MIX Fold 4",
+    "brand": "小米",
+    "category": "手机",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米mixfold4"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "小米 MIX Flip",
+    "brand": "小米",
+    "category": "手机",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "小米mixflip"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "红米 K80 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 3699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "k80pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "红米 K80",
+    "brand": "小米",
+    "category": "手机",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "k80"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "红米 Note 14 Pro+",
+    "brand": "小米",
+    "category": "手机",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "note14pro+"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "红米 Note 14 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 1699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "note14pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "红米 Note 14",
+    "brand": "小米",
+    "category": "手机",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "小米手机",
+      "note14"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "OPPO Find X8 Pro",
+    "brand": "OPPO",
+    "category": "手机",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oppo手机",
+      "find",
+      "x8",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "OPPO Find X8",
+    "brand": "OPPO",
+    "category": "手机",
+    "price": 4499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oppo手机",
+      "find",
+      "x8"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "OPPO Find N5",
+    "brand": "OPPO",
+    "category": "手机",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oppo手机",
+      "find",
+      "n5"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "OPPO Reno 12 Pro",
+    "brand": "OPPO",
+    "category": "手机",
+    "price": 3699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oppo手机",
+      "reno",
+      "12",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "OPPO Reno 12",
+    "brand": "OPPO",
+    "category": "手机",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oppo手机",
+      "reno",
+      "12"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "一加 13",
+    "brand": "一加",
+    "category": "手机",
+    "price": 4499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oneplus手机",
+      "13"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "一加 Ace 5 Pro",
+    "brand": "一加",
+    "category": "手机",
+    "price": 3499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "oneplus手机",
+      "ace",
+      "5",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "vivo X200 Pro",
+    "brand": "vivo",
+    "category": "手机",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "vivo手机",
+      "x200",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "vivo X200",
+    "brand": "vivo",
+    "category": "手机",
+    "price": 4499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "vivo手机",
+      "x200"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "vivo X100 Ultra",
+    "brand": "vivo",
+    "category": "手机",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "vivo手机",
+      "x100",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "iQOO 13",
+    "brand": "iQOO",
+    "category": "手机",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "iqoo手机",
+      "13"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "荣耀 Magic7 Pro",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 5699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "honor手机",
+      "magic7",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "荣耀 Magic7",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 4499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "honor手机",
+      "magic7"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "荣耀 Magic V3",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "honor手机",
+      "magic",
+      "v3"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "荣耀 200 Pro",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 3499,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "honor手机",
+      "200",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "荣耀 200",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 2699,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "honor手机",
+      "200"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "魅族 21 Pro",
+    "brand": "魅族",
+    "category": "手机",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "meizu手机",
+      "21",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "魅族 21",
+    "brand": "魅族",
+    "category": "手机",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:cellphone",
+    "keywords": [
+      "meizu手机",
+      "21"
+    ],
+    "icon_url": "/static/product_icons/cellphone.svg"
+  },
+  {
+    "name": "Apple Watch Ultra 2",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "ultra2"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S10 GPS 46mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 3199,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series10"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S10 GPS 42mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series10"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S10 GPS+Cellular 46mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 3799,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series10"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S10 GPS+Cellular 42mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 3599,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series10"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S9 GPS 45mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series9"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S9 GPS 41mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 2799,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series9"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S9 GPS+Cellular 45mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 3599,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series9"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch S9 GPS+Cellular 41mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 3399,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "series9"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch SE 2 44mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "se2"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "Apple Watch SE 2 40mm",
+    "brand": "苹果",
+    "category": "手表",
+    "price": 1899,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "se2"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 5 Pro 钛金",
+    "brand": "华为",
+    "category": "手表",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt5pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 5 Pro 陶瓷",
+    "brand": "华为",
+    "category": "手表",
+    "price": 3899,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt5pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 5 46mm",
+    "brand": "华为",
+    "category": "手表",
+    "price": 2199,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt5"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 5 41mm",
+    "brand": "华为",
+    "category": "手表",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt5"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch Ultimate",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5999,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "ultimate"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch 4 Pro",
+    "brand": "华为",
+    "category": "手表",
+    "price": 4999,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch4pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch 4",
+    "brand": "华为",
+    "category": "手表",
+    "price": 3999,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch4"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch Fit 3",
+    "brand": "华为",
+    "category": "手表",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "fit3"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 4 46mm",
+    "brand": "华为",
+    "category": "手表",
+    "price": 1699,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt4"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 4 41mm",
+    "brand": "华为",
+    "category": "手表",
+    "price": 1599,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt4"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch Ultra",
+    "brand": "三星",
+    "category": "手表",
+    "price": 4599,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watchultra"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 7 44mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 2399,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch7"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 7 40mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 2199,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch7"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 7 Classic 47mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 3399,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch7classic"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 7 Classic 43mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch7classic"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 6 44mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 1999,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch6"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 6 40mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 1799,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch6"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 6 Classic 47mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 2799,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch6classic"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch 6 Classic 43mm",
+    "brand": "三星",
+    "category": "手表",
+    "price": 2599,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch6classic"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "三星 Galaxy Watch FE",
+    "brand": "三星",
+    "category": "手表",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watchfe"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "小米手表 S4",
+    "brand": "小米",
+    "category": "手机",
+    "price": 1399,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "s4"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "小米手表 S3",
+    "brand": "小米",
+    "category": "手机",
+    "price": 899,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "s3"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "小米手环 9 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 399,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "band9pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "小米手环 9",
+    "brand": "小米",
+    "category": "手机",
+    "price": 249,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "band9"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "小米手环 8 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 399,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "band8pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "小米手环 8",
+    "brand": "小米",
+    "category": "手机",
+    "price": 229,
+    "year": 2023,
+    "icon": "mdi:watch",
+    "keywords": [
+      "band8"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "OPPO Watch 4 Pro",
+    "brand": "OPPO",
+    "category": "手表",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch4pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "OPPO Watch 4",
+    "brand": "OPPO",
+    "category": "手表",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch4"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "OPPO Watch X",
+    "brand": "OPPO",
+    "category": "手表",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watchx"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "荣耀 Watch 5",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 1499,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "watch5"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "荣耀 Watch GS 4",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 1199,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gs4"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Forerunner 965",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 4180,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "forerunner965"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Forerunner 265",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 2880,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "forerunner265"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Forerunner 165",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 2380,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "forerunner165"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Fenix 8 51mm",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 7280,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "fenix8"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Fenix 8 47mm",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 6680,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "fenix8"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Fenix 7X Solar",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 6280,
+    "year": 2022,
+    "icon": "mdi:watch",
+    "keywords": [
+      "fenix7"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Fenix 7S",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 5480,
+    "year": 2022,
+    "icon": "mdi:watch",
+    "keywords": [
+      "fenix7"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Venu 3",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 3780,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "venu3"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "佳明 Instinct 2X",
+    "brand": "佳明",
+    "category": "手表",
+    "price": 2980,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "instinct2"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "卡西欧 G-SHOCK DW-5600",
+    "brand": "卡西欧",
+    "category": "手表",
+    "price": 899,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gshock"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "卡西欧 G-SHOCK GA-2100",
+    "brand": "卡西欧",
+    "category": "手表",
+    "price": 1090,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gshock"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "卡西欧 G-SHOCK Mudmaster GWG-2000",
+    "brand": "卡西欧",
+    "category": "手表",
+    "price": 4990,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gshock"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "卡西欧 G-SHOCK Gravitymaster GPW-2000",
+    "brand": "卡西欧",
+    "category": "手表",
+    "price": 6990,
+    "year": 2022,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gshock"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "卡西欧 G-SHOCK Rangeman GPR-H1000",
+    "brand": "卡西欧",
+    "category": "手表",
+    "price": 4990,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gshock"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "天梭 力洛克 T006.407",
+    "brand": "天梭",
+    "category": "手表",
+    "price": 4450,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "力洛克"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "天梭 杜鲁尔 T099.407",
+    "brand": "天梭",
+    "category": "手表",
+    "price": 4750,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "杜鲁尔"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "天梭 海星 T120.407",
+    "brand": "天梭",
+    "category": "手表",
+    "price": 3650,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "海星"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "天梭 速驰 T116.617",
+    "brand": "天梭",
+    "category": "手表",
+    "price": 2850,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "速驰"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "精工 5 Sports SRPD53",
+    "brand": "精工",
+    "category": "手表",
+    "price": 2280,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "5sports"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "精工 Prospex SPB143",
+    "brand": "精工",
+    "category": "手表",
+    "price": 4680,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "prospex"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "精工 Presage SRPB43",
+    "brand": "精工",
+    "category": "手表",
+    "price": 3480,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "presage"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "西铁城 光动能 AW1360",
+    "brand": "西铁城",
+    "category": "手表",
+    "price": 1980,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "光动能"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "西铁城 光动能卫星对时 CC3085",
+    "brand": "西铁城",
+    "category": "手表",
+    "price": 8980,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "光动能"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "浪琴 名匠 L2.793.4",
+    "brand": "浪琴",
+    "category": "手表",
+    "price": 15800,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "名匠"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "浪琴 康卡斯 L3.781.4",
+    "brand": "浪琴",
+    "category": "手表",
+    "price": 12800,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "康卡斯"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "欧米茄 海马300 潜水表",
+    "brand": "欧米茄",
+    "category": "手表",
+    "price": 46300,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "海马"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "欧米茄 超霸 登月表",
+    "brand": "欧米茄",
+    "category": "手表",
+    "price": 46800,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "超霸"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "欧米茄 星座 41mm",
+    "brand": "欧米茄",
+    "category": "手表",
+    "price": 48700,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "星座"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "劳力士 潜航者(水鬼) 126610",
+    "brand": "劳力士",
+    "category": "手表",
+    "price": 78000,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "水鬼"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "劳力士 迪通拿 116500",
+    "brand": "劳力士",
+    "category": "手表",
+    "price": 150000,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "迪通拿"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "劳力士 星期日历 228238",
+    "brand": "劳力士",
+    "category": "手表",
+    "price": 280000,
+    "year": 2024,
+    "icon": "mdi:watch",
+    "keywords": [
+      "星期日历"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "特斯拉 Model 3 焕新版后驱",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 236900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model3"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model 3 焕新版长续航",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 275900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model3"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model Y 后驱版",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 249900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "y"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model Y 长续航版",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 299900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "y"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model Y 高性能版",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 354900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "y"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model S 双电机",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 712900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "s"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model S Plaid",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 949900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "s"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model X 双电机",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 729900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "x"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Model X Plaid",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 959900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "model",
+      "x"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "特斯拉 Cybertruck 野兽版",
+    "brand": "特斯拉",
+    "category": "车辆",
+    "price": 999900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "cybertruck"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 海鸥 荣耀版 305km",
+    "brand": "比亚迪",
+    "category": "手机",
+    "price": 69800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "海鸥"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 海豚 骑士版 401km",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 139800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "海豚"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 海豹 DM-i 尊贵型",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 186800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "海豹"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 海豹EV 四驱性能版",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 249800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "海豹"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 海狮07 EV 550km",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 189800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "海狮"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 秦Plus DM-i",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 79800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "秦"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 秦L DM-i",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 99800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "秦"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 汉DM-i 尊荣型",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 189800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "汉"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 汉EV 四驱旗舰型",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 249800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "汉"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 唐DM-i 尊享型",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 199800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "唐"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 宋Pro DM-i",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 109800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "宋"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 宋Plus DM-i 150km",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 159800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "宋"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 元UP 401km",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 109800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "元"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 腾势 D9 DM-i 四驱尊贵",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 389800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "腾势"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "比亚迪 仰望 U8 豪华版",
+    "brand": "比亚迪",
+    "category": "车辆",
+    "price": 1098000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "仰望"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 ES6 75kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 338000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "es6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 ES8 75kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 528000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "es8"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 ET5 75kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 298000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "et5"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 ET5T 75kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 298000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "et5t"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 ET7 100kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 428000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "et7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 EC6 75kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 358000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "ec6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "蔚来 EC7 75kWh",
+    "brand": "蔚来",
+    "category": "车辆",
+    "price": 458000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "ec7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L6 Pro",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 249800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L6 Max",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 279800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L7 Pro",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 309800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L7 Max",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 339800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L8 Pro",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 339800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l8"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L8 Max",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 379800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l8"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L9 Pro",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 409800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l9"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 L9 Ultra",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 439800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "l9"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "理想 MEGA",
+    "brand": "理想",
+    "category": "车辆",
+    "price": 559800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "mega"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小鹏 X9 超长续航Max",
+    "brand": "小鹏",
+    "category": "车辆",
+    "price": 419800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "x9"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小鹏 G9 570Max",
+    "brand": "小鹏",
+    "category": "车辆",
+    "price": 289900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "g9"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小鹏 G6 755超长续航Max",
+    "brand": "小鹏",
+    "category": "车辆",
+    "price": 259900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "g6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小鹏 P7i 610鹏翼版",
+    "brand": "小鹏",
+    "category": "车辆",
+    "price": 289900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "p7i"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小鹏 MONA M03 515",
+    "brand": "小鹏",
+    "category": "车辆",
+    "price": 119800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "mona"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小米 SU7 标准版",
+    "brand": "小米",
+    "category": "手机",
+    "price": 215900,
+    "year": 2024,
+    "icon": "mdi:car",
+    "keywords": [
+      "su7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小米 SU7 Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 245900,
+    "year": 2024,
+    "icon": "mdi:car",
+    "keywords": [
+      "su7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "小米 SU7 Max",
+    "brand": "小米",
+    "category": "手机",
+    "price": 299900,
+    "year": 2024,
+    "icon": "mdi:car",
+    "keywords": [
+      "su7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "问界 M5 增程Max RS",
+    "brand": "问界",
+    "category": "车辆",
+    "price": 282800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "m5"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "问界 M7 后驱Plus",
+    "brand": "问界",
+    "category": "车辆",
+    "price": 249800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "m7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "问界 M7 Max智驾",
+    "brand": "问界",
+    "category": "车辆",
+    "price": 329800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "m7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "问界 M9 增程Max",
+    "brand": "问界",
+    "category": "车辆",
+    "price": 469800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "m9"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "问界 M9 纯电Max",
+    "brand": "问界",
+    "category": "车辆",
+    "price": 529800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "m9"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "极氪 001 ME版 100kWh",
+    "brand": "极氪",
+    "category": "车辆",
+    "price": 299900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "001"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "极氪 007 后驱智驾版",
+    "brand": "极氪",
+    "category": "车辆",
+    "price": 229900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "007"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "极氪 009 七座版",
+    "brand": "极氪",
+    "category": "车辆",
+    "price": 589000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "009"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "极氪 X 四驱版",
+    "brand": "极氪",
+    "category": "车辆",
+    "price": 199000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "极氪x"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "极氪 MIX",
+    "brand": "极氪",
+    "category": "车辆",
+    "price": 279900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "mix"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 E 260 L",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 449000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "e级"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 E 300 L",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 519000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "e级"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 C 200 L",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 331500,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "c级"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 C 260 L",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 376500,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "c级"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 GLC 300 L",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 486800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "glc"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 GLE 350",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 694000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "gle"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 EQE 350先锋版",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 478000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "eqe"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 EQS 450先锋版",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 885000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "eqs"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奔驰 S 450 L",
+    "brand": "奔驰",
+    "category": "车辆",
+    "price": 1160000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "s级"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 325Li M运动",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 353900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "3系"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 530Li 领先型",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 495000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "5系"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 X3 xDrive30i",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 449000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "x3"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 X5 xDrive40Li",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 723000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "x5"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 i3 eDrive35L",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 353900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "i3"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 iX3 领先型",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 435000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "ix3"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "宝马 iX xDrive50",
+    "brand": "宝马",
+    "category": "车辆",
+    "price": 846900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "ix"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 A4L 45TFSI臻选动感",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 382500,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "a4"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 A6L 45TFSI",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 456800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "a6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 A8L 55TFSI",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 888800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "a8"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 Q5L 45TFSI",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 458900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "q5"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 Q7 55TFSI",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 637800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "q7"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 Q8 55TFSI",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 786800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "q8"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "奥迪 e-tron 50",
+    "brand": "奥迪",
+    "category": "车辆",
+    "price": 548800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "etron"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "保时捷 Cayenne 3.0T",
+    "brand": "保时捷",
+    "category": "车辆",
+    "price": 948000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "cayenne"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "保时捷 Taycan 4S",
+    "brand": "保时捷",
+    "category": "车辆",
+    "price": 1168000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "taycan"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "保时捷 Macan 2.0T",
+    "brand": "保时捷",
+    "category": "车辆",
+    "price": 598000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "macan"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 ID.3 Pro",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 125900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "id3"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 ID.4 Crozz",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 196900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "id4"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 ID.6 Crozz",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 259900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "id6"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 迈腾 380TSI",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 256900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "迈腾"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 帕萨特 380TSI",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 234900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "帕萨特"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 途观L Pro",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 239900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "途观"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "大众 途昂 380TSI",
+    "brand": "大众",
+    "category": "车辆",
+    "price": 315000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "途昂"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "丰田 卡罗拉 双擎",
+    "brand": "丰田",
+    "category": "车辆",
+    "price": 136800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "卡罗拉"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "丰田 凯美瑞 双擎",
+    "brand": "丰田",
+    "category": "车辆",
+    "price": 179800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "凯美瑞"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "丰田 RAV4 双擎",
+    "brand": "丰田",
+    "category": "车辆",
+    "price": 222800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "rav4"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "丰田 汉兰达 双擎",
+    "brand": "丰田",
+    "category": "车辆",
+    "price": 269800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "汉兰达"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "丰田 普拉多 2.4T",
+    "brand": "丰田",
+    "category": "车辆",
+    "price": 459800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "普拉多"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "本田 思域 240TURBO",
+    "brand": "本田",
+    "category": "车辆",
+    "price": 149900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "思域"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "本田 雅阁 锐·T动",
+    "brand": "本田",
+    "category": "车辆",
+    "price": 191800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "雅阁"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "本田 CR-V 240TURBO",
+    "brand": "本田",
+    "category": "车辆",
+    "price": 193900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "crv"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "本田 皓影 锐·混动",
+    "brand": "本田",
+    "category": "车辆",
+    "price": 199800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": [
+      "皓影"
+    ],
+    "icon_url": "/static/product_icons/car.svg"
+  },
+  {
+    "name": "雅迪 冠能Q9",
+    "brand": "雅迪",
+    "category": "车辆",
+    "price": 5299,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "冠能"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "雅迪 冠能M10",
+    "brand": "雅迪",
+    "category": "车辆",
+    "price": 6599,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "冠能"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "雅迪 冠能E10",
+    "brand": "雅迪",
+    "category": "车辆",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "冠能"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "雅迪 雅迪S10",
+    "brand": "雅迪",
+    "category": "车辆",
+    "price": 4599,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "s10"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 MMAX 110",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "ninebot"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E300P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 19999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "ninebot"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "小牛 电动 MQiL",
+    "brand": "小牛",
+    "category": "车辆",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "小牛"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "爱玛 电动车 露娜",
+    "brand": "爱玛",
+    "category": "车辆",
+    "price": 3899,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "爱玛"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "爱玛 电动车 指挥官",
+    "brand": "爱玛",
+    "category": "车辆",
+    "price": 5299,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": [
+      "爱玛"
+    ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "MacBook Air M4",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m4",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Air M3",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m3",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Air M2",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 7999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m2",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Air M1",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 6999,
+    "year": 2020,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m1",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Pro 14 M4",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 14999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m4",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Pro 16 M4",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 19999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m4",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Pro 14 M3",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2023,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m3",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Pro 16 M3",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 19999,
+    "year": 2023,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m3",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Pro 14 M2",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2022,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m2",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "MacBook Pro 13 M2",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2022,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "m2"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "iMac 24 M3",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 10999,
+    "year": 2024,
+    "icon": "mdi:monitor",
+    "keywords": [
+      "imac",
+      "m3"
+    ],
+    "icon_url": "/static/product_icons/monitor.svg"
+  },
+  {
+    "name": "Mac mini M4",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 4799,
+    "year": 2024,
+    "icon": "mdi:monitor",
+    "keywords": [
+      "macmini",
+      "m4"
+    ],
+    "icon_url": "/static/product_icons/monitor.svg"
+  },
+  {
+    "name": "Mac mini M2",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 4499,
+    "year": 2024,
+    "icon": "mdi:monitor",
+    "keywords": [
+      "macmini",
+      "m2"
+    ],
+    "icon_url": "/static/product_icons/monitor.svg"
+  },
+  {
+    "name": "Mac Studio M2 Ultra",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 32999,
+    "year": 2024,
+    "icon": "mdi:monitor",
+    "keywords": [
+      "macstudio"
+    ],
+    "icon_url": "/static/product_icons/monitor.svg"
+  },
+  {
+    "name": "Mac Pro M2 Ultra",
+    "brand": "苹果",
+    "category": "电脑",
+    "price": 55999,
+    "year": 2024,
+    "icon": "mdi:monitor",
+    "keywords": [
+      "macpro"
+    ],
+    "icon_url": "/static/product_icons/monitor.svg"
+  },
+  {
+    "name": "华为 MateBook X Pro 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 13999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "matebook",
+      "x",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华为 MateBook 14 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "matebook",
+      "14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华为 MateBook 16 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "matebook",
+      "16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华为 MateBook D14 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5299,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "matebook",
+      "d14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华为 MateBook D16 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 6199,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "matebook",
+      "d16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华为 MateBook E Go",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "matebook",
+      "e"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 ThinkPad X1 Carbon Gen 12",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 10999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "thinkpad",
+      "x1",
+      "carbon"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 ThinkPad X1 Carbon Gen 11",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "thinkpad",
+      "x1",
+      "carbon"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 ThinkPad T14s Gen 4",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "thinkpad",
+      "t14s"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 ThinkPad T14 Gen 4",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 8299,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "thinkpad",
+      "t14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 ThinkPad X13 Gen 4",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 7499,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "thinkpad",
+      "x13"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 Yoga Pro 9 16",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 10499,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "yoga",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 Yoga Air 14",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "yoga",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 Yoga Slim 7 14",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 7499,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "yoga",
+      "slim"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 小新 Pro 16 2024",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "小新",
+      "pro",
+      "16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 小新 Pro 14 2024",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "小新",
+      "pro",
+      "14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 小新 16 2024",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "小新",
+      "16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 拯救者 Y9000P 2024",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "拯救者"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 拯救者 Y7000P 2024",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "拯救者"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "联想 拯救者 R9000P 2024",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "拯救者"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 XPS 16 2024",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 15999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "xps",
+      "16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 XPS 14 2024",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 11999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "xps",
+      "14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 XPS 13 2024",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "xps",
+      "13"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 Inspiron 16 5640",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "inspiron"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 Inspiron 14 5440",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "inspiron"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 Latitude 7440",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "latitude"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "戴尔 Precision 5680",
+    "brand": "戴尔",
+    "category": "电脑",
+    "price": 19999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "precision"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 Spectre x360 14 2024",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 11999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "spectre"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 Spectre x360 16 2024",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 13999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "spectre"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 Envy 16 2024",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "envy"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 Pavilion 15 2024",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 5499,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "pavilion"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 Pavilion 14 2024",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "pavilion"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 战66 六代 14",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "战66"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "惠普 战X 16 锐龙版",
+    "brand": "惠普",
+    "category": "电脑",
+    "price": 7999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "战x"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 ROG Zephyrus G16 2024",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 14999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "rog幻"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 ROG Zephyrus G14 2024",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "rog幻"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 ROG Strix G16 2024",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 11999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "rog枪神"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 ROG Strix G18 2024",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 13999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "rog枪神"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 天选 5 Pro",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "天选"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 天选 5 Air",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "天选"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 ZenBook 14 UX3405",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 7999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "zenbook"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 Vivobook 15",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "vivobook"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "华硕 ROG Ally X",
+    "brand": "华硕",
+    "category": "电脑",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "rog",
+      "ally"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "微软 Surface Pro 10",
+    "brand": "微软",
+    "category": "电脑",
+    "price": 10999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "surface",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "微软 Surface Pro 9",
+    "brand": "微软",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "surface",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "微软 Surface Laptop 6",
+    "brand": "微软",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "surface",
+      "laptop"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "微软 Surface Laptop 5",
+    "brand": "微软",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "surface",
+      "laptop"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "三星 Galaxy Book4 Ultra",
+    "brand": "三星",
+    "category": "电脑",
+    "price": 16999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "book4",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "三星 Galaxy Book4 Pro",
+    "brand": "三星",
+    "category": "电脑",
+    "price": 11999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "book4",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "三星 Galaxy Book4 360",
+    "brand": "三星",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "book4",
+      "360"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "小米笔记本 Pro 16 2024",
+    "brand": "小米",
+    "category": "手机",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "小米pro16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "小米笔记本 Pro 14 2024",
+    "brand": "小米",
+    "category": "手机",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "小米pro14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "RedmiBook Pro 16 2024",
+    "brand": "小米",
+    "category": "手机",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "redmibook16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "RedmiBook Pro 14 2024",
+    "brand": "小米",
+    "category": "手机",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "redmibook14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "荣耀 MagicBook Pro 16",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "magicbook16"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "荣耀 MagicBook 14",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "magicbook14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "荣耀 MagicBook X 14",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "magicbook",
+      "x14"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "宏碁 Swift Go 14",
+    "brand": "宏碁",
+    "category": "电脑",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "swift",
+      "go"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "宏碁 Aspire 15",
+    "brand": "宏碁",
+    "category": "电脑",
+    "price": 4299,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "aspire"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "宏碁 Nitro V15",
+    "brand": "宏碁",
+    "category": "电脑",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "nitro"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "宏碁 Predator Helios 16",
+    "brand": "宏碁",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2024,
+    "icon": "mdi:laptop",
+    "keywords": [
+      "predator"
+    ],
+    "icon_url": "/static/product_icons/laptop.svg"
+  },
+  {
+    "name": "iPad Pro 13 M4",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 11499,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad",
+      "pro",
+      "m4"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "iPad Pro 11 M4",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad",
+      "pro",
+      "m4"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "iPad Air 13 M2",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 5799,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad",
+      "air",
+      "m2"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "iPad Air 11 M2",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 4799,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad",
+      "air",
+      "m2"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "iPad 10代",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 3599,
+    "year": 2022,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "iPad 9代",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 3299,
+    "year": 2021,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "iPad mini 7",
+    "brand": "苹果",
+    "category": "平板",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "ipad",
+      "mini"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "华为 MatePad Pro 13.2",
+    "brand": "华为",
+    "category": "手机",
+    "price": 5699,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "matepad",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "华为 MatePad Pro 11 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 4299,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "matepad",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "华为 MatePad Air 2024",
+    "brand": "华为",
+    "category": "手机",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "matepad",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "华为 MatePad SE 11",
+    "brand": "华为",
+    "category": "手机",
+    "price": 1699,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "matepad",
+      "se"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "华为 MatePad Paper",
+    "brand": "华为",
+    "category": "手机",
+    "price": 3299,
+    "year": 2023,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "matepad",
+      "paper"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "三星 Galaxy Tab S10 Ultra",
+    "brand": "三星",
+    "category": "平板",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "tab",
+      "s10",
+      "ultra"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "三星 Galaxy Tab S10+",
+    "brand": "三星",
+    "category": "平板",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "tab",
+      "s10",
+      "plus"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "三星 Galaxy Tab S10",
+    "brand": "三星",
+    "category": "平板",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "tab",
+      "s10"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "三星 Galaxy Tab S9 FE",
+    "brand": "三星",
+    "category": "平板",
+    "price": 3499,
+    "year": 2023,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "tab",
+      "s9",
+      "fe"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "三星 Galaxy Tab A9+",
+    "brand": "三星",
+    "category": "平板",
+    "price": 1999,
+    "year": 2023,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "tab",
+      "a9"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "小米平板 7 Pro",
+    "brand": "小米",
+    "category": "平板",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "小米平板7"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "小米平板 7",
+    "brand": "小米",
+    "category": "平板",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "小米平板7"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "小米平板 6S Pro",
+    "brand": "小米",
+    "category": "平板",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "小米平板6"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "小米平板 6",
+    "brand": "小米",
+    "category": "平板",
+    "price": 1999,
+    "year": 2023,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "小米平板6"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "OPPO Pad 4 Pro",
+    "brand": "OPPO",
+    "category": "平板",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "oppo",
+      "pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "OPPO Pad 4",
+    "brand": "OPPO",
+    "category": "平板",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "oppo",
+      "pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "vivo Pad 3 Pro",
+    "brand": "vivo",
+    "category": "平板",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "vivo",
+      "pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "vivo Pad 3",
+    "brand": "vivo",
+    "category": "平板",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "vivo",
+      "pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "联想 小新 Pad Pro 12.7",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 1799,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "小新pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "联想 拯救者 Y700",
+    "brand": "联想",
+    "category": "电脑",
+    "price": 2399,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "拯救者",
+      "y700"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "荣耀 Pad 9 Pro",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "荣耀pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "荣耀 Pad 9",
+    "brand": "荣耀",
+    "category": "手机",
+    "price": 1499,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "荣耀pad"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "微软 Surface Pro 10",
+    "brand": "微软",
+    "category": "电脑",
+    "price": 10999,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "surface",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "亚马逊 Kindle Scribe",
+    "brand": "亚马逊",
+    "category": "平板",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:book-open-variant",
+    "keywords": [
+      "kindle"
+    ],
+    "icon_url": "/static/product_icons/book-open-variant.svg"
+  },
+  {
+    "name": "亚马逊 Kindle Paperwhite",
+    "brand": "亚马逊",
+    "category": "平板",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:book-open-variant",
+    "keywords": [
+      "kindle"
+    ],
+    "icon_url": "/static/product_icons/book-open-variant.svg"
+  },
+  {
+    "name": "文石 BOOX Note X3",
+    "brand": "文石",
+    "category": "平板",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "boox"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "文石 BOOX Tab Ultra",
+    "brand": "文石",
+    "category": "平板",
+    "price": 4599,
+    "year": 2024,
+    "icon": "mdi:tablet",
+    "keywords": [
+      "boox"
+    ],
+    "icon_url": "/static/product_icons/tablet.svg"
+  },
+  {
+    "name": "掌阅 iReader Smart 4",
+    "brand": "掌阅",
+    "category": "平板",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:book-open-variant",
+    "keywords": [
+      "ireader"
+    ],
+    "icon_url": "/static/product_icons/book-open-variant.svg"
+  },
+  {
+    "name": "掌阅 iReader Ocean 4",
+    "brand": "掌阅",
+    "category": "平板",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:book-open-variant",
+    "keywords": [
+      "ireader"
+    ],
+    "icon_url": "/static/product_icons/book-open-variant.svg"
+  },
+  {
+    "name": "格力 冷静王+ 1.5匹新一级",
+    "brand": "格力",
+    "category": "家电",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 冷静王+ 3匹新一级",
+    "brand": "格力",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 云佳 1.5匹新一级",
+    "brand": "格力",
+    "category": "家电",
+    "price": 2699,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 云佳 3匹新一级",
+    "brand": "格力",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 云锦 1.5匹新一级",
+    "brand": "格力",
+    "category": "家电",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 云锦 3匹新一级",
+    "brand": "格力",
+    "category": "家电",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 天丽 1.5匹",
+    "brand": "格力",
+    "category": "家电",
+    "price": 2699,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "格力 京爽 1.5匹",
+    "brand": "格力",
+    "category": "家电",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "格力空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "美的 酷省电 1.5匹新一级",
+    "brand": "美的",
+    "category": "家电",
+    "price": 2899,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "美的空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "美的 酷省电 3匹新一级",
+    "brand": "美的",
+    "category": "家电",
+    "price": 6599,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "美的空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "美的 风尊 1.5匹新一级",
+    "brand": "美的",
+    "category": "家电",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "美的空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "美的 风尊 3匹新一级",
+    "brand": "美的",
+    "category": "家电",
+    "price": 7499,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "美的空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "美的 舒适星 1.5匹",
+    "brand": "美的",
+    "category": "家电",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "美的空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "海尔 新风 1.5匹新一级",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "海尔空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "海尔 静悦 1.5匹新一级",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 2699,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "海尔空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "海尔 劲爽 1.5匹",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "海尔空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "海尔 雷神者 3匹",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "海尔空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "大金 E-MAX 7 1.5匹",
+    "brand": "大金",
+    "category": "家电",
+    "price": 4599,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "大金空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "大金 E-MAX 8 1.5匹",
+    "brand": "大金",
+    "category": "家电",
+    "price": 5299,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "大金空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "三菱电机 MSZ-JL12",
+    "brand": "三菱",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "三菱空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "松下 怡臻 1.5匹",
+    "brand": "松下",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "松下空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "松下 怡炫 1.5匹",
+    "brand": "松下",
+    "category": "家电",
+    "price": 3699,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "松下空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "TCL 小蓝翼 1.5匹",
+    "brand": "TCL",
+    "category": "家电",
+    "price": 2699,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "tcl空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "海信 易省电 1.5匹",
+    "brand": "海信",
+    "category": "家电",
+    "price": 2499,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": [
+      "海信空调"
+    ],
+    "icon_url": "/static/product_icons/air-conditioner.svg"
+  },
+  {
+    "name": "海尔 BCD-520WGH 双开门冰箱",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "海尔冰箱",
+      "520"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "海尔 BCD-600WGH 双开门冰箱",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 4599,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "海尔冰箱",
+      "600"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "海尔 BCD-465WGHT 十字对开",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "海尔冰箱",
+      "465"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "海尔 BCD-500WGHT 十字对开",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 4599,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "海尔冰箱",
+      "500"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "海尔 BCD-340WGHT 法式多门",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 4299,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "海尔冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "美的 BCD-508WKPZM 双开门",
+    "brand": "美的",
+    "category": "家电",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "美的冰箱",
+      "508"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "美的 BCD-478WSPZM 十字对开",
+    "brand": "美的",
+    "category": "家电",
+    "price": 4299,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "美的冰箱",
+      "478"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "美的 BCD-507WGPZM 十字对开",
+    "brand": "美的",
+    "category": "家电",
+    "price": 5299,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "美的冰箱",
+      "507"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "容声 BCD-529WD12HP 双开门",
+    "brand": "容声",
+    "category": "家电",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "容声冰箱",
+      "529"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "容声 BCD-465WD11FP 十字对开",
+    "brand": "容声",
+    "category": "家电",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "容声冰箱",
+      "465"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "容声 BCD-513WD12FP 十字对开",
+    "brand": "容声",
+    "category": "家电",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "容声冰箱",
+      "513"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "西门子 BCD-500W(K56L) 对开门",
+    "brand": "西门子",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "西门子冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "西门子 零度保鲜 十字452L",
+    "brand": "西门子",
+    "category": "家电",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "西门子冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "松下 NR-E531TG 法式多门",
+    "brand": "松下",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "松下冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "松下 NR-F504VT 法式多门",
+    "brand": "松下",
+    "category": "家电",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "松下冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "美菱 M鲜生 BCD-503WPU",
+    "brand": "美菱",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "美菱冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "海信 真空系列 BCD-500",
+    "brand": "海信",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": [
+      "海信冰箱"
+    ],
+    "icon_url": "/static/product_icons/fridge.svg"
+  },
+  {
+    "name": "海尔 精华洗 EG10012BD59S",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 4399,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "海尔洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "海尔 精华洗 EG12014BD59S",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "海尔洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "海尔 水晶系列 G10078HI",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "海尔洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "海尔 FPA直驱 XQG100-BD14326L",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 5499,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "海尔洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "海尔 纤合热泵洗烘一体",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "海尔洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "小天鹅 水魔方 TG100V88",
+    "brand": "小天鹅",
+    "category": "家电",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "小天鹅洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "小天鹅 水魔方 TG100V89",
+    "brand": "小天鹅",
+    "category": "家电",
+    "price": 3799,
+    "year": 2023,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "小天鹅洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "小天鹅 纯平全嵌 TG100V96",
+    "brand": "小天鹅",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "小天鹅洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "小天鹅 比佛利系列",
+    "brand": "小天鹅",
+    "category": "家电",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "小天鹅洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "西门子 iQ500 洗烘一体",
+    "brand": "西门子",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "西门子洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "西门子 iQ300 独立式",
+    "brand": "西门子",
+    "category": "家电",
+    "price": 4299,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "西门子洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "松下 罗密欧 XQG100-ND1E",
+    "brand": "松下",
+    "category": "家电",
+    "price": 4299,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "松下洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "松下 L系列 洗烘一体",
+    "brand": "松下",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "松下洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "LG AI DD FCY10Y4W",
+    "brand": "LG",
+    "category": "家电",
+    "price": 4499,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": [
+      "lg洗衣机"
+    ],
+    "icon_url": "/static/product_icons/washing-machine.svg"
+  },
+  {
+    "name": "索尼 XR-65X90L",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 7999,
+    "year": 2023,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "x90l"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "索尼 XR-75X90L",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 10999,
+    "year": 2023,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "x90l"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "索尼 XR-85X90L",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 14999,
+    "year": 2023,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "x90l"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "索尼 XR-65X95L",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 12999,
+    "year": 2023,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "x95l"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "索尼 XR-75X95L",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 17999,
+    "year": 2023,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "x95l"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "索尼 XR-65A95L OLED",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 16999,
+    "year": 2023,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "a95l"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "索尼 Bravia 7 65寸",
+    "brand": "索尼",
+    "category": "家电",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "sony",
+      "bravia"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "三星 Neo QLED 65QN90D",
+    "brand": "三星",
+    "category": "家电",
+    "price": 11999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "samsung",
+      "qn90"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "三星 Neo QLED 75QN90D",
+    "brand": "三星",
+    "category": "家电",
+    "price": 16999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "samsung",
+      "qn90"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "三星 Neo QLED 85QN90D",
+    "brand": "三星",
+    "category": "家电",
+    "price": 24999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "samsung",
+      "qn90"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "三星 S95D OLED 65寸",
+    "brand": "三星",
+    "category": "家电",
+    "price": 17999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "samsung",
+      "s95"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "LG OLED65C4PCA",
+    "brand": "LG",
+    "category": "家电",
+    "price": 13999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "lg",
+      "oled",
+      "c4"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "LG OLED77C4PCA",
+    "brand": "LG",
+    "category": "家电",
+    "price": 21999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "lg",
+      "oled",
+      "c4"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "LG OLED65G4PCA",
+    "brand": "LG",
+    "category": "家电",
+    "price": 19999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "lg",
+      "oled",
+      "g4"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "海信 65U8N",
+    "brand": "海信",
+    "category": "家电",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "海信",
+      "u8"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "海信 75U8N",
+    "brand": "海信",
+    "category": "家电",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "海信",
+      "u8"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "海信 85U8N",
+    "brand": "海信",
+    "category": "家电",
+    "price": 17999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "海信",
+      "u8"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "海信 65E8N Ultra",
+    "brand": "海信",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "海信",
+      "e8n"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "TCL 65Q10K Pro",
+    "brand": "TCL",
+    "category": "家电",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "tcl",
+      "q10k"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "TCL 75Q10K Pro",
+    "brand": "TCL",
+    "category": "家电",
+    "price": 11999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "tcl",
+      "q10k"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "TCL 85Q10K Pro",
+    "brand": "TCL",
+    "category": "家电",
+    "price": 16999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "tcl",
+      "q10k"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "TCL 98X11H",
+    "brand": "TCL",
+    "category": "家电",
+    "price": 39999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "tcl",
+      "x11h"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "小米电视 S Pro 65寸",
+    "brand": "小米",
+    "category": "手机",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "小米电视"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "小米电视 S Pro 75寸",
+    "brand": "小米",
+    "category": "手机",
+    "price": 7499,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "小米电视"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "小米电视 S Pro 85寸",
+    "brand": "小米",
+    "category": "手机",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "小米电视"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "小米电视 Max 100寸",
+    "brand": "小米",
+    "category": "手机",
+    "price": 19999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "小米电视"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "华为 智慧屏 V75 Pro",
+    "brand": "华为",
+    "category": "家电",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "华为智慧屏"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "华为 智慧屏 S86 Pro",
+    "brand": "华为",
+    "category": "家电",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:television",
+    "keywords": [
+      "华为智慧屏"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "创维 OLED 65S82",
+    "brand": "创维",
+    "category": "家电",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "创维电视"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "雷鸟 85鹤7",
+    "brand": "雷鸟",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": [
+      "雷鸟电视"
+    ],
+    "icon_url": "/static/product_icons/television.svg"
+  },
+  {
+    "name": "戴森 V15 Detect 无线吸尘器",
+    "brand": "戴森",
+    "category": "家电",
+    "price": 4990,
+    "year": 2025,
+    "icon": "mdi:vacuum-outline",
+    "keywords": [
+      "dyson",
+      "v15"
+    ],
+    "icon_url": "/static/product_icons/vacuum-outline.svg"
+  },
+  {
+    "name": "戴森 V12 Detect Slim",
+    "brand": "戴森",
+    "category": "家电",
+    "price": 3990,
+    "year": 2025,
+    "icon": "mdi:vacuum-outline",
+    "keywords": [
+      "dyson",
+      "v12"
+    ],
+    "icon_url": "/static/product_icons/vacuum-outline.svg"
+  },
+  {
+    "name": "戴森 V11 Fluffy",
+    "brand": "戴森",
+    "category": "家电",
+    "price": 2990,
+    "year": 2023,
+    "icon": "mdi:vacuum-outline",
+    "keywords": [
+      "dyson",
+      "v11"
+    ],
+    "icon_url": "/static/product_icons/vacuum-outline.svg"
+  },
+  {
+    "name": "戴森 Airwrap 多功能美发器",
+    "brand": "戴森",
+    "category": "家电",
+    "price": 3690,
+    "year": 2025,
+    "icon": "mdi:hair-dryer",
+    "keywords": [
+      "dyson",
+      "airwrap"
+    ],
+    "icon_url": "/static/product_icons/hair-dryer.svg"
+  },
+  {
+    "name": "戴森 Supersonic Nural 吹风机",
+    "brand": "戴森",
+    "category": "家电",
+    "price": 3190,
+    "year": 2025,
+    "icon": "mdi:hair-dryer",
+    "keywords": [
+      "dyson吹风机"
+    ],
+    "icon_url": "/static/product_icons/hair-dryer.svg"
+  },
+  {
+    "name": "科沃斯 X5 Pro Omni",
+    "brand": "科沃斯",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "科沃斯x5"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "科沃斯 T30 Pro Omni",
+    "brand": "科沃斯",
+    "category": "家电",
+    "price": 4499,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "科沃斯特t30"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "石头 P10S Pro",
+    "brand": "石头",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "石头p10s"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "石头 G20S",
+    "brand": "石头",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "石头g20s"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "石头 G20",
+    "brand": "石头",
+    "category": "家电",
+    "price": 4999,
+    "year": 2023,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "石头g20"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "追觅 X40 Pro Ultra",
+    "brand": "追觅",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "追觅x40"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "追觅 X30 Pro",
+    "brand": "追觅",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "追觅x30"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "追觅 S30 Pro Ultra",
+    "brand": "追觅",
+    "category": "家电",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "追觅s30"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "云鲸 J5",
+    "brand": "云鲸",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": [
+      "云鲸j5"
+    ],
+    "icon_url": "/static/product_icons/robot-vacuum.svg"
+  },
+  {
+    "name": "飞利浦 EP3246 全自动意式咖啡机",
+    "brand": "飞利浦",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:coffee-maker",
+    "keywords": [
+      "飞利浦咖啡机"
+    ],
+    "icon_url": "/static/product_icons/coffee-maker.svg"
+  },
+  {
+    "name": "德龙 ECAM 22.110.B 全自动",
+    "brand": "德龙",
+    "category": "家电",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:coffee-maker",
+    "keywords": [
+      "德龙咖啡机"
+    ],
+    "icon_url": "/static/product_icons/coffee-maker.svg"
+  },
+  {
+    "name": "德龙 La Specialista Arte",
+    "brand": "德龙",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:coffee-maker",
+    "keywords": [
+      "德龙咖啡机"
+    ],
+    "icon_url": "/static/product_icons/coffee-maker.svg"
+  },
+  {
+    "name": "铂富 Barista Express BES878",
+    "brand": "铂富",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:coffee-maker",
+    "keywords": [
+      "铂富咖啡机"
+    ],
+    "icon_url": "/static/product_icons/coffee-maker.svg"
+  },
+  {
+    "name": "Nespresso Vertuo Next 胶囊咖啡机",
+    "brand": "Nespresso",
+    "category": "家电",
+    "price": 1699,
+    "year": 2025,
+    "icon": "mdi:coffee-maker",
+    "keywords": [
+      "nespresso"
+    ],
+    "icon_url": "/static/product_icons/coffee-maker.svg"
+  },
+  {
+    "name": "美的 微烤一体机 M3-L208E",
+    "brand": "美的",
+    "category": "家电",
+    "price": 999,
+    "year": 2025,
+    "icon": "mdi:microwave",
+    "keywords": [
+      "美的微波炉"
+    ],
+    "icon_url": "/static/product_icons/microwave.svg"
+  },
+  {
+    "name": "格兰仕 G90F25CSLV 微波炉",
+    "brand": "格兰仕",
+    "category": "家电",
+    "price": 699,
+    "year": 2025,
+    "icon": "mdi:microwave",
+    "keywords": [
+      "格兰仕微波炉"
+    ],
+    "icon_url": "/static/product_icons/microwave.svg"
+  },
+  {
+    "name": "松下 NN-DS2200 蒸烤微一体",
+    "brand": "松下",
+    "category": "家电",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:microwave",
+    "keywords": [
+      "松下微波炉"
+    ],
+    "icon_url": "/static/product_icons/microwave.svg"
+  },
+  {
+    "name": "飞利浦 Airfryer XXL HD9880",
+    "brand": "飞利浦",
+    "category": "家电",
+    "price": 1999,
+    "year": 2025,
+    "icon": "mdi:toaster-oven",
+    "keywords": [
+      "飞利浦空气炸锅"
+    ],
+    "icon_url": "/static/product_icons/toaster-oven.svg"
+  },
+  {
+    "name": "九阳 KL65-VF511 空气炸锅",
+    "brand": "九阳",
+    "category": "家电",
+    "price": 399,
+    "year": 2025,
+    "icon": "mdi:toaster-oven",
+    "keywords": [
+      "九阳空气炸锅"
+    ],
+    "icon_url": "/static/product_icons/toaster-oven.svg"
+  },
+  {
+    "name": "美的 KZ650F 空气炸锅",
+    "brand": "美的",
+    "category": "家电",
+    "price": 599,
+    "year": 2025,
+    "icon": "mdi:toaster-oven",
+    "keywords": [
+      "美的空气炸锅"
+    ],
+    "icon_url": "/static/product_icons/toaster-oven.svg"
+  },
+  {
+    "name": "松下 SR-DX155 电饭煲",
+    "brand": "松下",
+    "category": "家电",
+    "price": 899,
+    "year": 2025,
+    "icon": "mdi:rice-cooker",
+    "keywords": [
+      "松下电饭煲"
+    ],
+    "icon_url": "/static/product_icons/rice-cooker.svg"
+  },
+  {
+    "name": "象印 NS-YSQ10 电饭煲",
+    "brand": "象印",
+    "category": "家电",
+    "price": 2299,
+    "year": 2025,
+    "icon": "mdi:rice-cooker",
+    "keywords": [
+      "象印电饭煲"
+    ],
+    "icon_url": "/static/product_icons/rice-cooker.svg"
+  },
+  {
+    "name": "虎牌 JKY-T10C 电饭煲",
+    "brand": "虎牌",
+    "category": "家电",
+    "price": 1999,
+    "year": 2025,
+    "icon": "mdi:rice-cooker",
+    "keywords": [
+      "虎牌电饭煲"
+    ],
+    "icon_url": "/static/product_icons/rice-cooker.svg"
+  },
+  {
+    "name": "美的 MB-FB40Simple 电饭煲",
+    "brand": "美的",
+    "category": "家电",
+    "price": 299,
+    "year": 2025,
+    "icon": "mdi:rice-cooker",
+    "keywords": [
+      "美的电饭煲"
+    ],
+    "icon_url": "/static/product_icons/rice-cooker.svg"
+  },
+  {
+    "name": "苏泊尔 SF40FC686 电饭煲",
+    "brand": "苏泊尔",
+    "category": "家电",
+    "price": 399,
+    "year": 2025,
+    "icon": "mdi:rice-cooker",
+    "keywords": [
+      "苏泊尔电饭煲"
+    ],
+    "icon_url": "/static/product_icons/rice-cooker.svg"
+  },
+  {
+    "name": "小米 IH 电饭煲 3L",
+    "brand": "小米",
+    "category": "手机",
+    "price": 599,
+    "year": 2024,
+    "icon": "mdi:rice-cooker",
+    "keywords": [
+      "小米电饭煲"
+    ],
+    "icon_url": "/static/product_icons/rice-cooker.svg"
+  },
+  {
+    "name": "西门子 SN636S00JC 嵌入式洗碗机",
+    "brand": "西门子",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:dishwasher",
+    "keywords": [
+      "西门子洗碗机"
+    ],
+    "icon_url": "/static/product_icons/dishwasher.svg"
+  },
+  {
+    "name": "美的 RX600S 嵌入式洗碗机",
+    "brand": "美的",
+    "category": "家电",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:dishwasher",
+    "keywords": [
+      "美的洗碗机"
+    ],
+    "icon_url": "/static/product_icons/dishwasher.svg"
+  },
+  {
+    "name": "海尔 EW158168BK 洗碗机",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:dishwasher",
+    "keywords": [
+      "海尔洗碗机"
+    ],
+    "icon_url": "/static/product_icons/dishwasher.svg"
+  },
+  {
+    "name": "小米净水器 H800G Pro",
+    "brand": "小米",
+    "category": "手机",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:water",
+    "keywords": [
+      "小米净水器"
+    ],
+    "icon_url": "/static/product_icons/water.svg"
+  },
+  {
+    "name": "海尔 HRO6H66-3 净水器",
+    "brand": "海尔",
+    "category": "家电",
+    "price": 1699,
+    "year": 2025,
+    "icon": "mdi:water",
+    "keywords": [
+      "海尔净水器"
+    ],
+    "icon_url": "/static/product_icons/water.svg"
+  },
+  {
+    "name": "A.O.史密斯 JSQ31-VJSX 16L热水器",
+    "brand": "A.O.史密斯",
+    "category": "家电",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:water-boiler",
+    "keywords": [
+      "史密斯热水器"
+    ],
+    "icon_url": "/static/product_icons/water-boiler.svg"
+  },
+  {
+    "name": "林内 RUS-16E66FRF 热热水器",
+    "brand": "林内",
+    "category": "家电",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:water-boiler",
+    "keywords": [
+      "林内热水器"
+    ],
+    "icon_url": "/static/product_icons/water-boiler.svg"
+  },
+  {
+    "name": "火星人 X5 Pro 集成灶",
+    "brand": "火星人",
+    "category": "家电",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:stove",
+    "keywords": [
+      "火星人集成灶"
+    ],
+    "icon_url": "/static/product_icons/stove.svg"
+  },
+  {
+    "name": "亿田 S8C 集成灶",
+    "brand": "亿田",
+    "category": "家电",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:stove",
+    "keywords": [
+      "亿田集成灶"
+    ],
+    "icon_url": "/static/product_icons/stove.svg"
+  },
+  {
+    "name": "佳能 EOS R5 Mark II",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 26999,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "canon",
+      "r5"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "佳能 EOS R5",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 25999,
+    "year": 2020,
+    "icon": "mdi:camera",
+    "keywords": [
+      "canon",
+      "r5"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "佳能 EOS R6 Mark II",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 15999,
+    "year": 2022,
+    "icon": "mdi:camera",
+    "keywords": [
+      "canon",
+      "r6"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "佳能 EOS R8",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 11999,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "canon",
+      "r8"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "佳能 EOS R50",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 5999,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "canon",
+      "r50"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "佳能 EOS R100",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 3999,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "canon",
+      "r100"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "索尼 α7R V",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 22999,
+    "year": 2022,
+    "icon": "mdi:camera",
+    "keywords": [
+      "sony",
+      "a7r5"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "索尼 α7 IV",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 16999,
+    "year": 2021,
+    "icon": "mdi:camera",
+    "keywords": [
+      "sony",
+      "a7m4"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "索尼 α7 III",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 11999,
+    "year": 2018,
+    "icon": "mdi:camera",
+    "keywords": [
+      "sony",
+      "a7m3"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "索尼 α6700",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 9999,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "sony",
+      "a6700"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "索尼 ZV-E1",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 15499,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "sony",
+      "zve1"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "索尼 ZV-E10 II",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 6799,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "sony",
+      "zve10"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "尼康 Z8",
+    "brand": "尼康",
+    "category": "摄影",
+    "price": 27999,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "nikon",
+      "z8"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "尼康 Z6 III",
+    "brand": "尼康",
+    "category": "摄影",
+    "price": 14999,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "nikon",
+      "z6iii"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "尼康 Zf",
+    "brand": "尼康",
+    "category": "摄影",
+    "price": 13799,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "nikon",
+      "zf"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "富士 GFX100 II",
+    "brand": "富士",
+    "category": "摄影",
+    "price": 49900,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "fujifilm",
+      "gfx"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "富士 X-T5",
+    "brand": "富士",
+    "category": "摄影",
+    "price": 11999,
+    "year": 2022,
+    "icon": "mdi:camera",
+    "keywords": [
+      "fujifilm",
+      "xt5"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "富士 X100 VI",
+    "brand": "富士",
+    "category": "摄影",
+    "price": 11390,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "fujifilm",
+      "x100"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "富士 X-S20",
+    "brand": "富士",
+    "category": "摄影",
+    "price": 8799,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "fujifilm",
+      "xs20"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "富士 X-T50",
+    "brand": "富士",
+    "category": "摄影",
+    "price": 9499,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "fujifilm",
+      "xt50"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "松下 Lumix S5 II",
+    "brand": "松下",
+    "category": "摄影",
+    "price": 13999,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "lumix",
+      "s5"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "松下 Lumix S9",
+    "brand": "松下",
+    "category": "摄影",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "lumix",
+      "s9"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "徕卡 Q3",
+    "brand": "徕卡",
+    "category": "摄影",
+    "price": 52900,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "leica",
+      "q3"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "徕卡 M11",
+    "brand": "徕卡",
+    "category": "摄影",
+    "price": 75800,
+    "year": 2022,
+    "icon": "mdi:camera",
+    "keywords": [
+      "leica",
+      "m11"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "徕卡 SL3",
+    "brand": "徕卡",
+    "category": "摄影",
+    "price": 68200,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "leica",
+      "sl3"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "佳能 RF 24-70mm F2.8 L IS USM",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 17799,
+    "year": 2019,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "canon",
+      "rf"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "佳能 RF 70-200mm F2.8 L IS USM",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 18299,
+    "year": 2020,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "canon",
+      "rf"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "佳能 RF 50mm F1.2 L USM",
+    "brand": "佳能",
+    "category": "摄影",
+    "price": 17499,
+    "year": 2018,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "canon",
+      "rf"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "索尼 FE 24-70mm F2.8 GM II",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 15999,
+    "year": 2022,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "sony",
+      "gm"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "索尼 FE 70-200mm F2.8 GM II",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 18999,
+    "year": 2021,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "sony",
+      "gm"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "索尼 FE 50mm F1.2 GM",
+    "brand": "索尼",
+    "category": "摄影",
+    "price": 15999,
+    "year": 2021,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "sony",
+      "gm"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "尼康 NIKKOR Z 24-70mm F2.8 S",
+    "brand": "尼康",
+    "category": "摄影",
+    "price": 15299,
+    "year": 2019,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "nikon",
+      "z"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "尼康 NIKKOR Z 70-200mm F2.8 VR S",
+    "brand": "尼康",
+    "category": "摄影",
+    "price": 15799,
+    "year": 2020,
+    "icon": "mdi:camera-lens",
+    "keywords": [
+      "nikon",
+      "z"
+    ],
+    "icon_url": "/static/product_icons/camera-lens.svg"
+  },
+  {
+    "name": "DJI Osmo Pocket 3",
+    "brand": "大疆",
+    "category": "摄影",
+    "price": 3499,
+    "year": 2023,
+    "icon": "mdi:camcorder",
+    "keywords": [
+      "dji",
+      "pocket"
+    ],
+    "icon_url": "/static/product_icons/camcorder.svg"
+  },
+  {
+    "name": "DJI Osmo Action 5 Pro",
+    "brand": "大疆",
+    "category": "摄影",
+    "price": 3299,
+    "year": 2024,
+    "icon": "mdi:camcorder",
+    "keywords": [
+      "dji",
+      "action"
+    ],
+    "icon_url": "/static/product_icons/camcorder.svg"
+  },
+  {
+    "name": "DJI Air 3S 畅飞套装",
+    "brand": "大疆",
+    "category": "摄影",
+    "price": 9988,
+    "year": 2024,
+    "icon": "mdi:quadcopter",
+    "keywords": [
+      "dji",
+      "air"
+    ],
+    "icon_url": "/static/product_icons/quadcopter.svg"
+  },
+  {
+    "name": "DJI Mini 4 Pro 畅飞套装",
+    "brand": "大疆",
+    "category": "摄影",
+    "price": 7388,
+    "year": 2024,
+    "icon": "mdi:quadcopter",
+    "keywords": [
+      "dji",
+      "mini"
+    ],
+    "icon_url": "/static/product_icons/quadcopter.svg"
+  },
+  {
+    "name": "DJI Avata 2 穿越机",
+    "brand": "大疆",
+    "category": "摄影",
+    "price": 5988,
+    "year": 2024,
+    "icon": "mdi:quadcopter",
+    "keywords": [
+      "dji",
+      "avata"
+    ],
+    "icon_url": "/static/product_icons/quadcopter.svg"
+  },
+  {
+    "name": "DJI RS 4 稳定器",
+    "brand": "大疆",
+    "category": "摄影",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:gimbal",
+    "keywords": [
+      "dji",
+      "rs4"
+    ],
+    "icon_url": "/static/product_icons/gimbal.svg"
+  },
+  {
+    "name": "GoPro Hero 13 Black",
+    "brand": "GoPro",
+    "category": "摄影",
+    "price": 3998,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "gopro"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "GoPro Hero 12 Black",
+    "brand": "GoPro",
+    "category": "摄影",
+    "price": 3598,
+    "year": 2023,
+    "icon": "mdi:camera",
+    "keywords": [
+      "gopro"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "智云 云鹤4 稳定器",
+    "brand": "智云",
+    "category": "摄影",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:gimbal",
+    "keywords": [
+      "智云"
+    ],
+    "icon_url": "/static/product_icons/gimbal.svg"
+  },
+  {
+    "name": "捷信 GK2542-82QD 三脚架",
+    "brand": "捷信",
+    "category": "摄影",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "捷信"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "曼富图 MT190XPRO4 三脚架",
+    "brand": "曼富图",
+    "category": "摄影",
+    "price": 2599,
+    "year": 2024,
+    "icon": "mdi:camera",
+    "keywords": [
+      "曼富图"
+    ],
+    "icon_url": "/static/product_icons/camera.svg"
+  },
+  {
+    "name": "华硕 RT-AX86U Pro",
+    "brand": "华硕",
+    "category": "网络设备",
+    "price": 1999,
+    "year": 2023,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "asus",
+      "ax86u"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "华硕 RT-BE96U",
+    "brand": "华硕",
+    "category": "网络设备",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "asus",
+      "be96u"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "华硕 RT-AX57 Go",
+    "brand": "华硕",
+    "category": "网络设备",
+    "price": 599,
+    "year": 2024,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "asus",
+      "ax57"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "小米路由器 BE7000",
+    "brand": "小米",
+    "category": "手机",
+    "price": 799,
+    "year": 2024,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "小米路由器"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "小米路由器 AX6000",
+    "brand": "小米",
+    "category": "手机",
+    "price": 599,
+    "year": 2023,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "小米路由器"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "小米路由器 AX3000T",
+    "brand": "小米",
+    "category": "手机",
+    "price": 249,
+    "year": 2024,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "小米路由器"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "TP-Link BE19000",
+    "brand": "TP-Link",
+    "category": "网络设备",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "tplink"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "TP-Link BE7200",
+    "brand": "TP-Link",
+    "category": "网络设备",
+    "price": 1599,
+    "year": 2024,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "tplink"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "网件 Nighthawk RAX120",
+    "brand": "网件",
+    "category": "网络设备",
+    "price": 2999,
+    "year": 2023,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "netgear"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "Linksys Velop MX4200",
+    "brand": "Linksys",
+    "category": "网络设备",
+    "price": 2999,
+    "year": 2023,
+    "icon": "mdi:router-wireless",
+    "keywords": [
+      "linksys"
+    ],
+    "icon_url": "/static/product_icons/router-wireless.svg"
+  },
+  {
+    "name": "群晖 DS1522+",
+    "brand": "群晖",
+    "category": "网络设备",
+    "price": 5999,
+    "year": 2022,
+    "icon": "mdi:nas",
+    "keywords": [
+      "群晖"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "群晖 DS923+",
+    "brand": "群晖",
+    "category": "网络设备",
+    "price": 3999,
+    "year": 2022,
+    "icon": "mdi:nas",
+    "keywords": [
+      "群晖"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "群晖 DS723+",
+    "brand": "群晖",
+    "category": "网络设备",
+    "price": 3299,
+    "year": 2023,
+    "icon": "mdi:nas",
+    "keywords": [
+      "群晖"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "群晖 DS224+",
+    "brand": "群晖",
+    "category": "网络设备",
+    "price": 2499,
+    "year": 2023,
+    "icon": "mdi:nas",
+    "keywords": [
+      "群晖"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "威联通 TS-464",
+    "brand": "威联通",
+    "category": "网络设备",
+    "price": 2999,
+    "year": 2023,
+    "icon": "mdi:nas",
+    "keywords": [
+      "威联通"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "极空间 Z4 Pro",
+    "brand": "极空间",
+    "category": "网络设备",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:nas",
+    "keywords": [
+      "极空间"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "极空间 Z2 Pro",
+    "brand": "极空间",
+    "category": "网络设备",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:nas",
+    "keywords": [
+      "极空间"
+    ],
+    "icon_url": "/static/product_icons/nas.svg"
+  },
+  {
+    "name": "惠普 LaserJet MFP M234sdw",
+    "brand": "惠普",
+    "category": "其他",
+    "price": 2319,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "hp激光"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "惠普 Smart Tank 585",
+    "brand": "惠普",
+    "category": "VR",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "hp墨仓"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "惠普 DeskJet 2879",
+    "brand": "惠普",
+    "category": "其他",
+    "price": 599,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "hp打印"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "爱普生 L3251 墨仓式",
+    "brand": "爱普生",
+    "category": "影音",
+    "price": 999,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "epson"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "爱普生 L6498 墨仓一体机",
+    "brand": "爱普生",
+    "category": "影音",
+    "price": 2599,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "epson"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "佳能 PIXMA G3830",
+    "brand": "佳能",
+    "category": "其他",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "canon"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "兄弟 DCP-L2550DW 黑白激光",
+    "brand": "兄弟",
+    "category": "其他",
+    "price": 1899,
+    "year": 2024,
+    "icon": "mdi:printer",
+    "keywords": [
+      "brother"
+    ],
+    "icon_url": "/static/product_icons/printer.svg"
+  },
+  {
+    "name": "PS5 Pro",
+    "brand": "索尼",
+    "category": "游戏",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "ps5",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "PS5 Slim 光驱版",
+    "brand": "索尼",
+    "category": "游戏",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "ps5",
+      "slim"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "Xbox Series X",
+    "brand": "微软",
+    "category": "游戏",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "xbox"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "Xbox Series S",
+    "brand": "微软",
+    "category": "游戏",
+    "price": 2599,
+    "year": 2024,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "xbox"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "Nintendo Switch 2",
+    "brand": "任天堂",
+    "category": "游戏",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "switch2"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "Nintendo Switch OLED",
+    "brand": "任天堂",
+    "category": "游戏",
+    "price": 2599,
+    "year": 2021,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "switch"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "Steam Deck OLED 512G",
+    "brand": "Valve",
+    "category": "游戏",
+    "price": 4699,
+    "year": 2023,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "steam",
+      "deck"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "华硕 ROG Ally X",
+    "brand": "华硕",
+    "category": "游戏",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:gamepad",
+    "keywords": [
+      "rog",
+      "ally"
+    ],
+    "icon_url": "/static/product_icons/gamepad.svg"
+  },
+  {
+    "name": "索尼 WH-1000XM5 头戴降噪",
+    "brand": "索尼",
+    "category": "音频",
+    "price": 2999,
+    "year": 2022,
+    "icon": "mdi:headphones",
+    "keywords": [
+      "sony",
+      "xm5"
+    ],
+    "icon_url": "/static/product_icons/headphones.svg"
+  },
+  {
+    "name": "索尼 WF-1000XM5 真无线降噪",
+    "brand": "索尼",
+    "category": "音频",
+    "price": 1999,
+    "year": 2023,
+    "icon": "mdi:headphones",
+    "keywords": [
+      "sony",
+      "xm5"
+    ],
+    "icon_url": "/static/product_icons/headphones.svg"
+  },
+  {
+    "name": "Bose QC Ultra 头戴降噪",
+    "brand": "Bose",
+    "category": "音频",
+    "price": 3299,
+    "year": 2023,
+    "icon": "mdi:headphones",
+    "keywords": [
+      "bose",
+      "qc"
+    ],
+    "icon_url": "/static/product_icons/headphones.svg"
+  },
+  {
+    "name": "Bose QC Ultra Earbuds",
+    "brand": "Bose",
+    "category": "音频",
+    "price": 2399,
+    "year": 2023,
+    "icon": "mdi:headphones",
+    "keywords": [
+      "bose",
+      "qc"
+    ],
+    "icon_url": "/static/product_icons/headphones.svg"
+  },
+  {
+    "name": "森海塞尔 Momentum 4",
+    "brand": "森海塞尔",
+    "category": "其他",
+    "price": 2999,
+    "year": 2023,
+    "icon": "mdi:headphones",
+    "keywords": [
+      "sennheiser"
+    ],
+    "icon_url": "/static/product_icons/headphones.svg"
+  },
+  {
+    "name": "苹果 Vision Pro",
+    "brand": "苹果",
+    "category": "VR",
+    "price": 29999,
+    "year": 2024,
+    "icon": "mdi:virtual-reality",
+    "keywords": [
+      "vision",
+      "pro"
+    ],
+    "icon_url": "/static/product_icons/virtual-reality.svg"
+  },
+  {
+    "name": "Meta Quest 3 128G",
+    "brand": "Meta",
+    "category": "VR",
+    "price": 3499,
+    "year": 2023,
+    "icon": "mdi:virtual-reality",
+    "keywords": [
+      "quest3"
+    ],
+    "icon_url": "/static/product_icons/virtual-reality.svg"
+  },
+  {
+    "name": "Meta Quest 3 512G",
+    "brand": "Meta",
+    "category": "VR",
+    "price": 4499,
+    "year": 2023,
+    "icon": "mdi:virtual-reality",
+    "keywords": [
+      "quest3"
+    ],
+    "icon_url": "/static/product_icons/virtual-reality.svg"
+  },
+  {
+    "name": "极米 RS 10 Ultra",
+    "brand": "极米",
+    "category": "影音",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:projector",
+    "keywords": [
+      "极米"
+    ],
+    "icon_url": "/static/product_icons/projector.svg"
+  },
+  {
+    "name": "极米 H6 4K",
+    "brand": "极米",
+    "category": "影音",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:projector",
+    "keywords": [
+      "极米"
+    ],
+    "icon_url": "/static/product_icons/projector.svg"
+  },
+  {
+    "name": "当贝 X5 Ultra",
+    "brand": "当贝",
+    "category": "影音",
+    "price": 7999,
+    "year": 2024,
+    "icon": "mdi:projector",
+    "keywords": [
+      "当贝"
+    ],
+    "icon_url": "/static/product_icons/projector.svg"
+  },
+  {
+    "name": "当贝 D5X Pro",
+    "brand": "当贝",
+    "category": "影音",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:projector",
+    "keywords": [
+      "当贝"
+    ],
+    "icon_url": "/static/product_icons/projector.svg"
+  },
+  {
+    "name": "明基 W2710 投影仪",
+    "brand": "明基",
+    "category": "影音",
+    "price": 8499,
+    "year": 2024,
+    "icon": "mdi:projector",
+    "keywords": [
+      "benq"
+    ],
+    "icon_url": "/static/product_icons/projector.svg"
+  },
+  {
+    "name": "小米充电宝 20000mAh 50W",
+    "brand": "小米",
+    "category": "手机",
+    "price": 199,
+    "year": 2024,
+    "icon": "mdi:battery-charging-100",
+    "keywords": [
+      "小米充电宝"
+    ],
+    "icon_url": "/static/product_icons/battery-charging-100.svg"
+  },
+  {
+    "name": "倍思 能量堆 20000mAh",
+    "brand": "倍思",
+    "category": "其他",
+    "price": 129,
+    "year": 2024,
+    "icon": "mdi:battery-charging-100",
+    "keywords": [
+      "倍思充电宝"
+    ],
+    "icon_url": "/static/product_icons/battery-charging-100.svg"
+  },
+  {
+    "name": "Anker MagSafe 三合一充电站",
+    "brand": "Anker",
+    "category": "充电配件",
+    "price": 499,
+    "year": 2024,
+    "icon": "mdi:battery-charging-100",
+    "keywords": [
+      "anker"
+    ],
+    "icon_url": "/static/product_icons/battery-charging-100.svg"
+  },
+  {
+    "name": "倍思 100W 氮化镓充电器",
+    "brand": "倍思",
+    "category": "充电配件",
+    "price": 199,
+    "year": 2024,
+    "icon": "mdi:battery-charging-100",
+    "keywords": [
+      "倍思"
+    ],
+    "icon_url": "/static/product_icons/battery-charging-100.svg"
+  },
+  {
+    "name": "Anker 140W 氮化镓充电器",
+    "brand": "Anker",
+    "category": "充电配件",
+    "price": 399,
+    "year": 2024,
+    "icon": "mdi:battery-charging-100",
+    "keywords": [
+      "anker"
+    ],
+    "icon_url": "/static/product_icons/battery-charging-100.svg"
+  },
+  {
+    "name": "罗技 MX Keys 无线键盘",
+    "brand": "罗技",
+    "category": "外设",
+    "price": 899,
+    "year": 2024,
+    "icon": "mdi:keyboard",
+    "keywords": [
+      "logitech"
+    ],
+    "icon_url": "/static/product_icons/keyboard.svg"
+  },
+  {
+    "name": "罗技 MX Master 3S 鼠标",
+    "brand": "罗技",
+    "category": "外设",
+    "price": 699,
+    "year": 2024,
+    "icon": "mdi:mouse",
+    "keywords": [
+      "logitech"
+    ],
+    "icon_url": "/static/product_icons/mouse.svg"
+  },
+  {
+    "name": "雷蛇 黑寡妇蜘蛛 V4 Pro",
+    "brand": "雷蛇",
+    "category": "其他",
+    "price": 1499,
+    "year": 2024,
+    "icon": "mdi:keyboard",
+    "keywords": [
+      "razer"
+    ],
+    "icon_url": "/static/product_icons/keyboard.svg"
+  },
+  {
+    "name": "雷蛇 毒蝰 V3 Pro 鼠标",
+    "brand": "雷蛇",
+    "category": "外设",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:mouse",
+    "keywords": [
+      "razer"
+    ],
+    "icon_url": "/static/product_icons/mouse.svg"
+  },
+  {
+    "name": "三星 990 EVO Plus 2TB 固态",
+    "brand": "三星",
+    "category": "存储",
+    "price": 1299,
+    "year": 2024,
+    "icon": "mdi:harddisk",
+    "keywords": [
+      "三星固态"
+    ],
+    "icon_url": "/static/product_icons/harddisk.svg"
+  },
+  {
+    "name": "三星 990 Pro 2TB 固态",
+    "brand": "三星",
+    "category": "存储",
+    "price": 1899,
+    "year": 2023,
+    "icon": "mdi:harddisk",
+    "keywords": [
+      "三星固态"
+    ],
+    "icon_url": "/static/product_icons/harddisk.svg"
+  },
+  {
+    "name": "西数 SN850X 2TB 固态",
+    "brand": "西数",
+    "category": "存储",
+    "price": 1599,
+    "year": 2023,
+    "icon": "mdi:harddisk",
+    "keywords": [
+      "西数固态"
+    ],
+    "icon_url": "/static/product_icons/harddisk.svg"
+  },
+  {
+    "name": "希捷 酷鱼 2TB 机械硬盘",
+    "brand": "希捷",
+    "category": "存储",
+    "price": 429,
+    "year": 2024,
+    "icon": "mdi:harddisk",
+    "keywords": [
+      "希捷硬盘"
+    ],
+    "icon_url": "/static/product_icons/harddisk.svg"
+  },
+  {
+    "name": "闪迪 E61 2TB 移动固态",
+    "brand": "闪迪",
+    "category": "存储",
+    "price": 1199,
+    "year": 2024,
+    "icon": "mdi:harddisk",
+    "keywords": [
+      "闪迪移动"
+    ],
+    "icon_url": "/static/product_icons/harddisk.svg"
+  },
+  {
+    "name": "金士顿 KC3000 2TB 固态",
+    "brand": "金士顿",
+    "category": "存储",
+    "price": 1199,
+    "year": 2023,
+    "icon": "mdi:harddisk",
+    "keywords": [
+      "金士顿"
+    ],
+    "icon_url": "/static/product_icons/harddisk.svg"
+  },
+  {
+    "name": "宜家 马尔姆 双人床架 1.8m",
+    "brand": "宜家",
+    "category": "家具",
+    "price": 2999,
+    "year": 2024,
+    "icon": "mdi:bed",
+    "keywords": [
+      "宜家床"
+    ],
+    "icon_url": "/static/product_icons/bed.svg"
+  },
+  {
+    "name": "宜家 汉尼斯 双人床架 1.5m",
+    "brand": "宜家",
+    "category": "家具",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:bed",
+    "keywords": [
+      "宜家床"
+    ],
+    "icon_url": "/static/product_icons/bed.svg"
+  },
+  {
+    "name": "慕思 3D透气乳胶床垫 1.8m",
+    "brand": "慕思",
+    "category": "家具",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:bed",
+    "keywords": [
+      "慕思床垫"
+    ],
+    "icon_url": "/static/product_icons/bed.svg"
+  },
+  {
+    "name": "顾家家居 科技布沙发 三人位",
+    "brand": "顾家",
+    "category": "家具",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:seat",
+    "keywords": [
+      "顾家沙发"
+    ],
+    "icon_url": "/static/product_icons/seat.svg"
+  },
+  {
+    "name": "全友家居 布艺沙发 L型",
+    "brand": "全友",
+    "category": "家具",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:seat",
+    "keywords": [
+      "全友沙发"
+    ],
+    "icon_url": "/static/product_icons/seat.svg"
+  },
+  {
+    "name": "林氏木业 实木餐桌 1.4m",
+    "brand": "林氏",
+    "category": "家具",
+    "price": 1999,
+    "year": 2024,
+    "icon": "mdi:table",
+    "keywords": [
+      "林氏餐桌"
+    ],
+    "icon_url": "/static/product_icons/table.svg"
+  },
+  {
+    "name": "宜家 贝肯特 升降书桌 1.6m",
+    "brand": "宜家",
+    "category": "家具",
+    "price": 2299,
+    "year": 2024,
+    "icon": "mdi:desk",
+    "keywords": [
+      "宜家书桌"
+    ],
+    "icon_url": "/static/product_icons/desk.svg"
+  },
+  {
+    "name": "西昊 M18 人体工学椅",
+    "brand": "西昊",
+    "category": "家具",
+    "price": 1099,
+    "year": 2024,
+    "icon": "mdi:seat-outline",
+    "keywords": [
+      "西昊椅子"
+    ],
+    "icon_url": "/static/product_icons/seat-outline.svg"
+  },
+  {
+    "name": "网易严选 小蛮腰 人体工学椅",
+    "brand": "网易严选",
+    "category": "家具",
+    "price": 999,
+    "year": 2024,
+    "icon": "mdi:seat-outline",
+    "keywords": [
+      "网易椅子"
+    ],
+    "icon_url": "/static/product_icons/seat-outline.svg"
+  },
+  {
+    "name": "赫曼米勒 Aeron 人体工学椅",
+    "brand": "赫曼米勒",
+    "category": "家具",
+    "price": 14460,
+    "year": 2024,
+    "icon": "mdi:seat-outline",
+    "keywords": [
+      "herman",
+      "miller"
+    ],
+    "icon_url": "/static/product_icons/seat-outline.svg"
+  },
+  {
+    "name": "宜家 帕克思 衣柜 2mx60cm",
+    "brand": "宜家",
+    "category": "家具",
+    "price": 2499,
+    "year": 2024,
+    "icon": "mdi:wardrobe-outline",
+    "keywords": [
+      "宜家衣柜"
+    ],
+    "icon_url": "/static/product_icons/wardrobe-outline.svg"
+  },
+  {
+    "name": "顾家家居 衣柜 四开门",
+    "brand": "顾家",
+    "category": "家具",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:wardrobe-outline",
+    "keywords": [
+      "顾家衣柜"
+    ],
+    "icon_url": "/static/product_icons/wardrobe-outline.svg"
+  },
+  {
+    "name": "宜家 拉斯克 手推车",
+    "brand": "宜家",
+    "category": "家具",
+    "price": 249,
+    "year": 2024,
+    "icon": "mdi:trolley",
+    "keywords": [
+      "宜家推车"
+    ],
+    "icon_url": "/static/product_icons/trolley.svg"
+  },
+  {
+    "name": "宜家 卡莱克 搁架单元",
+    "brand": "宜家",
+    "category": "车辆",
+    "price": 799,
+    "year": 2025,
+    "icon": "mdi:bookshelf",
+    "keywords": [
+      "宜家架子"
+    ],
+    "icon_url": "/static/product_icons/bookshelf.svg"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPhone 17 Air",
+    "category": "手机",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": "手机, 苹果, iPhone 17 Air, Apple"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPhone 17 Pro",
+    "category": "手机",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": "手机, 苹果, iPhone 17 Pro, Apple"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPhone 17 Pro Max",
+    "category": "手机",
+    "price": 11999,
+    "year": 2025,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": "手机, 苹果, iPhone 17 Pro Max, Apple"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPhone 18 Pro",
+    "category": "手机",
+    "price": 10999,
+    "year": 2026,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": "手机, 苹果, iPhone 18 Pro, 预计"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPhone 18 Pro Max",
+    "category": "手机",
+    "price": 12999,
+    "year": 2026,
+    "icon": "mdi:cellphone-iphone",
+    "keywords": "手机, 苹果, iPhone 18 Pro Max, 预计"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 Pura 80 Pro",
+    "category": "手机",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 华为, Pura 80 Pro"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 Pura 80 Ultra",
+    "category": "手机",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 华为, Pura 80 Ultra"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 Mate 80 Pro",
+    "category": "手机",
+    "price": 8999,
+    "year": 2026,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 华为, Mate 80 Pro, 预计"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 Mate X8",
+    "category": "手机",
+    "price": 15999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 华为, 折叠屏, Mate X8"
+  },
+  {
+    "brand": "三星",
+    "name": "三星 Galaxy S26",
+    "category": "手机",
+    "price": 7999,
+    "year": 2026,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 三星, Galaxy S26, 预计"
+  },
+  {
+    "brand": "小米",
+    "name": "小米16",
+    "category": "手机",
+    "price": 4299,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 小米16, Xiaomi, 2025"
+  },
+  {
+    "brand": "小米",
+    "name": "小米16 Pro",
+    "category": "手机",
+    "price": 5299,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 小米16 Pro, Xiaomi"
+  },
+  {
+    "brand": "小米",
+    "name": "小米17 Pro",
+    "category": "手机",
+    "price": 5499,
+    "year": 2026,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 小米17 Pro, 预计"
+  },
+  {
+    "brand": "OPPO",
+    "name": "OPPO Find X8 Ultra",
+    "category": "手机",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, OPPO, Find X8 Ultra"
+  },
+  {
+    "brand": "OPPO",
+    "name": "OPPO Find N6",
+    "category": "手机",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, OPPO, 折叠屏, Find N6"
+  },
+  {
+    "brand": "荣耀",
+    "name": "荣耀 Magic V4",
+    "category": "手机",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:cellphone",
+    "keywords": "手机, 荣耀, 折叠屏, Magic V4"
+  },
+  {
+    "brand": "苹果",
+    "name": "MacBook Pro 16 M5",
+    "category": "电脑",
+    "price": 19999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 苹果, MacBook Pro, M5"
+  },
+  {
+    "brand": "苹果",
+    "name": "MacBook Air M5",
+    "category": "电脑",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 苹果, MacBook Air, M5"
+  },
+  {
+    "brand": "苹果",
+    "name": "MacBook Pro 14 M6",
+    "category": "电脑",
+    "price": 16999,
+    "year": 2026,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 苹果, MacBook Pro, M6, 预计"
+  },
+  {
+    "brand": "联想",
+    "name": "联想 ThinkPad X1 Carbon Gen 13",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 联想, ThinkPad, X1 Carbon"
+  },
+  {
+    "brand": "联想",
+    "name": "联想 小新Pro 16 2025",
+    "category": "电脑",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 联想, 小新Pro"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 MateBook X Pro 2025",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 华为, MateBook X Pro"
+  },
+  {
+    "brand": "戴尔",
+    "name": "戴尔 XPS 16 2025",
+    "category": "电脑",
+    "price": 14999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 戴尔, XPS 16"
+  },
+  {
+    "brand": "戴尔",
+    "name": "戴尔 XPS 14 2025",
+    "category": "电脑",
+    "price": 11999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 戴尔, XPS 14"
+  },
+  {
+    "brand": "惠普",
+    "name": "惠普 星Book Pro 14 2025",
+    "category": "电脑",
+    "price": 5499,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 惠普, 星Book Pro"
+  },
+  {
+    "brand": "华硕",
+    "name": "华硕 ROG 幻16 Air 2025",
+    "category": "电脑",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 华硕, ROG, 幻16"
+  },
+  {
+    "brand": "华硕",
+    "name": "华硕 天选5 Pro",
+    "category": "电脑",
+    "price": 8499,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 华硕, 天选5"
+  },
+  {
+    "brand": "微软",
+    "name": "Surface Laptop 7",
+    "category": "电脑",
+    "price": 8888,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 微软, Surface Laptop"
+  },
+  {
+    "brand": "微软",
+    "name": "Surface Pro 11",
+    "category": "电脑",
+    "price": 9999,
+    "year": 2025,
+    "icon": "mdi:laptop",
+    "keywords": "电脑, 微软, Surface Pro 11"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPad Pro M5 11英寸",
+    "category": "平板",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": "平板, 苹果, iPad Pro, M5"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPad Pro M5 13英寸",
+    "category": "平板",
+    "price": 11499,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": "平板, 苹果, iPad Pro, M5, 13英寸"
+  },
+  {
+    "brand": "苹果",
+    "name": "iPad Air M4",
+    "category": "平板",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": "平板, 苹果, iPad Air, M4"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 MatePad Pro 13.2 2025",
+    "category": "平板",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": "平板, 华为, MatePad Pro"
+  },
+  {
+    "brand": "小米",
+    "name": "小米平板7 Pro",
+    "category": "平板",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:tablet",
+    "keywords": "平板, 小米, 平板7 Pro"
+  },
+  {
+    "brand": "苹果",
+    "name": "Apple Watch Ultra 3",
+    "category": "手表",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 苹果, Watch Ultra 3"
+  },
+  {
+    "brand": "苹果",
+    "name": "Apple Watch Series 11",
+    "category": "手表",
+    "price": 3199,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 苹果, Watch Series 11"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 Watch GT 5 Pro",
+    "category": "手表",
+    "price": 2499,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 华为, Watch GT 5 Pro"
+  },
+  {
+    "brand": "华为",
+    "name": "华为 Watch D3",
+    "category": "手表",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 华为, Watch D3, 血压"
+  },
+  {
+    "brand": "三星",
+    "name": "三星 Galaxy Watch 8",
+    "category": "手表",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 三星, Galaxy Watch 8"
+  },
+  {
+    "brand": "三星",
+    "name": "三星 Galaxy Watch 8 Ultra",
+    "category": "手表",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 三星, Galaxy Watch 8 Ultra"
+  },
+  {
+    "brand": "小米",
+    "name": "小米 Watch S4",
+    "category": "手表",
+    "price": 1299,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 小米, Watch S4"
+  },
+  {
+    "brand": "佳明",
+    "name": "佳明 Fenix 8",
+    "category": "手表",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": "手表, 佳明, Fenix 8"
+  },
+  {
+    "brand": "小米",
+    "name": "小米SU7 Ultra",
+    "category": "车辆",
+    "price": 529900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 小米SU7 Ultra, 电动汽车"
+  },
+  {
+    "brand": "比亚迪",
+    "name": "比亚迪 唐L",
+    "category": "车辆",
+    "price": 259800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 比亚迪, 唐L, SUV"
+  },
+  {
+    "brand": "比亚迪",
+    "name": "比亚迪 汉L",
+    "category": "车辆",
+    "price": 229800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 比亚迪, 汉L, 轿车"
+  },
+  {
+    "brand": "比亚迪",
+    "name": "比亚迪 海狮07",
+    "category": "车辆",
+    "price": 189800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 比亚迪, 海狮07, SUV"
+  },
+  {
+    "brand": "特斯拉",
+    "name": "特斯拉 焕新版Model Y",
+    "category": "车辆",
+    "price": 269900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 特斯拉, Model Y, 焕新"
+  },
+  {
+    "brand": "特斯拉",
+    "name": "特斯拉 Model Q",
+    "category": "车辆",
+    "price": 189900,
+    "year": 2026,
+    "icon": "mdi:car",
+    "keywords": "车辆, 特斯拉, Model Q, 预计"
+  },
+  {
+    "brand": "理想",
+    "name": "理想 L6",
+    "category": "车辆",
+    "price": 249800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 理想, L6"
+  },
+  {
+    "brand": "蔚来",
+    "name": "蔚来 ET9",
+    "category": "车辆",
+    "price": 788000,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 蔚来, ET9, 旗舰"
+  },
+  {
+    "brand": "问界",
+    "name": "问界M9 2025款",
+    "category": "车辆",
+    "price": 569800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 问界, M9, 2025"
+  },
+  {
+    "brand": "小鹏",
+    "name": "小鹏 G7",
+    "category": "车辆",
+    "price": 229800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 小鹏, G7, SUV"
+  },
+  {
+    "brand": "极氪",
+    "name": "极氪 007 GT",
+    "category": "车辆",
+    "price": 229900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 极氪, 007 GT, 猎装"
+  },
+  {
+    "brand": "奔驰",
+    "name": "奔驰 E级 2025款",
+    "category": "车辆",
+    "price": 449800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奔驰, E级, 2025"
+  },
+  {
+    "brand": "宝马",
+    "name": "宝马 5系 2025款",
+    "category": "车辆",
+    "price": 459900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 宝马, 5系, 2025"
+  },
+  {
+    "brand": "奥迪",
+    "name": "奥迪 A6L 2025款",
+    "category": "车辆",
+    "price": 429800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奥迪, A6L, 2025"
+  },
+  {
+    "brand": "丰田",
+    "name": "丰田 凯美瑞 2025款",
+    "category": "车辆",
+    "price": 179800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 丰田, 凯美瑞"
+  },
+  {
+    "brand": "本田",
+    "name": "本田 雅阁 2025款",
+    "category": "车辆",
+    "price": 179800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 本田, 雅阁"
+  },
+  {
+    "brand": "美的",
+    "name": "美的 鲜净感 空调 3匹 新一级",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": "家电, 空调, 美的, 3匹"
+  },
+  {
+    "brand": "格力",
+    "name": "格力 云锦III 空调 1.5匹",
+    "category": "家电",
+    "price": 3899,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": "家电, 空调, 格力, 云锦"
+  },
+  {
+    "brand": "海尔",
+    "name": "海尔 全空间保鲜 冰箱 500L",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": "家电, 冰箱, 海尔, 500L"
+  },
+  {
+    "brand": "海尔",
+    "name": "海尔 精华洗 洗衣机 10kg",
+    "category": "家电",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:washing-machine",
+    "keywords": "家电, 洗衣机, 海尔"
+  },
+  {
+    "brand": "海信",
+    "name": "海信 U8N Pro 电视 75寸",
+    "category": "家电",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": "家电, 电视, 海信, U8N Pro"
+  },
+  {
+    "brand": "TCL",
+    "name": "TCL Q10K Pro 电视 85寸",
+    "category": "家电",
+    "price": 16999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": "家电, 电视, TCL, Q10K Pro"
+  },
+  {
+    "brand": "索尼",
+    "name": "索尼 XR-75X95L 电视 75寸",
+    "category": "家电",
+    "price": 19999,
+    "year": 2025,
+    "icon": "mdi:television",
+    "keywords": "家电, 电视, 索尼, X95L"
+  },
+  {
+    "brand": "小米",
+    "name": "小米 巨省电Pro 空调 1.5匹",
+    "category": "家电",
+    "price": 2499,
+    "year": 2025,
+    "icon": "mdi:air-conditioner",
+    "keywords": "家电, 空调, 小米, 巨省电"
+  },
+  {
+    "brand": "戴森",
+    "name": "戴森 V15 Detect Pro 吸尘器",
+    "category": "家电",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:vacuum-outline",
+    "keywords": "家电, 吸尘器, 戴森, V15"
+  },
+  {
+    "brand": "石头",
+    "name": "石头 G30 扫拖机器人",
+    "category": "家电",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": "家电, 扫拖, 石头, G30"
+  },
+  {
+    "brand": "追觅",
+    "name": "追觅 X50 Pro 扫拖机器人",
+    "category": "家电",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:robot-vacuum",
+    "keywords": "家电, 扫拖, 追觅, X50 Pro"
+  },
+  {
+    "brand": "松下",
+    "name": "松下 NR-EW57TG1-S 冰箱 570L",
+    "category": "家电",
+    "price": 12999,
+    "year": 2025,
+    "icon": "mdi:fridge",
+    "keywords": "家电, 冰箱, 松下, 570L"
+  },
+  {
+    "brand": "美的",
+    "name": "美的 火山一体 洗碗机 16套",
+    "category": "家电",
+    "price": 4499,
+    "year": 2025,
+    "icon": "mdi:dishwasher",
+    "keywords": "家电, 洗碗机, 美的"
+  },
+  {
+    "brand": "海尔",
+    "name": "海尔 水晶 洗碗机 15套",
+    "category": "家电",
+    "price": 4499,
+    "year": 2025,
+    "icon": "mdi:dishwasher",
+    "keywords": "家电, 洗碗机, 海尔"
+  },
+  {
+    "brand": "佳能",
+    "name": "佳能 EOS R1",
+    "category": "摄影",
+    "price": 42999,
+    "year": 2025,
+    "icon": "mdi:camera",
+    "keywords": "摄影, 相机, 佳能, EOS R1, 旗舰"
+  },
+  {
+    "brand": "索尼",
+    "name": "索尼 A1 II",
+    "category": "摄影",
+    "price": 47999,
+    "year": 2025,
+    "icon": "mdi:camera",
+    "keywords": "摄影, 相机, 索尼, A1 II, 全画幅"
+  },
+  {
+    "brand": "索尼",
+    "name": "索尼 A7 V",
+    "category": "摄影",
+    "price": 18999,
+    "year": 2025,
+    "icon": "mdi:camera",
+    "keywords": "摄影, 相机, 索尼, A7 V"
+  },
+  {
+    "brand": "尼康",
+    "name": "尼康 Z5 II",
+    "category": "摄影",
+    "price": 10999,
+    "year": 2025,
+    "icon": "mdi:camera",
+    "keywords": "摄影, 相机, 尼康, Z5 II"
+  },
+  {
+    "brand": "富士",
+    "name": "富士 X-T6",
+    "category": "摄影",
+    "price": 10999,
+    "year": 2025,
+    "icon": "mdi:camera",
+    "keywords": "摄影, 相机, 富士, X-T6"
+  },
+  {
+    "brand": "大疆",
+    "name": "大疆 DJI AIR 4",
+    "category": "摄影",
+    "price": 8999,
+    "year": 2025,
+    "icon": "mdi:quadcopter",
+    "keywords": "摄影, 无人机, 大疆, AIR 4"
+  },
+  {
+    "brand": "大疆",
+    "name": "大疆 DJI Mini 5 Pro",
+    "category": "摄影",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:quadcopter",
+    "keywords": "摄影, 无人机, 大疆, Mini 5 Pro"
+  },
+  {
+    "brand": "大疆",
+    "name": "大疆 Osmo Action 6",
+    "category": "摄影",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:camcorder",
+    "keywords": "摄影, 运动相机, 大疆, Action 6"
+  },
+  {
+    "brand": "苹果",
+    "name": "AirPods Pro 3",
+    "category": "音频",
+    "price": 1999,
+    "year": 2025,
+    "icon": "mdi:headphones",
+    "keywords": "音频, 耳机, 苹果, AirPods Pro"
+  },
+  {
+    "brand": "苹果",
+    "name": "AirPods Max 2",
+    "category": "音频",
+    "price": 4499,
+    "year": 2025,
+    "icon": "mdi:headphones",
+    "keywords": "音频, 苹果, AirPods Max"
+  },
+  {
+    "brand": "索尼",
+    "name": "索尼 WF-1000XM6",
+    "category": "音频",
+    "price": 2299,
+    "year": 2025,
+    "icon": "mdi:headphones",
+    "keywords": "音频, 耳机, 索尼, WF-1000XM6"
+  },
+  {
+    "brand": "Bose",
+    "name": "Bose QC Ultra 2025",
+    "category": "音频",
+    "price": 3299,
+    "year": 2025,
+    "icon": "mdi:headphones",
+    "keywords": "音频, 耳机, Bose, QC Ultra"
+  },
+  {
+    "brand": "小米",
+    "name": "小米路由器 BE10000",
+    "category": "网络设备",
+    "price": 1499,
+    "year": 2025,
+    "icon": "mdi:router-wireless",
+    "keywords": "路由器, 小米, BE10000, WiFi7"
+  },
+  {
+    "brand": "TP-Link",
+    "name": "TP-Link BE19000 三频",
+    "category": "网络设备",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:router-wireless",
+    "keywords": "路由器, TP-Link, BE19000"
+  },
+  {
+    "brand": "华硕",
+    "name": "华硕 RT-BE88U",
+    "category": "网络设备",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:router-wireless",
+    "keywords": "路由器, 华硕, BE88U"
+  },
+  {
+    "brand": "群晖",
+    "name": "群晖 DS1525+",
+    "category": "网络设备",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:nas",
+    "keywords": "NAS, 群晖, DS1525+"
+  },
+  {
+    "brand": "群晖",
+    "name": "群晖 DS925+",
+    "category": "网络设备",
+    "price": 2999,
+    "year": 2025,
+    "icon": "mdi:nas",
+    "keywords": "NAS, 群晖, DS925+"
+  },
+  {
+    "brand": "苹果",
+    "name": "Apple Vision Pro 2",
+    "category": "VR",
+    "price": 29999,
+    "year": 2025,
+    "icon": "mdi:virtual-reality",
+    "keywords": "VR, 苹果, Vision Pro 2"
+  },
+  {
+    "brand": "Meta",
+    "name": "Meta Quest 4",
+    "category": "VR",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:virtual-reality",
+    "keywords": "VR, Meta, Quest 4"
+  },
+  {
+    "brand": "索尼",
+    "name": "索尼 PSVR3",
+    "category": "VR",
+    "price": 3999,
+    "year": 2026,
+    "icon": "mdi:virtual-reality",
+    "keywords": "VR, 索尼, PSVR3, 预计"
+  },
+  {
+    "brand": "任天堂",
+    "name": "Nintendo Switch 2 OLED",
+    "category": "游戏",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:gamepad",
+    "keywords": "游戏, 任天堂, Switch 2"
+  },
+  {
+    "brand": "索尼",
+    "name": "PS6",
+    "category": "游戏",
+    "price": 4999,
+    "year": 2026,
+    "icon": "mdi:gamepad",
+    "keywords": "游戏, 索尼, PS6, 预计"
+  },
+  {
+    "brand": "微软",
+    "name": "Xbox Next",
+    "category": "游戏",
+    "price": 4999,
+    "year": 2026,
+    "icon": "mdi:gamepad",
+    "keywords": "游戏, 微软, Xbox Next, 预计"
+  },
+  {
+    "brand": "小米",
+    "name": "小米充电宝 Pro 25000mAh",
+    "category": "充电配件",
+    "price": 299,
+    "year": 2025,
+    "icon": "mdi:battery-charging-100",
+    "keywords": "充电配件, 小米, 充电宝"
+  },
+  {
+    "brand": "Anker",
+    "name": "Anker Prime 200W 充电站",
+    "category": "充电配件",
+    "price": 999,
+    "year": 2025,
+    "icon": "mdi:battery-charging-100",
+    "keywords": "充电配件, Anker, 充电站"
+  },
+  {
+    "brand": "罗技",
+    "name": "罗技 G Pro X Superlight 3",
+    "category": "外设",
+    "price": 1499,
+    "year": 2025,
+    "icon": "mdi:mouse",
+    "keywords": "外设, 鼠标, 罗技, Superlight"
+  },
+  {
+    "brand": "罗技",
+    "name": "罗技 G915 X 无线键盘",
+    "category": "外设",
+    "price": 1999,
+    "year": 2025,
+    "icon": "mdi:keyboard",
+    "keywords": "外设, 键盘, 罗技, G915"
+  },
+  {
+    "brand": "雷蛇",
+    "name": "雷蛇 蝰蛇V4 Pro",
+    "category": "外设",
+    "price": 1799,
+    "year": 2025,
+    "icon": "mdi:mouse",
+    "keywords": "外设, 鼠标, 雷蛇"
+  },
+  {
+    "brand": "三星",
+    "name": "三星 Odyssey OLED G8 34寸",
+    "category": "外设",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:monitor",
+    "keywords": "外设, 显示器, 三星, Odyssey, OLED"
+  },
+  {
+    "brand": "三星",
+    "name": "三星 9100 Pro 2TB",
+    "category": "存储",
+    "price": 1999,
+    "year": 2025,
+    "icon": "mdi:harddisk",
+    "keywords": "存储, 固态, 三星, 9100 Pro"
+  },
+  {
+    "brand": "西数",
+    "name": "西数 SN1100 2TB",
+    "category": "存储",
+    "price": 1699,
+    "year": 2025,
+    "icon": "mdi:harddisk",
+    "keywords": "存储, 固态, 西数, SN1100"
+  },
+  {
+    "brand": "极米",
+    "name": "极米 RS 12 Ultra",
+    "category": "影音",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:projector",
+    "keywords": "影音, 投影, 极米, RS 12"
+  },
+  {
+    "brand": "当贝",
+    "name": "当贝 X6 Ultra",
+    "category": "影音",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:projector",
+    "keywords": "影音, 投影, 当贝, X6"
+  }
+]

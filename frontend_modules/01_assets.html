@@ -1,0 +1,276 @@
+<script>
+/**
+ * ChiWu Assets Module
+ * Provides asset list rendering, search, filter, swipe-to-delete,
+ * and detail navigation for the assets tab.
+ */
+function setupAssetsModule() {
+  const { ref, reactive, computed, watch, onMounted, nextTick } = Vue;
+  const api = window.__chiwu_api;
+
+  // ===== Module State =====
+  const filterStatus = ref('all');
+  const statusOptions = [
+    { value: 'all',      label: '全部' },
+    { value: 'active',   label: '在用' },
+    { value: 'sold',     label: '已出售' },
+    { value: 'discarded',label: '报废' },
+    { value: 'lost',     label: '丢失' },
+  ];
+
+  /* Map status values to CSS class suffixes and labels */
+  const statusMap = {
+    'active':    { cls: 'status-active',    label: '在用' },
+    'sold':      { cls: 'status-sold',      label: '已出售' },
+    'discarded': { cls: 'status-discarded',  label: '报废' },
+    'lost':      { cls: 'status-lost',      label: '丢失' },
+  };
+
+  let assets = ref([]);
+  let isLoading = ref(false);
+  let loadedOnce = ref(false);        // guards first-request fire
+  let loadedAt = ref(null);           // timestamp of last full load (ms)
+
+  // ===== Category helper =====
+  function categoryById(id) {
+    return (api.categories.value || []).find(c => c.id === id);
+  }
+  function categoryIcon(id) {
+    const c = categoryById(id);
+    return c ? (c.icon || '📦') : '📦';
+  }
+  function categoryName(id) {
+    const c = categoryById(id);
+    return c ? c.name : '未分类';
+  }
+
+  // ===== Fetch assets =====
+  async function fetchAssets(search) {
+    isLoading.value = true;
+    try {
+      let url = '/assets';
+      const params = [];
+      if (search && search.trim()) params.push('search=' + encodeURIComponent(search.trim()));
+      if (filterStatus.value !== 'all') params.push('status=' + filterStatus.value);
+      if (params.length) url += '?' + params.join('&');
+      const data = await api.api(url);
+      assets.value = Array.isArray(data) ? data : (data.assets || data.data || []);
+      loadedAt.value = Date.now();
+    } catch (e) {
+      console.error('Failed to load assets:', e);
+      assets.value = [];
+    } finally {
+      isLoading.value = false;
+    }
+  }
+
+  // ===== Render list =====
+  function render() {
+    const container = document.getElementById('assets-list-placeholder');
+    if (!container) return;
+    const list = assets.value;
+
+    if (isLoading.value && list.length === 0) {
+      container.innerHTML = '<div class="loading">加载中…</div>';
+      return;
+    }
+
+    if (!list.length) {
+      container.innerHTML = '<div class="empty-state"><div class="empty-icon">📦</div><p>还没有资产</p><p style="font-size:13px;margin-top:4px">点击右上角 + 添加</p></div>';
+      return;
+    }
+
+    let html = '';
+    list.forEach((asset, index) => {
+      const st = statusMap[asset.status] || statusMap['active'];
+      const dailyCost = asset.daily_cost != null ? asset.daily_cost : 0;
+      const priceText = asset.purchase_price != null ? '¥' + Number(asset.purchase_price).toFixed(2) : '';
+      const icon = categoryIcon(asset.category_id);
+      const cname = categoryName(asset.category_id);
+
+      html += `
+        <div class="swipe-wrap" data-index="${index}" data-id="${asset.id}">
+          <div class="card swipe-content" data-id="${asset.id}">
+            <div style="display:flex;align-items:center;gap:12px">
+              <span style="font-size:32px">${icon}</span>
+              <div style="flex:1;min-width:0">
+                <div style="font-size:16px;font-weight:600;margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${escapeHtml(asset.name)}</div>
+                <div style="font-size:13px;color:var(--text-secondary)">${escapeHtml(cname)}</div>
+              </div>
+              <div style="text-align:right">
+                <div class="price">${priceText}</div>
+                ${ dailyCost > 0 ? `<div style="font-size:11px;color:var(--text-secondary);margin-top:2px">¥${dailyCost.toFixed(2)}/天</div>` : '' }
+              </div>
+            </div>
+            <div style="margin-top:8px;display:flex;gap:6px;align-items:center">
+              <span class="status-tag ${st.cls}">${st.label}</span>
+              ${ asset.purchase_date ? `<span style="font-size:11px;color:var(--text-secondary)">${asset.purchase_date}</span>` : '' }
+            </div>
+          </div>
+          <div class="swipe-actions">
+            <button class="swipe-btn swipe-btn-danger" data-id="${asset.id}">删除</button>
+          </div>
+        </div>
+      `;
+    });
+    container.innerHTML = html;
+
+    // -- Card tap → show detail --
+    container.querySelectorAll('.swipe-content').forEach(el => {
+      el.addEventListener('click', function(e) {
+        if (this.closest('.swipe-wrap')?.classList.contains('show-delete')) return; // ignore when swipe-open
+        const id = Number(this.dataset.id);
+        const asset = list.find(a => a.id === id);
+        if (asset) {
+          api.detailAsset.value = asset;
+          api.showDetail.value = true;
+        }
+      });
+    });
+
+    // -- Swipe-to-delete: touch handlers --
+    let touchState = null;
+    function onTouchStart(e) {
+      const wrap = e.currentTarget;
+      const touch = e.changedTouches[0];
+      touchState = { wrap, startX: touch.clientX, startY: touch.clientY, moved: false };
+      wrap.classList.remove('show-delete');
+    }
+    function onTouchMove(e) {
+      if (!touchState) return;
+      const touch = e.changedTouches[0];
+      const dx = touch.clientX - touchState.startX;
+      const dy = touch.clientY - touchState.startY;
+      if (Math.abs(dx) < 8 && Math.abs(dy) < 8) return;
+      touchState.moved = true;
+      if (Math.abs(dx) > Math.abs(dy) && dx < -40) {
+        touchState.wrap.classList.add('show-delete');
+      } else if (dx > 40) {
+        touchState.wrap.classList.remove('show-delete');
+      }
+    }
+    function onTouchEnd() {
+      touchState = null;
+    }
+
+    container.querySelectorAll('.swipe-wrap').forEach(wrap => {
+      wrap.addEventListener('touchstart', onTouchStart, { passive: true });
+      wrap.addEventListener('touchmove', onTouchMove, { passive: true });
+      wrap.addEventListener('touchend', onTouchEnd, { passive: true });
+    });
+
+    // -- Delete button click --
+    container.querySelectorAll('.swipe-btn-danger').forEach(btn => {
+      btn.addEventListener('click', async function() {
+        const id = Number(this.dataset.id);
+        if (!confirm('确定要删除此资产吗？')) return;
+        try {
+          await api.api('/assets/' + id, { method: 'DELETE' });
+        } catch (e) {
+          console.error('Delete failed:', e);
+        }
+        // close swipe & re-fetch
+        this.closest('.swipe-wrap')?.classList.remove('show-delete');
+        await fetchAssets(api.searchQuery.value || '');
+        render();
+      });
+    });
+  }
+
+  // ===== Escape HTML helper =====
+  function escapeHtml(str) {
+    if (str == null) return '';
+    const div = document.createElement('div');
+    div.appendChild(document.createTextNode(String(str)));
+    return div.innerHTML;
+  }
+
+  // ===== Watch: search query → fetch + render =====
+  let searchTimer = null;
+  watch(() => api.searchQuery.value, (val) => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(() => {
+      fetchAssets(val);
+      nextTick(render);
+    }, 300);
+  });
+
+  // ===== Watch: status filter → fetch + render =====
+  watch(filterStatus, () => {
+    fetchAssets(api.searchQuery.value || '');
+    nextTick(render);
+  });
+
+  // ===== Watch: activeTab → load on first visit & refresh =====
+  watch(() => api.activeTab.value, async (tab) => {
+    if (tab !== 'assets') return;
+    const now = Date.now();
+    const stale = loadedAt.value ? (now - loadedAt.value > 60000) : true; // stale after 60 s
+
+    if (!loadedOnce.value || stale) {
+      loadedOnce.value = true;
+      await fetchAssets(api.searchQuery.value || '');
+      render();
+    }
+    // Re-render if data already loaded (e.g. user navigated away and back quickly)
+    if (loadedOnce.value && !stale) {
+      nextTick(render);
+    }
+  });
+
+  // ===== Initial load =====
+  if (api.activeTab.value === 'assets') {
+    loadedOnce.value = true;
+    fetchAssets(api.searchQuery.value || '').then(render);
+  }
+
+  // ===== Expose status filter to the template =====
+  // Insert the status filter buttons into the page, right after search bar
+  function injectFilterBar() {
+    const searchBar = document.querySelector('.search-bar');
+    if (!searchBar) return;
+    // Remove existing injected filter if any
+    const existing = document.getElementById('assets-status-filter');
+    if (existing) existing.remove();
+
+    const bar = document.createElement('div');
+    bar.id = 'assets-status-filter';
+    bar.style.cssText = 'display:flex;gap:6px;margin:0 16px 12px;overflow-x:auto;padding-bottom:4px';
+    bar.innerHTML = statusOptions.map(opt =>
+      `<button class="status-filter-btn" data-value="${opt.value}" style="flex-shrink:0;padding:6px 14px;border:1px solid var(--border);border-radius:16px;font-size:13px;cursor:pointer;background:${filterStatus.value === opt.value ? 'var(--primary)' : 'var(--card-bg)'};color:${filterStatus.value === opt.value ? '#fff' : 'var(--text)'}">${opt.label}</button>`
+    ).join('');
+    searchBar.parentNode.insertBefore(bar, searchBar.nextSibling);
+
+    bar.querySelectorAll('.status-filter-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        filterStatus.value = this.dataset.value;
+        // update visual
+        bar.querySelectorAll('.status-filter-btn').forEach(b => {
+          b.style.background = b.dataset.value === filterStatus.value ? 'var(--primary)' : 'var(--card-bg)';
+          b.style.color = b.dataset.value === filterStatus.value ? '#fff' : 'var(--text)';
+        });
+      });
+    });
+  }
+
+  // Inject filter after DOM ready and after every tab switch back
+  watch(() => api.activeTab.value, (tab) => {
+    if (tab === 'assets') {
+      nextTick(() => {
+        injectFilterBar();
+        render();
+      });
+    }
+  });
+  if (api.activeTab.value === 'assets') {
+    nextTick(injectFilterBar);
+  }
+}
+
+// ===== Bootstrap =====
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', setupAssetsModule);
+} else {
+  setupAssetsModule();
+}
+</script>

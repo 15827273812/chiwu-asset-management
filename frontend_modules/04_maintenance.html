@@ -1,0 +1,384 @@
+<!-- 04_maintenance.html - ChiWu 维护记录管理模块 -->
+<!-- 维护记录管理：查看已有记录 + 新建维护记录 -->
+<script>
+/**
+ * setupMaintenanceModule(app, api)
+ * 注册维护记录相关的渲染逻辑，监听 detailAsset 变化并渲染到 #detail-placeholder
+ */
+function setupMaintenanceModule(app, api) {
+  if (window.__chiwu_maintenance_ready) return;
+  window.__chiwu_maintenance_ready = true;
+
+  const { ref, watch, nextTick } = Vue;
+
+  // ===== Reactive State =====
+  const maintenances = ref([]);
+  const showMaintenanceForm = ref(false);
+  const loadingMaintenance = ref(false);
+
+  // ===== Maintenance CRUD =====
+
+  /** 加载指定资产的所有维护记录 */
+  async function loadMaintenances(assetId) {
+    if (!assetId) { maintenances.value = []; return; }
+    loadingMaintenance.value = true;
+    try {
+      maintenances.value = await api.api('/maintenances/' + assetId);
+    } catch (e) {
+      console.error('加载维护记录失败', e);
+      maintenances.value = [];
+    } finally {
+      loadingMaintenance.value = false;
+    }
+  }
+
+  /** 获取今日日期（YYYY-MM-DD） */
+  function todayStr() {
+    const d = new Date();
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return y + '-' + m + '-' + day;
+  }
+
+  /** 创建维护记录 */
+  async function createMaintenance(data) {
+    try {
+      await api.api('/maintenances', {
+        method: 'POST',
+        body: JSON.stringify({
+          asset_id: api.detailAsset?.value?.id,
+          date: data.date,
+          title: data.title,
+          amount: data.amount || null,
+          note: data.note || ''
+        })
+      });
+      showMaintenanceForm.value = false;
+      // 刷新列表
+      const assetId = api.detailAsset?.value?.id;
+      if (assetId) await loadMaintenances(assetId);
+    } catch (e) {
+      console.error('创建维护记录失败', e);
+      alert('创建维护记录失败：' + (e.message || '未知错误'));
+    }
+  }
+
+  /** 删除维护记录 */
+  async function deleteMaintenance(mId) {
+    if (!confirm('确定删除这条维护记录？')) return;
+    try {
+      await api.api('/maintenances/' + mId, { method: 'DELETE' });
+      const assetId = api.detailAsset?.value?.id;
+      if (assetId) await loadMaintenances(assetId);
+    } catch (e) {
+      console.error('删除维护记录失败', e);
+      alert('删除失败：' + (e.message || '未知错误'));
+    }
+  }
+
+  // ===== Render =====
+
+  function renderMaintenanceSection() {
+    const placeholder = document.getElementById('detail-placeholder');
+    if (!placeholder) return;
+
+    const asset = api.detailAsset?.value;
+    if (!asset) return;
+
+    // 构建 HTML
+    let html = '';
+
+    // 维护记录列表
+    html += '<div class="detail-section" id="maintenance-section">';
+    html += '  <div class="detail-section-header">';
+    html += '    <h3>维护记录</h3>';
+    html += '    <button class="btn-add-maintenance" id="btn-add-maintenance" onclick="window.__chiwu_addMaintenance()">+ 添加</button>';
+    html += '  </div>';
+
+    if (loadingMaintenance.value) {
+      html += '  <div class="loading">加载中...</div>';
+    } else if (maintenances.value.length === 0) {
+      html += '  <div class="empty-state" style="padding: 24px 16px;">';
+      html += '    <p>暂无维护记录</p>';
+      html += '  </div>';
+    } else {
+      html += '  <div id="maintenance-list">';
+      for (const m of maintenances.value) {
+        const amountHtml = m.amount != null ? ('<span class="price">' + m.amount + '</span>') : '';
+        html += '    <div class="maintenance-item" data-id="' + m.id + '">';
+        html += '      <div class="maintenance-item-top">';
+        html += '        <span class="maintenance-title">' + escapeHtml(m.title || '') + '</span>';
+        html += '        <button class="btn-delete-maintenance" onclick="window.__chiwu_deleteMaintenance(' + m.id + ')" title="删除">🗑</button>';
+        html += '      </div>';
+        html += '      <div class="maintenance-meta">';
+        html += '        <span class="maintenance-date">📅 ' + (m.date || '') + '</span>';
+        if (amountHtml) html += '        <span class="maintenance-amount">' + amountHtml + '</span>';
+        html += '      </div>';
+        if (m.note) {
+          html += '      <div class="maintenance-note">' + escapeHtml(m.note) + '</div>';
+        }
+        html += '    </div>';
+      }
+      html += '  </div>';
+    }
+    html += '</div>';
+
+    // 维护记录表单（Bottom Sheet）
+    html += '<template v-if="showMaintenanceForm">';
+    html += '  <div class="sheet-overlay" onclick="window.__chiwu_closeMaintenanceForm()"></div>';
+    html += '  <div class="sheet" id="maintenance-form-sheet">';
+    html += '    <div class="sheet-handle"></div>';
+    html += '    <h2>添加维护记录</h2>';
+    html += '    <div class="form-group">';
+    html += '      <label>标题 *</label>';
+    html += '      <input type="text" id="maint-title" placeholder="如：更换电池" required>';
+    html += '    </div>';
+    html += '    <div class="form-group">';
+    html += '      <label>日期 *</label>';
+    html += '      <input type="date" id="maint-date" value="' + todayStr() + '" required>';
+    html += '    </div>';
+    html += '    <div class="form-group">';
+    html += '      <label>金额</label>';
+    html += '      <input type="number" id="maint-amount" placeholder="可选" step="0.01" min="0">';
+    html += '    </div>';
+    html += '    <div class="form-group">';
+    html += '      <label>备注</label>';
+    html += '      <textarea id="maint-note" rows="3" placeholder="可选"></textarea>';
+    html += '    </div>';
+    html += '    <div style="display:flex;gap:8px;margin-top:16px;">';
+    html += '      <button class="btn-cancel" onclick="window.__chiwu_closeMaintenanceForm()" style="flex:1">取消</button>';
+    html += '      <button class="btn-submit" onclick="window.__chiwu_submitMaintenance()" style="flex:1">提交</button>';
+    html += '    </div>';
+    html += '  </div>';
+    html += '</template>';
+
+    placeholder.innerHTML = html;
+
+    // 如果表单已打开，需要保持显示（用插拔方式——直接追加 sheet 到 body）
+    if (showMaintenanceForm.value) {
+      renderMaintenanceFormSheet();
+    }
+  }
+
+  /** 渲染维护记录表单浮动层（直接挂在 body 下） */
+  function renderMaintenanceFormSheet() {
+    // 移除旧 sheet
+    const oldOverlay = document.getElementById('chiwu-maint-sheet-overlay');
+    if (oldOverlay) oldOverlay.remove();
+    const oldSheet = document.getElementById('chiwu-maint-sheet');
+    if (oldSheet) oldSheet.remove();
+
+    // 创建新的
+    const overlay = document.createElement('div');
+    overlay.className = 'sheet-overlay';
+    overlay.id = 'chiwu-maint-sheet-overlay';
+    overlay.onclick = window.__chiwu_closeMaintenanceForm;
+
+    const sheet = document.createElement('div');
+    sheet.className = 'sheet';
+    sheet.id = 'chiwu-maint-sheet';
+    sheet.innerHTML =
+      '<div class="sheet-handle"></div>' +
+      '<h2>添加维护记录</h2>' +
+      '<div class="form-group">' +
+      '  <label>标题 *</label>' +
+      '  <input type="text" id="maint-title" placeholder="如：更换电池" required>' +
+      '</div>' +
+      '<div class="form-group">' +
+      '  <label>日期 *</label>' +
+      '  <input type="date" id="maint-date" value="' + todayStr() + '" required>' +
+      '</div>' +
+      '<div class="form-group">' +
+      '  <label>金额</label>' +
+      '  <input type="number" id="maint-amount" placeholder="可选" step="0.01" min="0">' +
+      '</div>' +
+      '<div class="form-group">' +
+      '  <label>备注</label>' +
+      '  <textarea id="maint-note" rows="3" placeholder="可选"></textarea>' +
+      '</div>' +
+      '<div style="display:flex;gap:8px;margin-top:16px;">' +
+      '  <button class="btn-cancel" onclick="window.__chiwu_closeMaintenanceForm()" style="flex:1">取消</button>' +
+      '  <button class="btn-submit" onclick="window.__chiwu_submitMaintenance()" style="flex:1">提交</button>' +
+      '</div>';
+
+    document.body.appendChild(overlay);
+    document.body.appendChild(sheet);
+  }
+
+  function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+  }
+
+  // ===== 全局事件处理（绑定到 window 上，因为 HTML 用 onclick 触发） =====
+
+  window.__chiwu_addMaintenance = function() {
+    showMaintenanceForm.value = true;
+    renderMaintenanceFormSheet();
+  };
+
+  window.__chiwu_closeMaintenanceForm = function() {
+    showMaintenanceForm.value = false;
+    const overlay = document.getElementById('chiwu-maint-sheet-overlay');
+    const sheet = document.getElementById('chiwu-maint-sheet');
+    if (overlay) overlay.remove();
+    if (sheet) sheet.remove();
+    // 重新渲染 detail 区域（恢复无表单状态）
+    renderMaintenanceSection();
+  };
+
+  window.__chiwu_submitMaintenance = function() {
+    const title = document.getElementById('maint-title')?.value?.trim();
+    const date = document.getElementById('maint-date')?.value;
+    const amount = document.getElementById('maint-amount')?.value;
+    const note = document.getElementById('maint-note')?.value?.trim();
+
+    if (!title) { alert('请输入标题'); return; }
+    if (!date) { alert('请选择日期'); return; }
+
+    createMaintenance({
+      title: title,
+      date: date,
+      amount: amount ? parseFloat(amount) : null,
+      note: note || ''
+    }).then(() => {
+      // 清理 DOM 中的 sheet
+      window.__chiwu_closeMaintenanceForm();
+    });
+  };
+
+  window.__chiwu_deleteMaintenance = function(mId) {
+    deleteMaintenance(mId);
+  };
+
+  // ===== Watcher：监听 detailAsset 变化 =====
+
+  watch(
+    () => api.detailAsset?.value,
+    (newAsset, oldAsset) => {
+      if (!newAsset) {
+        maintenances.value = [];
+        showMaintenanceForm.value = false;
+        return;
+      }
+      loadMaintenances(newAsset.id).then(() => {
+        nextTick(() => renderMaintenanceSection());
+      });
+    },
+    { immediate: false }
+  );
+
+  // 也用 watch 监听 maintenances 和 showMaintenanceForm 变化来重渲染
+  watch([maintenances, showMaintenanceForm], () => {
+    if (api.detailAsset?.value) {
+      nextTick(() => renderMaintenanceSection());
+    }
+  });
+
+  // ===== 注入额外的 CSS =====
+  const styleEl = document.createElement('style');
+  styleEl.textContent = `
+    .detail-section {
+      background: var(--card-bg);
+      border-radius: 12px;
+      margin: 0 16px 12px;
+      padding: 16px;
+      box-shadow: var(--shadow);
+    }
+    .detail-section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+    .detail-section-header h3 {
+      font-size: 15px;
+      font-weight: 600;
+    }
+    .btn-add-maintenance {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .btn-add-maintenance:active {
+      opacity: 0.8;
+    }
+    .maintenance-item {
+      padding: 10px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .maintenance-item:last-child {
+      border-bottom: none;
+    }
+    .maintenance-item-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .maintenance-title {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    .btn-delete-maintenance {
+      background: none;
+      border: none;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 4px;
+      color: var(--text-secondary);
+      opacity: 0.6;
+    }
+    .btn-delete-maintenance:active {
+      opacity: 1;
+    }
+    .maintenance-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+    }
+    .maintenance-note {
+      margin-top: 6px;
+      font-size: 13px;
+      color: var(--text);
+      opacity: 0.8;
+      line-height: 1.4;
+    }
+    .btn-cancel {
+      background: var(--bg);
+      color: var(--text);
+      border: 1px solid var(--border);
+      padding: 10px 0;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 500;
+    }
+    .btn-submit {
+      background: var(--primary);
+      color: #fff;
+      border: none;
+      padding: 10px 0;
+      border-radius: 8px;
+      font-size: 15px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+    .btn-submit:active {
+      opacity: 0.8;
+    }
+  `;
+  document.head.appendChild(styleEl);
+
+  console.log('[04_maintenance] Module initialized');
+}
+</script>

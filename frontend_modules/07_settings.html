@@ -1,0 +1,834 @@
+<div id="settings-placeholder">
+  <div class="settings-page">
+    <h2>设置</h2>
+
+    <!-- Section: 分类管理 -->
+    <section class="settings-section" id="section-categories">
+      <div class="section-header">
+        <h3><i class="icon-folder"></i> 分类管理</h3>
+        <button class="btn btn-sm btn-primary" onclick="showNewCategoryDialog()">+ 新建分类</button>
+      </div>
+      <div id="settings-category-list" class="category-grid">
+        <div class="loading-spinner">加载中...</div>
+      </div>
+    </section>
+
+    <!-- Section: 渠道管理 -->
+    <section class="settings-section" id="section-channels">
+      <div class="section-header">
+        <h3><i class="icon-hash"></i> 渠道管理</h3>
+        <button class="btn btn-sm btn-primary" onclick="showNewChannelDialog()">+ 新建渠道</button>
+      </div>
+      <div id="settings-channel-list" class="channel-list">
+        <div class="loading-spinner">加载中...</div>
+      </div>
+    </section>
+
+    <!-- Section: 数据导出 -->
+    <section class="settings-section" id="section-export">
+      <div class="section-header">
+        <h3><i class="icon-download"></i> 数据导出</h3>
+      </div>
+      <p class="section-desc">将所有资产数据导出为 JSON 文件。</p>
+      <button class="btn btn-primary" onclick="exportAllData()">导出所有数据</button>
+      <span id="export-status" class="export-status"></span>
+    </section>
+
+    <!-- Section: 深色模式 -->
+    <section class="settings-section" id="section-theme">
+      <div class="section-header">
+        <h3><i class="icon-moon"></i> 深色模式</h3>
+      </div>
+      <label class="toggle-row">
+        <span>开启深色模式</span>
+        <input type="checkbox" id="dark-mode-toggle" onchange="toggleDarkMode(this.checked)" />
+        <span class="toggle-slider"></span>
+      </label>
+      <p class="hint-text">默认跟随系统。手动切换后覆盖系统设置。</p>
+    </section>
+
+    <!-- Section: 关于 -->
+    <section class="settings-section" id="section-about">
+      <div class="section-header">
+        <h3><i class="icon-info"></i> 关于</h3>
+      </div>
+      <div class="about-info">
+        <p><strong>持物 ChiWu v1.0</strong></p>
+        <p>Based on FastAPI + Vue3 + SQLite</p>
+      </div>
+    </section>
+  </div>
+
+  <!-- New Category Dialog -->
+  <div id="new-category-overlay" class="dialog-overlay" style="display:none" onclick="closeDialog(event)">
+    <div class="dialog" onclick="event.stopPropagation()">
+      <div class="dialog-header">
+        <h4>新建分类</h4>
+        <button class="btn-close" onclick="closeDialog(event)">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <label>名称 <input type="text" id="new-cat-name" placeholder="分类名称" /></label>
+        <label>图标 (Emoji) <input type="text" id="new-cat-icon" placeholder="📁" maxlength="4" /></label>
+        <label>父级分类
+          <select id="new-cat-parent">
+            <option value="">无（顶级分类）</option>
+          </select>
+        </label>
+        <div id="new-cat-error" class="form-error" style="display:none"></div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn" onclick="closeDialog(event)">取消</button>
+        <button class="btn btn-primary" onclick="submitNewCategory()">创建</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- New Channel Dialog -->
+  <div id="new-channel-overlay" class="dialog-overlay" style="display:none" onclick="closeDialog(event)">
+    <div class="dialog" onclick="event.stopPropagation()">
+      <div class="dialog-header">
+        <h4>新建渠道</h4>
+        <button class="btn-close" onclick="closeDialog(event)">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <label>名称 <input type="text" id="new-channel-name" placeholder="渠道名称" /></label>
+        <div id="new-channel-error" class="form-error" style="display:none"></div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn" onclick="closeDialog(event)">取消</button>
+        <button class="btn btn-primary" onclick="submitNewChannel()">创建</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Category Dialog -->
+  <div id="delete-cat-overlay" class="dialog-overlay" style="display:none" onclick="closeDialog(event)">
+    <div class="dialog" onclick="event.stopPropagation()">
+      <div class="dialog-header">
+        <h4>删除分类</h4>
+        <button class="btn-close" onclick="closeDialog(event)">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <p id="delete-cat-info"></p>
+        <label>将资产迁移到目标分类
+          <select id="delete-cat-target"></select>
+        </label>
+        <div id="delete-cat-error" class="form-error" style="display:none"></div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn" onclick="closeDialog(event)">取消</button>
+        <button class="btn btn-danger" onclick="confirmDeleteCategory()">删除</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Delete Channel Confirm -->
+  <div id="delete-channel-overlay" class="dialog-overlay" style="display:none" onclick="closeDialog(event)">
+    <div class="dialog" onclick="event.stopPropagation()">
+      <div class="dialog-header">
+        <h4>删除渠道</h4>
+        <button class="btn-close" onclick="closeDialog(event)">&times;</button>
+      </div>
+      <div class="dialog-body">
+        <p id="delete-channel-info">确定要删除此渠道吗？</p>
+        <div id="delete-channel-error" class="form-error" style="display:none"></div>
+      </div>
+      <div class="dialog-footer">
+        <button class="btn" onclick="closeDialog(event)">取消</button>
+        <button class="btn btn-danger" onclick="confirmDeleteChannel()">删除</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+#settings-placeholder .settings-page {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+#settings-placeholder .settings-page > h2 {
+  font-size: 24px;
+  margin-bottom: 24px;
+  color: var(--text-primary, #1a1a2e);
+}
+#settings-placeholder .settings-section {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 20px;
+  margin-bottom: 20px;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+#settings-placeholder .section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+#settings-placeholder .section-header h3 {
+  font-size: 18px;
+  margin: 0;
+  color: var(--text-primary, #1a1a2e);
+}
+#settings-placeholder .section-desc {
+  font-size: 14px;
+  color: var(--text-secondary, #666);
+  margin: 0 0 12px 0;
+}
+#settings-placeholder .hint-text {
+  font-size: 12px;
+  color: var(--text-muted, #999);
+  margin: 6px 0 0 0;
+}
+
+/* Buttons */
+#settings-placeholder .btn {
+  padding: 8px 16px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  background: var(--btn-bg, #f5f5f5);
+  color: var(--text-primary, #333);
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.2s;
+}
+#settings-placeholder .btn:hover {
+  background: var(--btn-hover, #e8e8e8);
+}
+#settings-placeholder .btn-primary {
+  background: var(--accent, #6c63ff);
+  color: #fff;
+  border-color: var(--accent, #6c63ff);
+}
+#settings-placeholder .btn-primary:hover {
+  opacity: 0.9;
+}
+#settings-placeholder .btn-danger {
+  background: #e74c3c;
+  color: #fff;
+  border-color: #e74c3c;
+}
+#settings-placeholder .btn-danger:hover {
+  opacity: 0.9;
+}
+#settings-placeholder .btn-sm {
+  padding: 5px 12px;
+  font-size: 13px;
+}
+#settings-placeholder .btn-close {
+  background: none;
+  border: none;
+  font-size: 22px;
+  cursor: pointer;
+  color: var(--text-secondary, #666);
+  padding: 0 4px;
+}
+
+/* Category Grid */
+#settings-placeholder .category-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#settings-placeholder .category-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--item-bg, #f9f9f9);
+  border: 1px solid var(--border-light, #eee);
+  transition: background 0.15s;
+}
+#settings-placeholder .category-card:hover {
+  background: var(--item-hover, #f0f0f0);
+}
+#settings-placeholder .category-card .cat-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+#settings-placeholder .category-card .cat-icon {
+  font-size: 20px;
+  width: 28px;
+  text-align: center;
+}
+#settings-placeholder .category-card .cat-name {
+  font-weight: 500;
+  color: var(--text-primary, #333);
+}
+#settings-placeholder .category-card .cat-path {
+  font-size: 12px;
+  color: var(--text-muted, #999);
+  margin-left: 8px;
+}
+#settings-placeholder .category-card .cat-actions {
+  display: flex;
+  gap: 6px;
+}
+#settings-placeholder .subcategory-indent {
+  margin-left: 32px;
+}
+#settings-placeholder .category-card .btn-icon {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 6px;
+  border-radius: 4px;
+  color: var(--text-secondary, #888);
+  transition: background 0.15s;
+}
+#settings-placeholder .category-card .btn-icon:hover {
+  background: rgba(0,0,0,0.06);
+}
+#settings-placeholder .category-card .btn-icon.danger:hover {
+  background: rgba(231,76,60,0.12);
+  color: #e74c3c;
+}
+
+/* Channel List */
+#settings-placeholder .channel-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+#settings-placeholder .channel-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: 8px;
+  background: var(--item-bg, #f9f9f9);
+  border: 1px solid var(--border-light, #eee);
+}
+#settings-placeholder .channel-row .ch-name {
+  font-weight: 500;
+  color: var(--text-primary, #333);
+}
+#settings-placeholder .channel-row .ch-preset-badge {
+  font-size: 11px;
+  background: var(--accent-light, #e8e6ff);
+  color: var(--accent, #6c63ff);
+  padding: 2px 8px;
+  border-radius: 10px;
+  margin-left: 8px;
+}
+#settings-placeholder .preset-disabled {
+  opacity: 0.5;
+  cursor: not-allowed !important;
+}
+
+/* Toggle */
+#settings-placeholder .toggle-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  user-select: none;
+}
+#settings-placeholder .toggle-row input[type="checkbox"] {
+  display: none;
+}
+#settings-placeholder .toggle-slider {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  background: var(--toggle-off, #ccc);
+  border-radius: 12px;
+  transition: background 0.25s;
+}
+#settings-placeholder .toggle-slider::after {
+  content: '';
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #fff;
+  transition: transform 0.25s;
+}
+#settings-placeholder .toggle-row input:checked + .toggle-slider {
+  background: var(--accent, #6c63ff);
+}
+#settings-placeholder .toggle-row input:checked + .toggle-slider::after {
+  transform: translateX(20px);
+}
+
+/* Dialog */
+#settings-placeholder .dialog-overlay {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+#settings-placeholder .dialog {
+  background: var(--card-bg, #fff);
+  border-radius: 12px;
+  padding: 0;
+  min-width: 360px;
+  max-width: 480px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+}
+#settings-placeholder .dialog-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border, #eee);
+}
+#settings-placeholder .dialog-header h4 {
+  margin: 0;
+  font-size: 16px;
+}
+#settings-placeholder .dialog-body {
+  padding: 20px;
+}
+#settings-placeholder .dialog-body label {
+  display: block;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 14px;
+  color: var(--text-primary, #333);
+}
+#settings-placeholder .dialog-body input[type="text"],
+#settings-placeholder .dialog-body select {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 8px 12px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  font-size: 14px;
+  background: var(--input-bg, #fff);
+  color: var(--text-primary, #333);
+  box-sizing: border-box;
+}
+#settings-placeholder .dialog-body input:focus,
+#settings-placeholder .dialog-body select:focus {
+  outline: none;
+  border-color: var(--accent, #6c63ff);
+}
+#settings-placeholder .dialog-body p {
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  color: var(--text-primary, #333);
+}
+#settings-placeholder .dialog-footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 20px;
+  border-top: 1px solid var(--border, #eee);
+}
+#settings-placeholder .form-error {
+  font-size: 13px;
+  color: #e74c3c;
+  margin-top: 8px;
+}
+#settings-placeholder .export-status {
+  margin-left: 12px;
+  font-size: 13px;
+  color: var(--text-secondary, #666);
+}
+#settings-placeholder .about-info p {
+  margin: 4px 0;
+  font-size: 14px;
+  color: var(--text-primary, #333);
+}
+#settings-placeholder .loading-spinner {
+  padding: 20px;
+  text-align: center;
+  color: var(--text-muted, #999);
+}
+</style>
+
+<script>
+(function() {
+  'use strict';
+
+  const api = window.__chiwu_api;
+
+  function setupSettingsModule() {
+    // State
+    let categories = [];
+    let channels = [];
+    let deleteTarget = null; // { type: 'category'|'channel', id }
+
+    // --- Helpers ---
+    function buildCategoryTree(list) {
+      const map = {};
+      const roots = [];
+      list.forEach(c => { map[c.id] = { ...c, children: [] }; });
+      list.forEach(c => {
+        if (c.parent_id && map[c.parent_id]) {
+          map[c.parent_id].children.push(map[c.id]);
+        } else {
+          roots.push(map[c.id]);
+        }
+      });
+      return roots;
+    }
+
+    function flattenTree(nodes, depth = 0) {
+      let result = [];
+      nodes.forEach(n => {
+        result.push({ ...n, depth });
+        if (n.children && n.children.length) {
+          result = result.concat(flattenTree(n.children, depth + 1));
+        }
+      });
+      return result;
+    }
+
+    function getPathString(cat) {
+      const parts = [];
+      let current = cat;
+      const visited = new Set();
+      while (current) {
+        if (visited.has(current.id)) break;
+        visited.add(current.id);
+        parts.unshift(current.name);
+        current = current.parent_id ? categories.find(c => c.id === current.parent_id) : null;
+      }
+      return parts.join(' / ');
+    }
+
+    // --- Render Functions ---
+
+    function renderCategories() {
+      const container = document.getElementById('settings-category-list');
+      if (!container) return;
+      if (!categories.length) {
+        container.innerHTML = '<div class="loading-spinner">暂无分类</div>';
+        return;
+      }
+      const tree = buildCategoryTree(categories);
+      const flat = flattenTree(tree);
+      container.innerHTML = flat.map(cat => {
+        const indent = cat.depth > 0 ? `margin-left: ${cat.depth * 28}px` : '';
+        const pathStr = getPathString(cat);
+        return `
+          <div class="category-card" style="${indent}">
+            <div class="cat-info">
+              <span class="cat-icon">${cat.icon || '📁'}</span>
+              <span class="cat-name">${escapeHtml(cat.name)}</span>
+              <span class="cat-path">${escapeHtml(pathStr)}</span>
+            </div>
+            <div class="cat-actions">
+              <button class="btn-icon" onclick="window.__chiwu_deleteCategory(${cat.id})" title="删除">🗑</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function renderChannels() {
+      const container = document.getElementById('settings-channel-list');
+      if (!container) return;
+      if (!channels.length) {
+        container.innerHTML = '<div class="loading-spinner">暂无渠道</div>';
+        return;
+      }
+      container.innerHTML = channels.map(ch => {
+        const isPreset = ch.is_preset;
+        return `
+          <div class="channel-row">
+            <div>
+              <span class="ch-name">${escapeHtml(ch.name)}</span>
+              ${isPreset ? '<span class="ch-preset-badge">预设</span>' : ''}
+            </div>
+            <div>
+              <button class="btn-icon ${isPreset ? 'preset-disabled' : ''}"
+                ${isPreset ? 'disabled' : `onclick="window.__chiwu_deleteChannel(${ch.id})"`}
+                title="${isPreset ? '预设渠道不可删除' : '删除'}">🗑</button>
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    // --- Load Data ---
+
+    function loadCategories() {
+      return api('/categories').then(data => {
+        categories = Array.isArray(data) ? data : (data.categories || data.data || []);
+        renderCategories();
+        populateCategorySelects();
+      }).catch(err => {
+        console.error('Failed to load categories:', err);
+        const el = document.getElementById('settings-category-list');
+        if (el) el.innerHTML = '<div class="loading-spinner" style="color:#e74c3c">加载失败</div>';
+      });
+    }
+
+    function loadChannels() {
+      return api('/channels').then(data => {
+        channels = Array.isArray(data) ? data : (data.channels || data.data || []);
+        renderChannels();
+      }).catch(err => {
+        console.error('Failed to load channels:', err);
+        const el = document.getElementById('settings-channel-list');
+        if (el) el.innerHTML = '<div class="loading-spinner" style="color:#e74c3c">加载失败</div>';
+      });
+    }
+
+    function populateCategorySelects() {
+      // Parent select in new-category dialog
+      const parentSelect = document.getElementById('new-cat-parent');
+      if (parentSelect) {
+        parentSelect.innerHTML = '<option value="">无（顶级分类）</option>' +
+          categories.map(c => `<option value="${c.id}">${escapeHtml(c.name)}</option>`).join('');
+      }
+      // Target select in delete-category dialog
+      const targetSelect = document.getElementById('delete-cat-target');
+      if (targetSelect) {
+        targetSelect.innerHTML = '';
+      }
+    }
+
+    // --- New Category ---
+
+    window.showNewCategoryDialog = function() {
+      populateCategorySelects();
+      document.getElementById('new-cat-name').value = '';
+      document.getElementById('new-cat-icon').value = '';
+      document.getElementById('new-cat-parent').value = '';
+      document.getElementById('new-cat-error').style.display = 'none';
+      document.getElementById('new-category-overlay').style.display = 'flex';
+    };
+
+    window.submitNewCategory = function() {
+      const name = document.getElementById('new-cat-name').value.trim();
+      const icon = document.getElementById('new-cat-icon').value.trim() || '📁';
+      const parent_id = document.getElementById('new-cat-parent').value;
+      const errorEl = document.getElementById('new-cat-error');
+
+      if (!name) {
+        errorEl.textContent = '请输入分类名称';
+        errorEl.style.display = 'block';
+        return;
+      }
+      errorEl.style.display = 'none';
+
+      const body = { name, icon, parent_id: parent_id ? parseInt(parent_id) : null };
+
+      api('/categories', { method: 'POST', body: JSON.stringify(body) }).then(() => {
+        document.getElementById('new-category-overlay').style.display = 'none';
+        loadCategories();
+      }).catch(err => {
+        errorEl.textContent = '创建失败: ' + (err.message || '未知错误');
+        errorEl.style.display = 'block';
+      });
+    };
+
+    // --- Delete Category ---
+
+    window.__chiwu_deleteCategory = function(id) {
+      const cat = categories.find(c => c.id === id);
+      if (!cat) return;
+      deleteTarget = { type: 'category', id };
+
+      document.getElementById('delete-cat-info').textContent = `删除分类「${cat.name}」，其下的资产将被迁移到目标分类。`;
+
+      const targetSelect = document.getElementById('delete-cat-target');
+      targetSelect.innerHTML = '<option value="">请选择…</option>' +
+        categories.filter(c => c.id !== id).map(c =>
+          `<option value="${c.id}">${escapeHtml(c.name)}</option>`
+        ).join('');
+
+      document.getElementById('delete-cat-error').style.display = 'none';
+      document.getElementById('delete-cat-overlay').style.display = 'flex';
+    };
+
+    window.confirmDeleteCategory = function() {
+      if (!deleteTarget || deleteTarget.type !== 'category') return;
+      const targetId = document.getElementById('delete-cat-target').value;
+      const errorEl = document.getElementById('delete-cat-error');
+
+      if (!targetId) {
+        errorEl.textContent = '请选择迁移目标分类';
+        errorEl.style.display = 'block';
+        return;
+      }
+      errorEl.style.display = 'none';
+
+      api(`/categories/${deleteTarget.id}?target_id=${encodeURIComponent(targetId)}`, { method: 'DELETE' }).then(() => {
+        document.getElementById('delete-cat-overlay').style.display = 'none';
+        deleteTarget = null;
+        loadCategories();
+      }).catch(err => {
+        errorEl.textContent = '删除失败: ' + (err.message || '未知错误');
+        errorEl.style.display = 'block';
+      });
+    };
+
+    // --- New Channel ---
+
+    window.showNewChannelDialog = function() {
+      document.getElementById('new-channel-name').value = '';
+      document.getElementById('new-channel-error').style.display = 'none';
+      document.getElementById('new-channel-overlay').style.display = 'flex';
+    };
+
+    window.submitNewChannel = function() {
+      const name = document.getElementById('new-channel-name').value.trim();
+      const errorEl = document.getElementById('new-channel-error');
+
+      if (!name) {
+        errorEl.textContent = '请输入渠道名称';
+        errorEl.style.display = 'block';
+        return;
+      }
+      errorEl.style.display = 'none';
+
+      api('/channels', { method: 'POST', body: JSON.stringify({ name }) }).then(() => {
+        document.getElementById('new-channel-overlay').style.display = 'none';
+        loadChannels();
+      }).catch(err => {
+        errorEl.textContent = '创建失败: ' + (err.message || '未知错误');
+        errorEl.style.display = 'block';
+      });
+    };
+
+    // --- Delete Channel ---
+
+    window.__chiwu_deleteChannel = function(id) {
+      const channel = channels.find(c => c.id === id);
+      if (!channel) return;
+      deleteTarget = { type: 'channel', id };
+
+      document.getElementById('delete-channel-info').textContent = `确定要删除渠道「${escapeHtml(channel.name)}」吗？`;
+      document.getElementById('delete-channel-error').style.display = 'none';
+      document.getElementById('delete-channel-overlay').style.display = 'flex';
+    };
+
+    window.confirmDeleteChannel = function() {
+      if (!deleteTarget || deleteTarget.type !== 'channel') return;
+      const errorEl = document.getElementById('delete-channel-error');
+
+      api(`/channels/${deleteTarget.id}`, { method: 'DELETE' }).then(() => {
+        document.getElementById('delete-channel-overlay').style.display = 'none';
+        deleteTarget = null;
+        loadChannels();
+      }).catch(err => {
+        errorEl.textContent = '删除失败: ' + (err.message || '未知错误');
+        errorEl.style.display = 'block';
+      });
+    };
+
+    // --- Dark Mode ---
+
+    window.toggleDarkMode = function(enabled) {
+      if (enabled) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = 'dark';
+        localStorage.setItem('chiwu-theme', 'dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+        document.documentElement.style.colorScheme = 'light';
+        localStorage.setItem('chiwu-theme', 'light');
+      }
+    };
+
+    function initDarkModeToggle() {
+      const toggle = document.getElementById('dark-mode-toggle');
+      if (!toggle) return;
+      const saved = localStorage.getItem('chiwu-theme');
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = saved ? saved === 'dark' : prefersDark;
+      toggle.checked = isDark;
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+        document.documentElement.style.colorScheme = 'dark';
+      }
+      // Listen for system changes only if no manual override
+      window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (!localStorage.getItem('chiwu-theme')) {
+          toggle.checked = e.matches;
+          document.documentElement.classList.toggle('dark', e.matches);
+          document.documentElement.style.colorScheme = e.matches ? 'dark' : 'light';
+        }
+      });
+    }
+
+    // --- Export ---
+
+    window.exportAllData = function() {
+      const statusEl = document.getElementById('export-status');
+      statusEl.textContent = '导出中...';
+      api('/assets').then(assets => {
+        const data = Array.isArray(assets) ? assets : (assets.assets || assets.data || []);
+        const exportObj = {
+          version: '1.0',
+          exportedAt: new Date().toISOString(),
+          categories: categories,
+          channels: channels,
+          assets: data
+        };
+        const blob = new Blob([JSON.stringify(exportObj, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `chiwu-export-${new Date().toISOString().slice(0, 10)}.json`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+        statusEl.textContent = '✅ 导出成功';
+        setTimeout(() => { statusEl.textContent = ''; }, 3000);
+      }).catch(err => {
+        statusEl.textContent = '❌ 导出失败: ' + (err.message || '未知错误');
+      });
+    };
+
+    // --- Close Dialog ---
+
+    window.closeDialog = function(e) {
+      // Close the visible overlay
+      document.querySelectorAll('#settings-placeholder .dialog-overlay').forEach(el => {
+        el.style.display = 'none';
+      });
+      deleteTarget = null;
+    };
+
+    // --- Init ---
+
+    function init() {
+      loadCategories();
+      loadChannels();
+      initDarkModeToggle();
+    }
+
+    // Expose for external calls
+    window.__chiwu_settings = {
+      loadCategories,
+      loadChannels,
+      renderCategories,
+      renderChannels
+    };
+
+    // Run
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', init);
+    } else {
+      init();
+    }
+  }
+
+  // Export
+  window.setupSettingsModule = setupSettingsModule;
+
+  // Auto-run
+  setupSettingsModule();
+})();
+</script>

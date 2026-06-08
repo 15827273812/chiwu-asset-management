@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>持物 ChiWu</title>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script src="https://unpkg.com/element-plus"></script>
+<link rel="stylesheet" href="https://unpkg.com/element-plus/dist/index.css">
+<style>
+/* ===== CSS Variables ===== */
+:root {
+  --bg: #f5f5f7;
+  --card-bg: #ffffff;
+  --text: #1d1d1f;
+  --text-secondary: #86868b;
+  --border: #e5e5ea;
+  --tab-bar: rgba(255,255,255,0.92);
+  --primary: #3A7C6C;
+  --primary-light: #4A9C8C;
+  --danger: #ff3b30;
+  --success: #34c759;
+  --warning: #ff9500;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+html.dark {
+  --bg: #1c1c1e;
+  --card-bg: #2c2c2e;
+  --text: #f5f5f7;
+  --text-secondary: #98989d;
+  --border: #38383a;
+  --tab-bar: rgba(28,28,30,0.92);
+  --shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  background: var(--bg); color: var(--text);
+  max-width: 480px; margin: 0 auto; min-height: 100vh;
+  padding-bottom: 80px; position: relative;
+}
+
+/* ===== Tab Bar ===== */
+.tab-bar {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px;
+  background: var(--tab-bar); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-around; align-items: center;
+  height: 64px; padding-bottom: 8px; z-index: 100;
+}
+.tab-item {
+  display: flex; flex-direction: column; align-items: center; gap: 2px;
+  font-size: 10px; color: var(--text-secondary); cursor: pointer;
+  padding: 6px 16px; border: none; background: none; transition: color 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+.tab-item.active { color: var(--primary); }
+.tab-item .tab-icon { font-size: 22px; line-height: 1; }
+.tab-item .tab-label { font-size: 10px; }
+
+/* ===== Header ===== */
+.page-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 16px 20px 8px; position: sticky; top: 0; z-index: 10;
+  background: var(--bg);
+}
+.page-header h1 { font-size: 28px; font-weight: 700; }
+.page-header .header-actions { display: flex; gap: 12px; align-items: center; }
+
+/* ===== Cards ===== */
+.card {
+  background: var(--card-bg); border-radius: 12px;
+  box-shadow: var(--shadow); padding: 16px; margin: 0 16px 8px;
+  transition: transform 0.15s;
+}
+.card:active { transform: scale(0.98); }
+
+/* ===== Tags ===== */
+.status-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; font-weight: 500; }
+.status-active { color: var(--success); background: rgba(52,199,89,0.12); }
+.status-sold { color: var(--text-secondary); background: rgba(134,134,139,0.12); }
+.status-discarded { color: var(--warning); background: rgba(255,149,0,0.12); }
+.status-lost { color: var(--danger); background: rgba(255,59,48,0.12); }
+
+/* ===== Price ===== */
+.price { color: var(--primary); font-weight: 600; font-size: 15px; }
+.price::before { content: '¥'; font-size: 12px; }
+
+/* ===== Bottom Sheet Form ===== */
+.sheet-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.4); z-index: 200; }
+.sheet {
+  position: fixed; bottom: 0; left: 50%; transform: translateX(-50%);
+  width: 100%; max-width: 480px; max-height: 85vh; overflow-y: auto;
+  background: var(--card-bg); border-radius: 16px 16px 0 0; z-index: 201;
+  padding: 20px; animation: slideUp 0.3s ease;
+}
+@keyframes slideUp { from { transform: translateX(-50%) translateY(100%); } to { transform: translateX(-50%) translateY(0); } }
+.sheet-handle { width: 36px; height: 4px; border-radius: 2px; background: var(--border); margin: 0 auto 16px; }
+.sheet h2 { font-size: 18px; font-weight: 600; margin-bottom: 16px; }
+.sheet .form-group { margin-bottom: 14px; }
+.sheet .form-group label { display: block; font-size: 13px; color: var(--text-secondary); margin-bottom: 4px; }
+.sheet .form-group input, .sheet .form-group select, .sheet .form-group textarea {
+  width: 100%; padding: 10px 12px; border: 1px solid var(--border); border-radius: 8px;
+  font-size: 15px; background: var(--bg); color: var(--text); outline: none;
+}
+.sheet .form-group input:focus, .sheet .form-group select:focus { border-color: var(--primary); }
+
+/* ===== Search Bar ===== */
+.search-bar {
+  margin: 0 16px 12px; position: relative;
+}
+.search-bar input {
+  width: 100%; padding: 10px 16px 10px 36px; border: none; border-radius: 10px;
+  font-size: 15px; background: var(--card-bg); color: var(--text); box-shadow: var(--shadow);
+  outline: none;
+}
+.search-bar .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: var(--text-secondary); font-size: 16px; }
+
+/* ===== Animations ===== */
+.fade-enter-active, .fade-leave-active { transition: opacity 0.2s; }
+.fade-enter-from, .fade-leave-to { opacity: 0; }
+
+/* ===== Detail View ===== */
+.detail-view { position: absolute; inset: 0; background: var(--bg); z-index: 50; overflow-y: auto; padding-bottom: 80px; }
+.detail-header { display: flex; align-items: center; padding: 12px 16px; gap: 12px; }
+.detail-back { font-size: 24px; cursor: pointer; padding: 4px; border: none; background: none; color: var(--primary); }
+.detail-title { font-size: 17px; font-weight: 600; }
+
+/* ===== Empty State ===== */
+.empty-state { text-align: center; padding: 60px 20px; color: var(--text-secondary); }
+.empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
+.empty-state p { font-size: 15px; }
+
+/* ===== Loading ===== */
+.loading { text-align: center; padding: 40px; color: var(--text-secondary); }
+
+/* ===== Swipe action ===== */
+.swipe-wrap { position: relative; overflow: hidden; }
+.swipe-actions { position: absolute; right: 0; top: 0; height: 100%; display: flex; align-items: center; gap: 0; transform: translateX(100%); transition: transform 0.2s; }
+.swipe-wrap.show-delete .swipe-actions { transform: translateX(0); }
+.swipe-btn { height: 100%; display: flex; align-items: center; padding: 0 20px; font-size: 14px; color: #fff; border: none; cursor: pointer; }
+.swipe-btn-danger { background: var(--danger); border-radius: 0 12px 12px 0; }
+</style>
+</head>
+<body>
+
+<div id="app">
+  <!-- Tab Bar -->
+  <div class="tab-bar">
+    <button v-for="tab in tabs" :key="tab.id" class="tab-item" :class="{active: activeTab === tab.id}" @click="activeTab = tab.id">
+      <span class="tab-icon">{{ tab.icon }}</span>
+      <span class="tab-label">{{ tab.label }}</span>
+    </button>
+  </div>
+
+  <!-- Tab Content -->
+  <div v-show="activeTab === 'assets'" id="tab-assets">
+    <div class="page-header">
+      <h1>资产</h1>
+      <div class="header-actions">
+        <button style="font-size:24px;background:none;border:none;color:var(--primary);cursor:pointer;padding:4px" @click="openAssetForm()">+</button>
+      </div>
+    </div>
+    <div class="search-bar">
+      <span class="search-icon">🔍</span>
+      <input type="search" v-model="searchQuery" placeholder="搜索资产..." @input="searchAssets">
+    </div>
+    <!-- 列表将由 assets 组件填充 -->
+    <div id="assets-list-placeholder"></div>
+  </div>
+
+  <div v-show="activeTab === 'stats'" id="tab-stats">
+    <div class="page-header"><h1>统计</h1></div>
+    <div id="stats-placeholder"></div>
+  </div>
+
+  <div v-show="activeTab === 'wishes'" id="tab-wishes">
+    <div class="page-header">
+      <h1>心愿</h1>
+      <div class="header-actions">
+        <button style="font-size:24px;background:none;border:none;color:var(--primary);cursor:pointer;padding:4px" @click="openWishForm()">+</button>
+      </div>
+    </div>
+    <div id="wishes-placeholder"></div>
+  </div>
+
+  <div v-show="activeTab === 'settings'" id="tab-settings">
+    <div class="page-header"><h1>设置</h1></div>
+    <div id="settings-placeholder"></div>
+  </div>
+
+  <!-- Asset Detail View -->
+  <div v-if="showDetail" class="detail-view">
+    <div class="detail-header">
+      <button class="detail-back" @click="closeDetail">←</button>
+      <span class="detail-title">{{ detailAsset?.name }}</span>
+    </div>
+    <div id="detail-placeholder"></div>
+  </div>
+
+  <!-- Bottom Sheet Form (Asset) -->
+  <template v-if="showAssetForm">
+    <div class="sheet-overlay" @click="showAssetForm = false"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2>{{ editingAssetId ? '编辑资产' : '新建资产' }}</h2>
+      <div id="asset-form-placeholder"></div>
+    </div>
+  </template>
+
+  <!-- Bottom Sheet Form (Wish) -->
+  <template v-if="showWishForm">
+    <div class="sheet-overlay" @click="showWishForm = false"></div>
+    <div class="sheet">
+      <div class="sheet-handle"></div>
+      <h2>新建心愿</h2>
+      <div id="wish-form-placeholder"></div>
+    </div>
+  </template>
+</div>
+
+<script>
+const { createApp, ref, reactive, computed, onMounted, watch } = Vue;
+const API_BASE = window.location.origin;
+
+const app = createApp({
+  setup() {
+    // ===== Global State =====
+    const activeTab = ref('assets');
+    const showDetail = ref(false);
+    const detailAsset = ref(null);
+    const showAssetForm = ref(false);
+    const editingAssetId = ref(null);
+    const showWishForm = ref(false);
+    const searchQuery = ref('');
+    const categories = ref([]);
+    const channels = ref([]);
+    const isDark = ref(window.matchMedia('(prefers-color-scheme: dark)').matches);
+
+    const tabs = [
+      { id: 'assets', label: '资产', icon: '📱' },
+      { id: 'stats', label: '统计', icon: '📊' },
+      { id: 'wishes', label: '心愿', icon: '⭐' },
+      { id: 'settings', label: '设置', icon: '⚙️' },
+    ];
+
+    // ===== Dark Mode =====
+    watch(isDark, v => {
+      document.documentElement.classList.toggle('dark', v);
+    }, { immediate: true });
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', e => {
+      isDark.value = e.matches;
+    });
+
+    // ===== API Helper =====
+    async function api(path, opts = {}) {
+      const res = await fetch(API_BASE + '/api' + path, {
+        headers: { 'Content-Type': 'application/json', ...opts.headers },
+        ...opts
+      });
+      if (!res.ok) throw new Error(await res.text());
+      return res.json();
+    }
+
+    // ===== Load Categories & Channels =====
+    async function loadCategories() { categories.value = await api('/categories'); }
+    async function loadChannels() { channels.value = await api('/channels'); }
+
+    onMounted(() => {
+      loadCategories();
+      loadChannels();
+    });
+
+    // ===== Placeholder methods (filled by modules) =====
+    function searchAssets() {}
+    function openAssetForm(assetId) { editingAssetId.value = assetId || null; showAssetForm.value = true; }
+    function closeDetail() { showDetail.value = false; detailAsset.value = null; }
+    function openWishForm() { showWishForm.value = true; }
+
+    return {
+      activeTab, tabs, showDetail, detailAsset, showAssetForm, editingAssetId,
+      showWishForm, searchQuery, categories, channels, isDark,
+      searchAssets, openAssetForm, closeDetail, openWishForm, api, loadCategories, loadChannels
+    };
+  }
+});
+
+// 把 app 实例暴露到全局，让模块可以注册组件
+window.__chiwu_app = app;
+window.__chiwu_api = app._instance.setupState;
+</script>
+</body>
+</html>

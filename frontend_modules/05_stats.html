@@ -1,0 +1,448 @@
+<!-- ChiWu 统计页面模块 -->
+<style>
+/* ===== Stats Module Styles ===== */
+#stats-placeholder {
+  padding: 20px;
+  color: #e0e0e0;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+/* --- Overview Cards (2x2 grid) --- */
+.stats-overview-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin-bottom: 28px;
+}
+.stats-overview-card {
+  background: #1e2a3a;
+  border-radius: 12px;
+  padding: 16px 18px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.stats-overview-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.35);
+}
+.stats-overview-card .label {
+  font-size: 12px;
+  color: #8899aa;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+.stats-overview-card .value {
+  font-size: 24px;
+  font-weight: 700;
+  color: #ffffff;
+}
+.stats-overview-card .sub {
+  font-size: 13px;
+  color: #6b8aa0;
+  margin-top: 4px;
+}
+.stats-overview-card .sub strong {
+  color: #7ecfff;
+}
+.stats-overview-card.highlight {
+  border-left: 3px solid #4fc3f7;
+}
+.stats-overview-card.highlight-green {
+  border-left: 3px solid #66bb6a;
+}
+.stats-overview-card.highlight-amber {
+  border-left: 3px solid #ffb74d;
+}
+.stats-overview-card.highlight-purple {
+  border-left: 3px solid #ab47bc;
+}
+
+/* --- Section headers --- */
+.stats-section-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #c0d0e0;
+  margin: 24px 0 14px 0;
+  padding-bottom: 6px;
+  border-bottom: 1px solid #2a3a4a;
+}
+
+/* --- Category Distribution Donut --- */
+.stats-donut-container {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  padding: 14px 0;
+  flex-wrap: wrap;
+}
+.stats-donut-ring {
+  position: relative;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.stats-donut-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  background: #1a2535;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  color: #8899aa;
+}
+.stats-donut-center .num {
+  font-size: 22px;
+  font-weight: 700;
+  color: #e0e0e0;
+}
+.stats-donut-center .lbl {
+  font-size: 11px;
+}
+.stats-donut-legend {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 140px;
+}
+.stats-donut-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  color: #c0d0e0;
+}
+.stats-donut-legend-item .color-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.stats-donut-legend-item .pct {
+  margin-left: auto;
+  color: #8899aa;
+  font-size: 12px;
+}
+
+/* --- Daily Cost Ranking --- */
+.stats-cost-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.stats-cost-item {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid #253040;
+  gap: 12px;
+  transition: background 0.1s;
+}
+.stats-cost-item:hover {
+  background: #1f2c3e;
+  border-radius: 6px;
+}
+.stats-cost-item .rank {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #283548;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #7ecfff;
+  flex-shrink: 0;
+}
+.stats-cost-item .rank.top1 { background: #ffd700; color: #1a1a1a; }
+.stats-cost-item .rank.top2 { background: #c0c0c0; color: #1a1a1a; }
+.stats-cost-item .rank.top3 { background: #cd7f32; color: #1a1a1a; }
+.stats-cost-item .cost-name {
+  flex: 1;
+  font-size: 14px;
+  color: #d0e0f0;
+}
+.stats-cost-item .cost-daily {
+  font-size: 14px;
+  font-weight: 600;
+  color: #ff8a65;
+  width: 80px;
+  text-align: right;
+}
+.stats-cost-item .cost-tco {
+  font-size: 12px;
+  color: #6b8aa0;
+  width: 100px;
+  text-align: right;
+}
+
+/* --- Monthly Trend Bar Chart --- */
+.stats-trend-chart {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 0;
+}
+.stats-trend-bar-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.stats-trend-bar-label {
+  width: 70px;
+  font-size: 13px;
+  color: #8899aa;
+  text-align: right;
+  flex-shrink: 0;
+}
+.stats-trend-bar-track {
+  flex: 1;
+  height: 22px;
+  background: #1a2535;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+.stats-trend-bar-fill {
+  height: 100%;
+  border-radius: 4px;
+  background: linear-gradient(90deg, #4fc3f7, #29b6f6);
+  transition: width 0.5s ease;
+  display: flex;
+  align-items: center;
+  padding-left: 6px;
+}
+.stats-trend-bar-fill .bar-count {
+  font-size: 11px;
+  font-weight: 600;
+  color: #fff;
+  text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  white-space: nowrap;
+}
+.stats-trend-bar-count {
+  width: 36px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #b0c8e0;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+/* --- Empty State --- */
+.stats-empty {
+  text-align: center;
+  padding: 40px 20px;
+  color: #6b8aa0;
+  font-size: 15px;
+}
+.stats-empty .icon {
+  font-size: 40px;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+
+/* --- Loading --- */
+.stats-loading {
+  text-align: center;
+  padding: 40px;
+  color: #6b8aa0;
+}
+</style>
+
+<!-- ===== Stats Container ===== -->
+<div id="stats-container"></div>
+
+<script>
+(function() {
+  'use strict';
+
+  const COLORS = [
+    '#4fc3f7', '#66bb6a', '#ffb74d', '#ef5350',
+    '#ab47bc', '#26c6da', '#ffca28', '#8d6e63',
+    '#78909c', '#5c6bc0', '#a1887f', '#4db6ac'
+  ];
+
+  /**
+   * Render the entire stats module into #stats-container
+   */
+  function renderStats(data) {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+    if (!data || typeof data !== 'object') {
+      container.innerHTML = '<div class="stats-empty"><div class="icon">📊</div>暂无统计数据</div>';
+      return;
+    }
+
+    const totalAssets = data.total_assets ?? 0;
+    const activeAssets = data.active_assets ?? 0;
+    const totalValue = data.total_value ?? 0;
+    const totalMaintenance = data.total_maintenance ?? 0;
+    const categoryStats = Array.isArray(data.category_stats) ? data.category_stats : [];
+    const costTop = Array.isArray(data.daily_cost_top) ? data.daily_cost_top : [];
+    const monthlyTrend = Array.isArray(data.monthly_trend) ? data.monthly_trend : [];
+
+    const fmtPrice = (n) => {
+      if (n >= 10000) return (n / 10000).toFixed(1) + '万';
+      return n.toLocaleString('zh-CN');
+    };
+
+    const cols = COLORS;
+
+    /* ============ 1. Overview Cards ============ */
+    const overviewHTML = `
+      <div class="stats-overview-grid">
+        <div class="stats-overview-card highlight">
+          <div class="label">总资产数</div>
+          <div class="value">${totalAssets}</div>
+          <div class="sub">活跃: <strong>${activeAssets}</strong></div>
+        </div>
+        <div class="stats-overview-card highlight-green">
+          <div class="label">总价值</div>
+          <div class="value">¥${fmtPrice(totalValue)}</div>
+          <div class="sub">年维护费: <strong>¥${fmtPrice(totalMaintenance)}</strong></div>
+        </div>
+        <div class="stats-overview-card highlight-amber">
+          <div class="label">总维护费</div>
+          <div class="value">¥${fmtPrice(totalMaintenance)}</div>
+          <div class="sub">占价值 <strong>${totalValue > 0 ? (totalMaintenance / totalValue * 100).toFixed(1) : 0}%</strong></div>
+        </div>
+        <div class="stats-overview-card highlight-purple">
+          <div class="label">分类数</div>
+          <div class="value">${categoryStats.length}</div>
+          <div class="sub">累计 <strong>${categoryStats.reduce((s, c) => s + (c.count || 0), 0)}</strong> 件资产</div>
+        </div>
+      </div>
+    `;
+
+    /* ============ 2. Category Distribution Donut ============ */
+    const totalCatCount = categoryStats.reduce((s, c) => s + (c.count || 0), 0);
+    let donutHTML = '';
+    if (categoryStats.length > 0 && totalCatCount > 0) {
+      const conicParts = categoryStats.map((c, i) => {
+        const pct = totalCatCount > 0 ? ((c.count || 0) / totalCatCount * 100) : 0;
+        return { name: c.name, count: c.count || 0, pct, color: cols[i % cols.length] };
+      });
+      // Build conic-gradient string
+      let accumPct = 0;
+      const gradientStops = conicParts.map(seg => {
+        const start = accumPct;
+        const end = accumPct + seg.pct;
+        accumPct = end;
+        return `${seg.color} ${start}% ${end}%`;
+      }).join(', ');
+      const bgStyle = `conic-gradient(${gradientStops})`;
+
+      const legendItems = conicParts.map(seg => `
+        <div class="stats-donut-legend-item">
+          <span class="color-dot" style="background:${seg.color}"></span>
+          ${seg.name}
+          <span class="pct">${seg.pct.toFixed(1)}%</span>
+        </div>
+      `).join('');
+
+      donutHTML = `
+        <div class="stats-section-title">分类分布</div>
+        <div class="stats-donut-container">
+          <div class="stats-donut-ring" style="background:${bgStyle}">
+            <div class="stats-donut-center">
+              <span class="num">${totalCatCount}</span>
+              <span class="lbl">总件数</span>
+            </div>
+          </div>
+          <div class="stats-donut-legend">${legendItems}</div>
+        </div>
+      `;
+    }
+
+    /* ============ 3. Daily Cost Ranking ============ */
+    let costHTML = '';
+    if (costTop.length > 0) {
+      const items = costTop.map((item, idx) => {
+        let rankClass = '';
+        if (idx === 0) rankClass = 'top1';
+        else if (idx === 1) rankClass = 'top2';
+        else if (idx === 2) rankClass = 'top3';
+        const daily = item.daily_cost != null ? item.daily_cost : 0;
+        const tco = item.tco != null ? item.tco : 0;
+        return `
+          <li class="stats-cost-item">
+            <span class="rank ${rankClass}">${idx + 1}</span>
+            <span class="cost-name">${escHtml(String(item.name || ''))}</span>
+            <span class="cost-daily">¥${daily.toFixed(2)}/天</span>
+            <span class="cost-tco">TCO: ¥${fmtPrice(tco)}</span>
+          </li>
+        `;
+      }).join('');
+      costHTML = `
+        <div class="stats-section-title">日均成本排行榜</div>
+        <ul class="stats-cost-list">${items}</ul>
+      `;
+    }
+
+    /* ============ 4. Monthly Trend Bar Chart ============ */
+    let trendHTML = '';
+    if (monthlyTrend.length > 0) {
+      const maxCount = Math.max(...monthlyTrend.map(m => m.count || 0), 1);
+      const bars = monthlyTrend.map(m => {
+        const pct = (m.count || 0) / maxCount * 100;
+        return `
+          <div class="stats-trend-bar-row">
+            <span class="stats-trend-bar-label">${escHtml(m.month || '')}</span>
+            <div class="stats-trend-bar-track">
+              <div class="stats-trend-bar-fill" style="width:${pct}%">
+                <span class="bar-count">${m.count || 0}</span>
+              </div>
+            </div>
+            <span class="stats-trend-bar-count">${m.count || 0}</span>
+          </div>
+        `;
+      }).join('');
+      trendHTML = `
+        <div class="stats-section-title">月度新增趋势</div>
+        <div class="stats-trend-chart">${bars}</div>
+      `;
+    }
+
+    container.innerHTML = overviewHTML + donutHTML + costHTML + trendHTML;
+  }
+
+  function escHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s;
+    return d.innerHTML;
+  }
+
+  /**
+   * Load stats data and render
+   */
+  window.setupStatsModule = function() {
+    const container = document.getElementById('stats-container');
+    if (!container) return;
+    container.innerHTML = '<div class="stats-loading">📊 加载统计数据...</div>';
+
+    const api = window.__chiwu_api;
+    if (!api || typeof api.api !== 'function') {
+      container.innerHTML = '<div class="stats-empty"><div class="icon">⚠️</div>API 未就绪</div>';
+      return;
+    }
+
+    api.api('/stats')
+      .then(function(data) {
+        renderStats(data);
+      })
+      .catch(function(err) {
+        console.error('[Stats] Failed to load:', err);
+        container.innerHTML = '<div class="stats-empty"><div class="icon">❌</div>加载统计失败: ' + escHtml(String(err.message || err)) + '</div>';
+      });
+  };
+})();
+</script>

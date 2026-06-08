@@ -1,0 +1,349 @@
+<!-- ChiWu 心愿单模块 -->
+<div id="wishes-module" class="tab-content" data-tab="wishes" style="display: none;">
+
+  <!-- 心愿列表 -->
+  <div id="wishes-placeholder">
+    <div class="wishes-loading">加载中…</div>
+  </div>
+
+  <!-- 新建心愿 Bottom Sheet -->
+  <div id="wish-form-placeholder" class="wish-form-container" style="display: none;">
+    <div class="wish-form-overlay"></div>
+    <div class="wish-form-sheet">
+      <h3>新增心愿</h3>
+      <form id="wish-form">
+        <label>
+          名称
+          <input type="text" name="name" required placeholder="写个心愿名称" />
+        </label>
+        <label>
+          目标价格 (¥)
+          <input type="number" name="target_price" required min="0" step="0.01" placeholder="0.00" />
+        </label>
+        <label>
+          目标日期
+          <input type="date" name="target_date" />
+        </label>
+        <label>
+          备注
+          <textarea name="note" rows="2" placeholder="备注（选填）"></textarea>
+        </label>
+        <div class="wish-form-actions">
+          <button type="button" class="btn-cancel" data-wish-cancel>取消</button>
+          <button type="submit" class="btn-submit">提交</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const DEFAULT_API = window.__chiwu_api || '/api';
+
+  // ---------- render ----------
+  function renderWishList(items) {
+    const root = document.getElementById('wishes-placeholder');
+    if (!root) return;
+    if (!items || items.length === 0) {
+      root.innerHTML = '<div class="wishes-empty">还没有心愿，点右下角新建 😊</div>';
+      return;
+    }
+    root.innerHTML = items.map(function(w) {
+      var doneCls = w.is_done ? ' wish-card--done' : '';
+      return '<div class="wish-card' + doneCls + '" data-id="' + w.id + '">' +
+        '<div class="wish-card__body">' +
+          '<div class="wish-card__name">' + escHtml(w.name) + '</div>' +
+          '<div class="wish-card__meta">' +
+            '<span class="wish-card__price">¥' + fmtPrice(w.target_price) + '</span>' +
+            (w.target_date ? '<span class="wish-card__date">' + w.target_date + '</span>' : '') +
+          '</div>' +
+          (w.note ? '<div class="wish-card__note">' + escHtml(w.note) + '</div>' : '') +
+        '</div>' +
+        '<div class="wish-card__actions">' +
+          (w.is_done ? '' : '<button class="btn-convert" data-wish-convert="' + w.id + '">转资产</button>') +
+          '<button class="btn-delete" data-wish-delete="' + w.id + '">删除</button>' +
+        '</div>' +
+      '</div>';
+    }).join('');
+  }
+
+  function escHtml(s) {
+    if (!s) return '';
+    var d = document.createElement('div');
+    d.appendChild(document.createTextNode(s));
+    return d.innerHTML;
+  }
+
+  function fmtPrice(v) {
+    var n = parseFloat(v);
+    return isNaN(n) ? v : n.toFixed(2);
+  }
+
+  // ---------- data ----------
+  function loadWishes() {
+    var el = document.getElementById('wishes-placeholder');
+    if (el) el.innerHTML = '<div class="wishes-loading">加载中…</div>';
+    return fetch(DEFAULT_API + '/wishes')
+      .then(function(r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+      .then(function(data) {
+        renderWishList(data);
+      })
+      .catch(function(err) {
+        var el = document.getElementById('wishes-placeholder');
+        if (el) el.innerHTML = '<div class="wishes-error">加载失败: ' + escHtml(err.message) + '</div>';
+      });
+  }
+
+  // ---------- delete ----------
+  function handleDelete(id) {
+    if (!confirm('确定删除此心愿？')) return;
+    fetch(DEFAULT_API + '/wishes/' + id, { method: 'DELETE' })
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        loadWishes();
+      })
+      .catch(function(err) { alert('删除失败: ' + err.message); });
+  }
+
+  // ---------- convert ----------
+  function handleConvert(id) {
+    if (!confirm('将此心愿转为实际资产？')) return;
+    fetch(DEFAULT_API + '/wishes/' + id + '/convert', { method: 'POST' })
+      .then(function(r) {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        loadWishes();
+      })
+      .catch(function(err) { alert('转换失败: ' + err.message); });
+  }
+
+  // ---------- form ----------
+  function openForm() {
+    var el = document.getElementById('wish-form-placeholder');
+    if (el) el.style.display = '';
+  }
+
+  function closeForm() {
+    var el = document.getElementById('wish-form-placeholder');
+    if (el) el.style.display = 'none';
+    var form = document.getElementById('wish-form');
+    if (form) form.reset();
+  }
+
+  // ---------- setup ----------
+  function setupWishesModule() {
+    var root = document.getElementById('wishes-module');
+    if (!root) return;
+
+    // tab activation listener
+    var appRoot = root.closest('[data-active-tab]') || document;
+    var observer = new MutationObserver(function() {
+      var active = (appRoot.getAttribute('data-active-tab') || '');
+      if (active === 'wishes') {
+        loadWishes();
+      }
+    });
+    observer.observe(appRoot, { attributes: true, attributeFilter: ['data-active-tab'] });
+
+    // initial load if already active
+    var activeNow = (appRoot.getAttribute('data-active-tab') || '');
+    if (activeNow === 'wishes') {
+      loadWishes();
+    }
+
+    // delegation: delete, convert
+    root.addEventListener('click', function(e) {
+      var t = e.target;
+      if (t.hasAttribute('data-wish-delete')) {
+        e.preventDefault();
+        handleDelete(t.getAttribute('data-wish-delete'));
+      } else if (t.hasAttribute('data-wish-convert')) {
+        e.preventDefault();
+        handleConvert(t.getAttribute('data-wish-convert'));
+      } else if (t.hasAttribute('data-wish-cancel')) {
+        e.preventDefault();
+        closeForm();
+      }
+    });
+
+    // form submit
+    var form = document.getElementById('wish-form');
+    if (form) {
+      form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        var fd = new FormData(form);
+        var body = JSON.stringify({
+          name: fd.get('name'),
+          target_price: parseFloat(fd.get('target_price')) || 0,
+          target_date: fd.get('target_date') || null,
+          note: fd.get('note') || ''
+        });
+        fetch(DEFAULT_API + '/wishes', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: body
+        })
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          closeForm();
+          loadWishes();
+        })
+        .catch(function(err) { alert('提交失败: ' + err.message); });
+      });
+    }
+
+    // expose openWishForm
+    window.__chiwu_openWishForm = openForm;
+  }
+
+  // run on DOMContentLoaded or straight away
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupWishesModule);
+  } else {
+    setupWishesModule();
+  }
+})();
+</script>
+
+<style>
+#wishes-module .wishes-loading,
+#wishes-module .wishes-empty,
+#wishes-module .wishes-error {
+  padding: 40px 16px;
+  text-align: center;
+  color: var(--text-muted, #888);
+}
+#wishes-module .wishes-error { color: #e74c3c; }
+
+.wish-card {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: var(--card-bg, #fff);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin: 0 0 10px;
+  box-shadow: 0 1px 4px rgba(0,0,0,.08);
+  transition: opacity .25s;
+}
+.wish-card--done {
+  opacity: 0.45;
+}
+.wish-card__body { flex: 1; min-width: 0; }
+.wish-card__name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 4px;
+}
+.wish-card__meta {
+  display: flex;
+  gap: 12px;
+  font-size: 14px;
+  color: var(--text-muted, #888);
+}
+.wish-card__price { color: var(--accent, #e67e22); font-weight: 600; }
+.wish-card__note {
+  margin-top: 6px;
+  font-size: 13px;
+  color: var(--text-muted, #999);
+  white-space: pre-wrap;
+}
+.wish-card__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+  margin-left: 12px;
+}
+.wish-card__actions button {
+  padding: 4px 10px;
+  font-size: 12px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 6px;
+  cursor: pointer;
+  background: var(--btn-bg, #f5f5f5);
+  color: var(--text, #333);
+  white-space: nowrap;
+}
+.wish-card__actions .btn-convert {
+  border-color: var(--accent, #e67e22);
+  color: var(--accent, #e67e22);
+}
+.wish-card__actions .btn-delete {
+  border-color: #e74c3c;
+  color: #e74c3c;
+}
+
+/* form sheet */
+.wish-form-container {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+}
+.wish-form-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,.35);
+}
+.wish-form-sheet {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  background: var(--bg, #fff);
+  border-radius: 16px 16px 0 0;
+  padding: 20px 20px env(safe-area-inset-bottom, 20px);
+  box-shadow: 0 -4px 20px rgba(0,0,0,.12);
+  z-index: 1;
+}
+.wish-form-sheet h3 {
+  margin: 0 0 16px;
+  font-size: 18px;
+  text-align: center;
+}
+.wish-form-sheet label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 14px;
+  color: var(--text-muted, #666);
+}
+.wish-form-sheet input,
+.wish-form-sheet textarea {
+  display: block;
+  width: 100%;
+  margin-top: 4px;
+  padding: 10px 12px;
+  font-size: 15px;
+  border: 1px solid var(--border, #ddd);
+  border-radius: 8px;
+  box-sizing: border-box;
+  background: var(--input-bg, #fafafa);
+}
+.wish-form-sheet textarea { resize: vertical; }
+.wish-form-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+.wish-form-actions button {
+  flex: 1;
+  padding: 10px 0;
+  border: none;
+  border-radius: 8px;
+  font-size: 15px;
+  cursor: pointer;
+}
+.btn-cancel {
+  background: var(--btn-secondary-bg, #eee);
+  color: var(--text, #333);
+}
+.btn-submit {
+  background: var(--accent, #e67e22);
+  color: #fff;
+}
+</style>

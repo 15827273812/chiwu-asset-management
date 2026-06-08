@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Vue Test</title>
+</head>
+<body>
+<div id="app">
+  <h1>{{ message }}</h1>
+  <p>{{ count }}</p>
+  <button @click="count++">+1</button>
+</div>
+<script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+<script>
+const { createApp, ref } = Vue;
+const app = createApp({
+  setup() {
+    const message = ref('Hello ChiWu!');
+    const count = ref(0);
+    return { message, count };
+  }
+});
+app.mount('#app');
+</script>
+</body>
+</html>
