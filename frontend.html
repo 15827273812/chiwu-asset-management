@@ -1467,8 +1467,8 @@ body {
 const { createApp, ref, reactive, computed, onMounted, watch, nextTick } = Vue;
 const API_BASE = window.location.origin;
 
-const app = createApp({
-  setup() {
+const AppComp = {
+  setup() { {
     // ===== Global State =====
     const activeTab = ref('assets');
     const isDark = ref(window.matchMedia('(prefers-color-scheme: dark)').matches);
