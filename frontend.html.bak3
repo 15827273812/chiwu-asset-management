@@ -1072,42 +1072,6 @@ body {
           <input type="number" v-model.number="statsTopCatCount" min="1" max="50"
             style="width:60px;padding:4px 8px;border:1px solid var(--border);border-radius:6px;font-size:14px;background:var(--bg);color:var(--text);text-align:center">
         </div>
-        <div style="border-top:1px solid var(--border);margin:8px 0 12px"></div>
-        <!-- Visible Categories: multi-select dropdown -->
-        <div class="setting-item">
-          <div>
-            <div class="setting-label">👁️ 可见分类</div>
-            <div class="setting-desc">选择后在资产表单和统计中显示的父分类（多选）</div>
-          </div>
-        </div>
-        <div style="display:flex;flex-wrap:wrap;gap:6px">
-          <template v-for="cat in categories" :key="'vis-'+cat.id">
-            <div
-              @click="toggleCategoryVisibility(cat.id)"
-              style="
-                display:inline-flex;align-items:center;gap:4px;
-                padding:4px 10px;border-radius:14px;font-size:13px;cursor:pointer;
-                border:1px solid var(--border);
-                background:var(--bg);
-                transition:all 0.15s;
-                user-select:none;
-              "
-              :style="(visibleCategories === null || visibleCategories.includes(cat.id)) ?
-                'background:var(--primary);color:#fff;border-color:var(--primary)' :
-                'background:var(--bg);color:var(--text)'
-              "
-            >
-              <span>{{ cat.icon }} {{ cat.name }}</span>
-            </div>
-          </template>
-        </div>
-        <div style="margin-top:8px">
-          <button @click="visibleCategories = null; localStorage.setItem('chiwu_visible_categories', JSON.stringify(null))"
-            style="background:none;border:none;color:var(--primary);font-size:12px;cursor:pointer;padding:0">全选</button>
-          <span style="color:var(--text-secondary);margin:0 4px">·</span>
-          <button @click="visibleCategories = []; localStorage.setItem('chiwu_visible_categories', JSON.stringify([]))"
-            style="background:none;border:none;color:var(--danger);font-size:12px;cursor:pointer;padding:0">全不选</button>
-        </div>
       </div>
     </div>
     <!-- Categories (collapsible) -->
@@ -1117,28 +1081,36 @@ body {
         <span class="collapsible-arrow" :class="{open: showCatsSection}">▾</span>
       </div>
       <div v-show="showCatsSection" class="collapsible-body">
-        <!-- Multi-level collapsible categories -->
-        <div v-for="cat in categories" :key="cat.id">
-          <!-- Parent row with collapsible arrow -->
-          <div class="setting-item" style="cursor:pointer" @click="toggleCatCollapse(cat.id)">
-            <div style="display:flex;align-items:center;gap:6px">
-              <span class="collapsible-arrow" :class="{open: isCatCollapsed(cat.id)}" style="font-size:10px;color:var(--text-secondary);width:12px;text-align:center">
-                {{ (cat.children || []).length > 0 ? '▾' : '' }}
-              </span>
-              <div>
-                <div class="setting-label">{{ cat.icon }} {{ cat.name }}</div>
-                <div class="setting-desc">{{ cat.asset_count }} 个资产</div>
-              </div>
+        <!-- Each parent with its children grouped -->
+        <div v-for="cat in categories" :key="cat.id" style="margin-bottom:4px">
+          <!-- Parent -->
+          <div class="setting-item">
+            <div>
+              <div class="setting-label">{{ cat.icon }} {{ cat.name }}</div>
+              <div class="setting-desc">{{ cat.asset_count }} 个资产</div>
             </div>
-            <button style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer" @click.stop="deleteCategory(cat.id)">删除</button>
+            <button style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer" @click="deleteCategory(cat.id)">删除</button>
           </div>
-          <!-- Children (shown when parent is expanded) -->
-          <div v-if="isCatCollapsed(cat.id)" v-for="sub in (cat.children || [])" :key="sub.id" class="setting-item" style="padding-left:32px;padding-top:4px;padding-bottom:4px;border-bottom:none">
+          <!-- Children indented under parent -->
+          <div v-for="sub in (cat.children || [])" :key="sub.id" class="setting-item" style="padding-left:24px;padding-top:4px;padding-bottom:4px;border-bottom:none">
             <div>
               <div class="setting-label" style="font-size:14px">{{ sub.icon }} {{ sub.name }}</div>
               <div class="setting-desc">{{ sub.asset_count }} 个资产 · 子分类</div>
             </div>
             <button style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer" @click="deleteCategory(sub.id)">删除</button>
+          </div>
+        </div>
+        <!-- Separator -->
+        <div style="border-top:1px solid var(--border);margin:8px 0"></div>
+        <!-- Visible Categories subsection -->
+        <div>
+          <h4 style="font-size:14px;margin-bottom:4px">👁️ 可见分类</h4>
+          <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">勾选后在资产表单和统计中显示的父分类</div>
+          <div v-for="cat in categories" :key="'vis-' + cat.id" class="setting-item" style="border-bottom:none;padding:6px 0">
+            <div class="setting-label" style="display:flex;align-items:center;gap:8px">
+              <input type="checkbox" :checked="visibleCategories === null || visibleCategories.includes(cat.id)" @change="toggleCategoryVisibility(cat.id)" style="width:16px;height:16px;cursor:pointer">
+              <span>{{ cat.icon }} {{ cat.name }}</span>
+            </div>
           </div>
         </div>
       </div>
@@ -1696,30 +1668,6 @@ const app = createApp({
     function toggleCatsSection() { showCatsSection.value = !showCatsSection.value; saveCollapseState(); }
     function toggleChannelsSection() { showChannelsSection.value = !showChannelsSection.value; saveCollapseState(); }
 
-    // ===== Category collapse state (per-parent in category management) =====
-    const catCollapseState = ref(loadCatCollapseState());
-    function loadCatCollapseState() {
-      try {
-        const saved = JSON.parse(localStorage.getItem('chiwu_cat_collapse'));
-        if (saved && typeof saved === 'object') return saved;
-      } catch(e) {}
-      return {};
-    }
-    function saveCatCollapseState() {
-      localStorage.setItem('chiwu_cat_collapse', JSON.stringify(catCollapseState.value));
-    }
-    function isCatCollapsed(catId) {
-      // default collapsed (true = show children), unless user explicitly closed it
-      const key = String(catId);
-      if (catCollapseState.value[key] === false) return false;
-      return true;
-    }
-    function toggleCatCollapse(catId) {
-      const key = String(catId);
-      catCollapseState.value = { ...catCollapseState.value, [key]: !isCatCollapsed(catId) };
-      saveCatCollapseState();
-    }
-
     // ===== Visible Categories (Issue 3) =====
     function loadVisibleCategories() {
       try {
@@ -1764,9 +1712,9 @@ const app = createApp({
     // ===== Tabs =====
     const tabs = [
       { id: 'assets', label: '资产', icon: '📱' },
-      { id: 'timeline', label: '时间轴', icon: '🕐' },
-      { id: 'wishes', label: '心愿', icon: '⭐' },
       { id: 'stats', label: '统计', icon: '📊' },
+      { id: 'wishes', label: '心愿', icon: '⭐' },
+      { id: 'timeline', label: '时间线', icon: '🕐' },
       { id: 'settings', label: '设置', icon: '⚙️' },
     ];
 
@@ -2446,7 +2394,6 @@ const app = createApp({
       filteredTimeline, resetTimelineFilter,
       // Settings collapsible
       showStatsSettingsSection, showCatsSection, showChannelsSection,
-      catCollapseState, isCatCollapsed, toggleCatCollapse,
       toggleStatsSection, toggleCatsSection, toggleChannelsSection,
       // Visible Categories
       visibleCategories, visibleCategoryList,
