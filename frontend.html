@@ -602,6 +602,114 @@ body {
 .flex-center { display: flex; align-items: center; gap: 8px; }
 .truncate { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .v-space { margin-top: 8px; }
+
+/* Asset filter bar - inline filters + buttons */
+.asset-filter-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.asset-filter-left {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  flex: 1;
+}
+.asset-filter-right {
+  display: flex;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.btn-icon {
+  background: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  color: var(--text);
+}
+.btn-icon.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+.status-filter {
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--card-bg);
+  color: var(--text);
+  font-size: 13px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.status-filter.active {
+  background: var(--primary);
+  color: #fff;
+  border-color: var(--primary);
+}
+
+/* Card header-row: name on left, status tag on right */
+.card-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.card-body-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.card-meta {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+/* Warranty tags */
+.tag-warranty {
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-weight: 600;
+}
+.tag-warranty-active {
+  background: #e8f5e9;
+  color: #2e7d32;
+}
+.dark .tag-warranty-active {
+  background: rgba(46, 125, 50, 0.2);
+  color: #81c784;
+}
+.tag-warranty-expired {
+  background: #fbe9e7;
+  color: #bf360c;
+}
+.dark .tag-warranty-expired {
+  background: rgba(191, 54, 12, 0.2);
+  color: #ef9a9a;
+}
+.card-top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.tag-sm {
+  font-size: 10px;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-weight: 600;
+}
 </style>
 </head>
 <body>
@@ -628,8 +736,16 @@ body {
       <span class="search-icon">🔍</span>
       <input type="search" v-model="assetSearch" placeholder="搜索资产..." @input="filterAssets">
     </div>
-    <div class="status-filters">
-      <button v-for="f in statusFilters" :key="f.key" class="status-filter" :class="{active: assetStatusFilter === f.key}" @click="assetStatusFilter = f.key; filterAssets()">{{ f.label }}</button>
+
+    <!-- Asset Overview Cards + Layout/Actions inline -->
+    <div class="asset-filter-bar">
+      <div class="asset-filter-left">
+        <button v-for="f in statusFilters" :key="f.key" class="status-filter" :class="{active: assetStatusFilter === f.key}" @click="assetStatusFilter = f.key; filterAssets()">{{ f.label }}</button>
+      </div>
+      <div class="asset-filter-right">
+        <button class="btn-icon" @click="toggleLayout" title="切换布局">{{ layoutView === 'grid' ? '☰' : '▦' }}</button>
+        <button class="btn-icon" :class="{active: showAdvFilter}" @click="showAdvFilter = true" title="筛选">⫸</button>
+      </div>
     </div>
     <!-- Asset Overview Cards -->
     <div class="asset-overview-cards">
@@ -653,13 +769,6 @@ body {
       <p>{{ assetSearch ? '没有找到匹配的资产' : '还没有资产，点击 + 添加第一个' }}</p>
     </div>
     <div v-else>
-      <!-- Asset Filter Actions: layout switch + advanced filter -->
-      <div class="asset-filter-actions">
-        <button class="btn" :class="{active: layoutView === 'grid'}" @click="setLayoutView('grid')">▦ 网格</button>
-        <button class="btn" :class="{active: layoutView === 'list'}" @click="setLayoutView('list')">☰ 列表</button>
-        <button class="btn" :class="{active: showAdvFilter}" @click="showAdvFilter = true">⫸ 筛选</button>
-      </div>
-
       <!-- Advanced Filter Panel -->
       <template v-if="showAdvFilter">
         <div class="sheet-overlay" @click="showAdvFilter = false"></div>
@@ -709,18 +818,19 @@ body {
             <button class="swipe-btn swipe-btn-danger" @click="deleteAsset(a.id)">删除</button>
           </div>
           <div class="card" @click="openDetail(a)">
-            <div class="card-flex">
-              <div>
-                <div style="font-size:16px;font-weight:600">{{ a.category_icon || '📦' }}  {{ a.name }}</div>
-                <div style="margin-top:4px;display:flex;gap:6px;align-items:center;flex-wrap:wrap">
-                  <img v-if="a.image" :src="a.image" class="list-thumb-sm" alt="">
-                  <span class="status-tag" :class="'tag-' + a.status">{{ statusLabel(a.status) }}</span>
-                  <span class="price-sm">{{ a.purchase_price }}</span>
-                  <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
-                </div>
+            <div class="card-top-row">
+              <div style="font-size:16px;font-weight:600">{{ a.category_icon || '📦' }} {{ a.name }}</div>
+              <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span>
+            </div>
+            <div style="display:flex;justify-content:space-between;align-items:flex-start">
+              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
+                <img v-if="a.image" :src="a.image" class="list-thumb-sm" alt="">
+                <span class="price-sm">¥{{ Number(a.purchase_price || 0).toLocaleString() }}</span>
+                <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
+                <span v-if="a.warranty_months > 0" class="tag-sm" :class="'tag-' + (a.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:10px">{{ a.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
               </div>
-              <div style="text-align:right">
-                <div class="price">{{ a.current_value || a.purchase_price || 0 }}</div>
+              <div style="text-align:right;margin-top:4px">
+                <div class="price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
                 <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">{{ a.holding_days }}天</div>
               </div>
             </div>
@@ -737,7 +847,7 @@ body {
               <div v-else class="grid-icon">{{ a.category_icon || '📦' }}</div>
             </div>
             <div class="grid-name">{{ a.name }}</div>
-            <div class="grid-price">¥{{ formatK(a.current_value || a.purchase_price || 0) }}</div>
+            <div class="grid-price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
             <div class="grid-status">
               <span class="status-tag" :class="'tag-' + a.status">{{ statusLabel(a.status) }}</span>
             </div>
@@ -1030,6 +1140,7 @@ body {
     <div class="detail-header">
       <button class="detail-back" @click="closeDetail">←</button>
       <span class="detail-title">{{ detailAsset?.name }}</span>
+      <span class="tag" :class="'tag-' + (detailAsset?.status || '')" style="font-size:12px;margin-left:8px">{{ statusLabel(detailAsset?.status) }}</span>
     </div>
     <!-- Image -->
     <div class="detail-section" v-if="detailAsset?.image">
@@ -1056,12 +1167,22 @@ body {
         </div>
         <div class="detail-item">
           <div class="label">购买价格</div>
-          <div class="value"><span class="price">{{ detailAsset?.purchase_price || 0 }}</span></div>
+          <div class="value"><span class="price">¥{{ Number(detailAsset?.purchase_price || 0).toLocaleString() }}</span></div>
         </div>
         <div class="detail-item">
           <div class="label">当前价值</div>
-          <div class="value"><span class="price">{{ detailAsset?.current_value || '-' }}</span></div>
+          <div class="value"><span class="price">{{ detailAsset?.current_value ? '¥' + Number(detailAsset.current_value).toLocaleString() : '-' }}</span></div>
         </div>
+<div class="detail-item" v-if="detailAsset?.warranty_months > 0">
+          <div class="label">保修期限</div>
+          <div class="value" style="display:flex;align-items:center;gap:6px">
+            <span>{{ detailAsset.warranty_months }}个月</span>
+            <span v-if="detailAsset.warranty_start_date" style="font-size:12px;color:var(--text-secondary);margin-left:4px">({{ detailAsset.warranty_start_date }})</span><span v-else style="font-size:12px;color:var(--text-secondary);margin-left:4px">(起始日未设)</span>
+            <span class="tag" :class="'tag-' + (detailAsset.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:11px">{{ detailAsset.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
+          </div>
+        </div>
+        <div class="detail-item" v-if="detailAsset?.warranty_months > 0">
+          
       </div>
       <div v-if="detailAsset?.notes" style="margin-top:12px">
         <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
@@ -1074,6 +1195,7 @@ body {
       <div class="detail-grid">
         <div class="detail-item">
           <div class="label">维护总费用</div>
+        </div>
           <div class="value">¥{{ detailAsset?.total_maintenance_cost || 0 }}</div>
         </div>
         <div class="detail-item">
@@ -1176,6 +1298,19 @@ body {
           </select>
         </div>
       </div>
+      <div class="form-group">
+          <div style="display:flex;gap:10px">
+            <div style="flex:1">
+              <label>保修时长（月）</label>
+              <input type="number" v-model="formData.warranty_months" placeholder="如 12" min="0" style="display:block;width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;box-sizing:border-box">
+            </div>
+            <div style="flex:1">
+              <label>保修起始日</label>
+              <input type="text" readonly placeholder="YYYY-MM-DD" :value="formData.warranty_start_date" @click="openDatePicker($event, 'formData.warranty_start_date')" style="display:block;width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;box-sizing:border-box">
+            </div>
+          </div>
+        </div>
+
       <div class="form-group">
         <label>备注</label>
         <textarea v-model="formData.notes" placeholder="可选备注信息"></textarea>
@@ -1293,9 +1428,7 @@ const app = createApp({
     function formatK(val) {
       const n = Number(val);
       if (isNaN(n)) return '0';
-      if (n >= 10000) return (n / 10000).toFixed(1) + '万';
-      if (n >= 1000) return (n / 1000).toFixed(1) + 'K';
-      return n.toFixed(0);
+      return n.toLocaleString('zh-CN', { minimumFractionDigits: 0, maximumFractionDigits: 2 });
     }
 
     // ===== Asset Overview Computeds =====
@@ -1518,13 +1651,13 @@ const app = createApp({
     // ===== Status Helpers =====
     const statusFilters = [
       { key: '', label: '全部' },
-      { key: 'active', label: '在用' },
-      { key: 'sold', label: '已出售' },
-      { key: 'discarded', label: '报废' },
-      { key: 'lost', label: '丢失' },
+      { key: 'active', label: '活跃中' },
+      { key: 'warranty', label: '保障中' },
+      { key: 'retired', label: '已退役' },
+      { key: 'sold', label: '已售出' },
     ];
     function statusLabel(s) {
-      const map = { active: '在用', sold: '已出售', discarded: '报废', lost: '丢失' };
+      const map = { active: '活跃中', sold: '已售出', discarded: '已退役', lost: '已丢失', retired: '已退役' };
       return map[s] || s;
     }
 
@@ -1536,9 +1669,9 @@ const app = createApp({
 
     // ===== Layout & Advanced Filter =====
     const layoutView = ref(localStorage.getItem('chiwu_layout_view') || 'list');
-    function setLayoutView(v) {
-      layoutView.value = v;
-      localStorage.setItem('chiwu_layout_view', v);
+    function toggleLayout() {
+      layoutView.value = layoutView.value === 'grid' ? 'list' : 'grid';
+      localStorage.setItem('chiwu_layout_view', layoutView.value);
     }
     const showAdvFilter = ref(false);
     const advFilterCat = ref('');
@@ -1598,7 +1731,26 @@ const app = createApp({
         if (assetSearch.value) params.set('search', assetSearch.value);
         if (assetStatusFilter.value) params.set('status', assetStatusFilter.value);
         const qs = params.toString();
-        assets.value = await api('/assets' + (qs ? '?' + qs : ''));
+        const rawAssets = await api('/assets' + (qs ? '?' + qs : ''));
+      // 前端计算保修状态
+      const today = new Date();
+      rawAssets.forEach(a => {
+        if (a.warranty_months && a.warranty_months > 0) {
+          let start;
+          if (a.warranty_start_date) {
+            start = new Date(a.warranty_start_date);
+          } else if (a.purchase_date) {
+            start = new Date(a.purchase_date);
+            a.warranty_start_date = a.purchase_date;
+          }
+          if (start) {
+            const end = new Date(start);
+            end.setMonth(end.getMonth() + a.warranty_months);
+            a.warranty_status = today >= start && today <= end ? 'active' : 'expired';
+          }
+        }
+      });
+      assets.value = rawAssets;
       } catch (e) { console.error('Load assets error:', e); }
       finally { assetsLoading.value = false; }
     }
@@ -1736,6 +1888,11 @@ const app = createApp({
 
     function closeDetail() {
       showDetail.value = false;
+
+    function purchaseDateForForm() {
+      const d = new Date();
+      return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0');
+    }
       detailAsset.value = null;
       assetMaintenances.value = [];
     }
@@ -1790,6 +1947,8 @@ const app = createApp({
           formData.current_value = a.current_value || null;
           formData.status = a.status || 'active';
           formData.notes = a.notes || '';
+          formData.warranty_months = a.warranty_months || null;
+          formData.warranty_start_date = a.warranty_start_date || '';
         } catch (e) { console.error('Load asset for edit error:', e); }
       } else {
         formData.name = '';
@@ -1801,6 +1960,8 @@ const app = createApp({
         formData.status = 'active';
         formData.notes = '';
         formData.image = '';
+        formData.warranty_months = null;
+        formData.warranty_start_date = '';
       }
       showAssetForm.value = true;
       showSuggest.value = false;
@@ -2044,7 +2205,7 @@ const app = createApp({
       assets, assetsLoading, assetSearch, assetStatusFilter, statusFilters,
       filteredAssets, loadAssets, filterAssets,
       // Layout & Advanced Filter
-      layoutView, setLayoutView,
+      layoutView, toggleLayout,
       showAdvFilter, advFilterCat, advFilterChannel,
       advFilterPriceMin, advFilterPriceMax,
       advFilterDaysMin, advFilterDaysMax,
