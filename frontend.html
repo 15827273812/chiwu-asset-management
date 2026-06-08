@@ -1136,7 +1136,7 @@ body {
   </div>
 
   <!-- ===== Detail View ===== -->
-  <div v-if="showDetail" class="detail-view">
+  <div v-if="showDetail" class="detail-view" @touchstart="dtTouchStart" @touchend="dtTouchEnd">
     <div class="detail-header">
       <button class="detail-back" @click="closeDetail">←</button>
       <span class="detail-title">{{ detailAsset?.name }}</span>
@@ -1979,6 +1979,8 @@ const app = createApp({
         status: formData.status,
         notes: formData.notes || null,
         image: formData.image || null,
+        warranty_months: formData.warranty_months || null,
+        warranty_start_date: formData.warranty_start_date || null,
       };
       try {
         if (formEditId.value) {
@@ -2194,7 +2196,12 @@ const app = createApp({
       }
     });
 
-    return {
+    
+    // Detail swipe back
+    const DT = { x: 0 };
+    function dtTouchStart(e) { DT.x = e.touches[0].clientX; }
+    function dtTouchEnd(e) { const dx = e.changedTouches[0].clientX - DT.x; if (dx > 60) closeDetail(); }
+return {
       // Tab
       activeTab, tabs, switchTab,
       // Dark mode
@@ -2247,6 +2254,7 @@ const app = createApp({
       deleteCategory, deleteChannel, exportJSON,
       // Helpers
       statusLabel, formatK,
+      dtTouchStart, dtTouchEnd,
     };
   }
 });
