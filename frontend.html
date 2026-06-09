@@ -1070,7 +1070,7 @@ body {
           <label>状态</label>
           <select v-model="timelineFilterStatus">
             <option value="">全部</option>
-            <option value="active">在用</option>
+            <option value="active">活跃中</option>
             <option value="sold">已出售</option>
             <option value="discarded">报废</option>
             <option value="lost">丢失</option>
@@ -1426,7 +1426,7 @@ body {
         <div class="form-group">
           <label>状态</label>
           <select v-model="formData.status">
-            <option value="active">在用</option>
+            <option value="active">活跃中</option>
             <option value="sold">已售出</option>
             <option value="discarded">已退役</option>
             <option value="lost">已丢失</option>
@@ -2546,9 +2546,9 @@ const AppComp = {
           // 电脑
           { match: /macbook|mac ?(pro|air|mini|studio|book)|thinkpad|xps|surface|拯救者|外星人|rog|天选|小新/ig, icon: '💻' },
           // 平板
-          { match: /ipad|matepad|galaxy tab|surface pro|联想.*pad|小米.*pad/ig, icon: '📱' },
+          { match: /ipad|matepad|galaxy tab|surface pro|联想.*pad|小米.*pad|pro ?12\.?9|pro ?11/ig, icon: '📱' },
           // 耳机
-          { match: /airpods|wh-1000|xm[456]|sony.*耳机|bose|freebuds|buds ?pro|buds ?live/galaxy.*buds/ig, icon: '🎧' },
+          { match: /airpods|wh-1000|xm[456]|sony.*耳机|bose|freebuds|buds ?pro|buds ?live|galaxy.*buds|sony.*wh|sony.*wf|sony.*1000/ig, icon: '🎧' },
           // 手表
           { match: /apple watch|galaxy watch|watch ?(ultra|gt|pro)|手环|band ?[0-9]/ig, icon: '⌚' },
           // 显示器/电视
