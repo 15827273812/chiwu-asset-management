@@ -58,8 +58,17 @@ class ChannelCreate(BaseModel):
 class WishCreate(BaseModel):
     name: str
     target_price: Optional[float] = None
+    price: Optional[float] = None
     target_date: Optional[str] = None
     note: Optional[str] = None
+
+class WishUpdate(BaseModel):
+    name: Optional[str] = None
+    target_price: Optional[float] = None
+    price: Optional[float] = None
+    target_date: Optional[str] = None
+    note: Optional[str] = None
+    is_done: Optional[bool] = None
 
 # ------ 辅助函数 ------
 def asset_to_dict(a: Asset, db: Session):
@@ -280,6 +289,7 @@ def list_wishes(db: Session = Depends(get_db)):
     ws = db.query(WishItem).order_by(WishItem.created_at.desc()).all()
     return [{"id": w.id, "name": w.name, "target_price": w.target_price,
              "target_date": w.target_date.isoformat() if w.target_date else None,
+             "price": w.price,
              "note": w.note, "is_done": w.is_done,
              "converted_asset_id": w.converted_asset_id,
              "created_at": w.created_at.isoformat() if w.created_at else None} for w in ws]
@@ -288,6 +298,7 @@ def list_wishes(db: Session = Depends(get_db)):
 def create_wish(data: WishCreate, db: Session = Depends(get_db)):
     w = WishItem(name=data.name)
     if data.target_price: w.target_price = data.target_price
+    if data.price: w.price = data.price
     if data.target_date: w.target_date = datetime.date.fromisoformat(data.target_date)
     if data.note: w.note = data.note
     db.add(w)
@@ -295,6 +306,7 @@ def create_wish(data: WishCreate, db: Session = Depends(get_db)):
     db.refresh(w)
     return {"id": w.id, "name": w.name, "target_price": w.target_price,
             "target_date": w.target_date.isoformat() if w.target_date else None,
+            "price": w.price,
             "is_done": False}
 
 @router.post("/wishes/{wish_id}/convert")
@@ -315,6 +327,22 @@ def convert_wish_to_asset(wish_id: int, data: AssetCreate, db: Session = Depends
     db.commit()
     db.refresh(a)
     return asset_to_dict(a, db)
+
+@router.put("/wishes/{wish_id}")
+def update_wish(wish_id: int, data: WishUpdate, db: Session = Depends(get_db)):
+    w = db.query(WishItem).filter(WishItem.id == wish_id).first()
+    if not w:
+        raise HTTPException(404, "心愿不存在")
+    for field in ["name","target_price","price","note","is_done"]:
+        val = getattr(data, field, None)
+        if val is not None: setattr(w, field, val)
+    if data.target_date: w.target_date = datetime.date.fromisoformat(data.target_date)
+    db.commit()
+    db.refresh(w)
+    return {"id": w.id, "name": w.name, "target_price": w.target_price,
+            "price": w.price,
+            "target_date": w.target_date.isoformat() if w.target_date else None,
+            "is_done": w.is_done}
 
 @router.delete("/wishes/{wish_id}")
 def delete_wish(wish_id: int, db: Session = Depends(get_db)):

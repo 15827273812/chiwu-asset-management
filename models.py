@@ -120,6 +120,7 @@ class WishItem(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(200), nullable=False)
     target_price = Column(Float, nullable=True)
+    price = Column(Float, nullable=True)
     target_date = Column(Date, nullable=True)
     note = Column(Text, nullable=True)
     is_done = Column(Boolean, default=False)

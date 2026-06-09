@@ -222,6 +222,19 @@ body {
 .wish-checkbox.done { background: var(--success); border-color: var(--success); color: #fff; }
 .wish-info { flex: 1; min-width: 0; }
 .wish-info .wish-name { font-size: 15px; font-weight: 500; }
+
+/* Wish Summary Card */
+.wish-summary-card { margin-bottom: 12px; }
+.wish-summary-row { display: flex; align-items: center; justify-content: space-around; }
+.wish-summary-item { text-align: center; flex: 1; }
+.wish-summary-val { font-size: 24px; font-weight: 700; }
+.wish-summary-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+.wish-summary-divider { width: 1px; height: 40px; background: var(--border); }
+
+/* Swipe Btn Info */
+.swipe-btn-info { background: #3b82f6; }
+.swipe-actions { gap: 2px; }
+.swipe-actions .swipe-btn { min-width: 60px; font-size: 12px; }
 .wish-info .wish-name.done-text { text-decoration: line-through; color: var(--text-secondary); }
 .wish-info .wish-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
 
@@ -728,7 +741,7 @@ body {
     <div class="page-header">
       <h1>资产</h1>
       <div class="header-actions">
-        <button class="header-btn" @click="showCamera = true" title="拍照识图">📷</button>
+        <!-- 相机功能已移除：当前环境不支持 getUserMedia -->
         <button class="header-btn" @click="openAssetForm()">+</button>
       </div>
     </div>
@@ -766,7 +779,7 @@ body {
     <div v-if="assetsLoading" class="loading">加载中...</div>
     <div v-else-if="filteredAssets.length === 0" class="empty-state">
       <div class="empty-icon">📭</div>
-      <p>{{ assetSearch ? '没有找到匹配的资产' : '还没有资产，点击 + 添加第一个' }}</p>
+      <p>{{ assetSearch ? '没有找到匹配的资产' : '还没有资产,点击 + 添加第一个' }}</p>
     </div>
     <div v-else>
       <!-- Advanced Filter Panel -->
@@ -878,13 +891,7 @@ body {
             <div class="big-value">¥{{ formatK(statsTotalValue) }}</div>
             <div style="font-size:13px;color:var(--text-secondary);margin-top:2px">资产总值</div>
           </div>
-          <div style="width:80px;height:80px">
-            <div class="status-stacked-bar" style="height:80px;border-radius:8px;flex-direction:column">
-              <div class="seg seg-active" :style="{height: statsActivePct + '%'}"></div>
-              <div class="seg seg-discarded" :style="{height: statsDiscardedPct + '%'}"></div>
-              <div class="seg seg-sold" :style="{height: statsSoldPct + '%'}"></div>
-            </div>
-          </div>
+
         </div>
         <div class="v-space"></div>
         <div class="meta-row">
@@ -952,15 +959,37 @@ body {
         <button class="header-btn" @click="openWishForm()">+</button>
       </div>
     </div>
+
+    <!-- 顶部概览卡片 -->
+    <div class="card wish-summary-card">
+      <div class="wish-summary-row">
+        <div class="wish-summary-item">
+          <div class="wish-summary-val">¥{{ formatK(wishTotalValue) }}</div>
+          <div class="wish-summary-lbl">心愿总值</div>
+        </div>
+        <div class="wish-summary-divider"></div>
+        <div class="wish-summary-item">
+          <div class="wish-summary-val">{{ wishes.length }}</div>
+          <div class="wish-summary-lbl">心愿数量</div>
+        </div>
+        <div class="wish-summary-divider"></div>
+        <div class="wish-summary-item">
+          <div class="wish-summary-val" style="color:var(--success)">{{ wishDoneCount }}</div>
+          <div class="wish-summary-lbl" style="color:var(--success)">已实现</div>
+        </div>
+      </div>
+    </div>
+
     <div v-if="wishesLoading" class="loading">加载中...</div>
     <div v-else-if="wishes.length === 0" class="empty-state">
       <div class="empty-icon">⭐</div>
-      <p>还没有心愿，点击 + 添加第一个</p>
+      <p>还没有心愿,点击 + 添加第一个</p>
     </div>
     <div v-else>
       <div v-for="w in wishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
         <div class="swipe-actions">
-          <button class="swipe-btn swipe-btn-primary" v-if="!w.is_done" @click="convertWish(w)">转资产</button>
+          <button class="swipe-btn swipe-btn-info" @click="editWish(w)">编辑</button>
+          <button class="swipe-btn swipe-btn-primary" v-if="!w.is_done" @click="convertWish(w)">转化</button>
           <button class="swipe-btn swipe-btn-danger" @click="deleteWish(w.id)">删除</button>
         </div>
         <div class="card" style="display:flex;align-items:flex-start;gap:12px">
@@ -968,6 +997,7 @@ body {
           <div class="wish-info">
             <div class="wish-name" :class="{'done-text': w.is_done}">{{ w.name }}</div>
             <div class="wish-meta">
+              <span v-if="w.price">价值 ¥{{ w.price }}</span>
               <span v-if="w.target_price">目标 ¥{{ w.target_price }}</span>
               <span v-if="w.target_date">期限 {{ w.target_date }}</span>
               <span v-if="w.converted_asset_id" style="color:var(--success)">已转化</span>
@@ -1077,7 +1107,7 @@ body {
         <div class="setting-item">
           <div>
             <div class="setting-label">👁️ 可见分类</div>
-            <div class="setting-desc">选择后在资产表单和统计中显示的父分类（多选）</div>
+            <div class="setting-desc">选择后在资产表单和统计中显示的父分类(多选)</div>
           </div>
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:6px">
@@ -1170,10 +1200,10 @@ body {
       </div>
     </div>
     <div class="card">
-      <h3 style="font-size:15px;margin-bottom:8px">ℹ️ 关于</h3>
+      <h3 style="font-size:15px;margin-bottom:8px">i️ 关于</h3>
       <div style="font-size:14px;color:var(--text-secondary)">
         <p>持物 ChiWu v1.0</p>
-        <p style="margin-top:4px">管理你的数字资产，掌握每一分钱的价值</p>
+        <p style="margin-top:4px">管理你的数字资产,掌握每一分钱的价值</p>
       </div>
     </div>
   </div>
@@ -1225,7 +1255,7 @@ body {
           </div>
         </div>
         <div class="detail-item" v-if="detailAsset?.warranty_months > 0">
-          
+
       </div>
       <div v-if="detailAsset?.notes" style="margin-top:12px">
         <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
@@ -1277,8 +1307,9 @@ body {
       <button class="btn btn-danger" @click="deleteAsset(detailAsset.id, true)">🗑️ 删除</button>
     </div>
   </div>
+</div>
 
-  <!-- ===== Asset Form Sheet ===== -->
+<!-- ===== Asset Form Sheet ===== -->
   <template v-if="showAssetForm">
     <div class="sheet-overlay" @click="showAssetForm = false"></div>
     <div class="sheet">
@@ -1346,7 +1377,7 @@ body {
       <div class="form-group">
           <div style="display:flex;gap:10px">
             <div style="flex:1">
-              <label>保修时长（月）</label>
+              <label>保修时长(月)</label>
               <input type="number" v-model="formData.warranty_months" placeholder="如 12" min="0" style="display:block;width:100%;padding:9px 12px;border-radius:8px;border:1px solid var(--border);background:var(--input-bg);color:var(--text);font-size:14px;box-sizing:border-box">
             </div>
             <div style="flex:1">
@@ -1386,10 +1417,14 @@ body {
     <div class="sheet-overlay" @click="showWishForm = false"></div>
     <div class="sheet">
       <div class="sheet-handle"></div>
-      <h2>新建心愿</h2>
+      <h2>{{ wishEditId ? '编辑心愿' : '新建心愿' }}</h2>
       <div class="form-group">
         <label>名称 *</label>
-        <input type="text" v-model="wishForm.name" placeholder="想要什么？">
+        <input type="text" v-model="wishForm.name" placeholder="想要什么?">
+      </div>
+      <div class="form-group">
+        <label>产品价格 (¥)</label>
+        <input type="number" v-model.number="wishForm.price" placeholder="产品的实际价格" step="0.01">
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -1406,11 +1441,11 @@ body {
       </div>
       <div class="form-group">
         <label>备注</label>
-        <textarea v-model="wishForm.note" placeholder="为什么想要它？"></textarea>
+        <textarea v-model="wishForm.note" placeholder="为什么想要它?"></textarea>
       </div>
       <div class="form-actions">
         <button class="btn btn-secondary" @click="showWishForm = false">取消</button>
-        <button class="btn btn-primary" @click="submitWishForm">添加</button>
+        <button class="btn btn-primary" @click="submitWishForm">{{ wishEditId ? '保存' : '添加' }}</button>
       </div>
     </div>
   </template>
@@ -1423,7 +1458,7 @@ body {
       <h2>添加维护记录</h2>
       <div class="form-group">
         <label>标题 *</label>
-        <input type="text" v-model="maintForm.title" placeholder="如：换电池、维修屏幕">
+        <input type="text" v-model="maintForm.title" placeholder="如:换电池、维修屏幕">
       </div>
       <div class="form-row">
         <div class="form-group">
@@ -1449,18 +1484,8 @@ body {
     </div>
   </template>
 
-  <!-- ===== Camera ===== -->
-  <template v-if="showCamera">
-    <div class="camera-container">
-      <button class="camera-close-btn" @click="closeCamera">✕</button>
-      <video ref="cameraVideo" class="camera-video" autoplay playsinline></video>
-      <div class="camera-toolbar">
-        <button class="camera-btn" @click="capturePhoto">
-          <div class="camera-btn-inner"></div>
-        </button>
-      </div>
-    </div>
-  </template>
+  <!-- 相机功能已移除：环境不支持 getUserMedia -->
+  <!-- camera template removed -->
 </div>
 
 <script>
@@ -1922,87 +1947,18 @@ const AppComp = {
 
     function filterAssets() { loadAssets(); }
 
-    // ===== Camera =====
+    // ===== Camera (removed: getUserMedia not available in this environment) =====
     const showCamera = ref(false);
-    const cameraStream = ref(null);
     const cameraVideo = ref(null);
-
-    watch(showCamera, async (v) => {
-      if (v) {
-        await nextTick();
-        try {
-          const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
-          cameraStream.value = stream;
-          if (cameraVideo.value) {
-            cameraVideo.value.srcObject = stream;
-          }
-        } catch (e) {
-          alert('无法打开相机: ' + e.message);
-          showCamera.value = false;
-        }
-      } else {
-        if (cameraStream.value) {
-          cameraStream.value.getTracks().forEach(t => t.stop());
-          cameraStream.value = null;
-        }
-      }
-    });
-
-    async function capturePhoto() {
-      if (!cameraVideo.value) return;
-      const video = cameraVideo.value;
-      const canvas = document.createElement('canvas');
-      // Scale down to keep under 200KB
-      let w = video.videoWidth;
-      let h = video.videoHeight;
-      const maxDim = 800;
-      if (w > maxDim || h > maxDim) {
-        const scale = Math.min(maxDim / w, maxDim / h);
-        w = Math.round(w * scale);
-        h = Math.round(h * scale);
-      }
-      canvas.width = w;
-      canvas.height = h;
-      const ctx = canvas.getContext('2d');
-      ctx.drawImage(video, 0, 0, w, h);
-      const dataUrl = canvas.toDataURL('image/jpeg', 0.7);
-      closeCamera();
-      // Call API to recognize
-      try {
-        const res = await fetch(API_BASE + '/api/ai-recognize', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ image: dataUrl })
-        });
-        if (res.ok) {
-          const result = await res.json();
-          // Auto-fill form
-          formData.name = result.name || formData.name;
-          if (result.category_id) formData.category_id = result.category_id;
-          if (result.purchase_price) formData.purchase_price = result.purchase_price;
-          if (result.notes) formData.notes = result.notes;
-          if (result.image) formData.image = result.image;
-          // Open the form
-          openAssetForm();
-        } else {
-          openAssetForm();
-        }
-      } catch (e) {
-        console.error('AI recognize error:', e);
-        openAssetForm();
-      }
-    }
-
-    function closeCamera() {
-      showCamera.value = false;
-    }
+    async function capturePhoto() {}
+    function closeCamera() { showCamera.value = false; }
 
     // ===== Image Upload =====
     const imageInput = ref(null);
     function triggerImageUpload() {
       if (imageInput.value) imageInput.value.click();
     }
-    function onImageSelected(e) {
+    async function onImageSelected(e) {
       const file = e.target.files[0];
       if (!file) return;
       // Resize/crop to keep under 200KB
@@ -2029,6 +1985,63 @@ const AppComp = {
       reader.readAsDataURL(file);
       // Reset input so same file can be selected again
       e.target.value = '';
+
+      // ===== AI 识图：调用千问 API 自动填充表单 =====
+      try {
+        const form = new FormData();
+        form.append('file', file);
+        const res = await fetch(API_BASE + '/api/ai-recognize', {
+          method: 'POST',
+          body: form
+        });
+        if (res.ok) {
+          const data = await res.json();
+          if (data.name) {
+            formData.name = data.name;
+            // 尝试匹配本地产品库以获取 category_id
+            try {
+              const productsRes = await fetch(API_BASE + '/api/search-products?q=' + encodeURIComponent(data.name));
+              if (productsRes.ok) {
+                const products = await productsRes.json();
+                if (products.length > 0) {
+                  formData.category_id = products[0].category_id || null;
+                  if (products[0].price && !formData.purchase_price) {
+                    formData.purchase_price = products[0].price;
+                  }
+                }
+              }
+            } catch(e) { /* 本地搜索失败不影响主流程 */ }
+            // 如果没有匹配到本地产品，尝试按分类名映射
+            if (!formData.category_id && (data.category || data.brand)) {
+              try {
+                const catsRes = await fetch(API_BASE + '/api/categories');
+                if (catsRes.ok) {
+                  const cats = await catsRes.json();
+                  const catName = data.category || data.brand;
+                  for (const c of cats) {
+                    if (c.children && c.children.length > 0) {
+                      for (const child of c.children) {
+                        if (child.name.includes(catName) || catName.includes(child.name)) {
+                          formData.category_id = child.id;
+                          break;
+                        }
+                      }
+                    } else if (c.name.includes(catName) || catName.includes(c.name)) {
+                      formData.category_id = c.id;
+                    }
+                    if (formData.category_id) break;
+                  }
+                }
+              } catch(e) { /* 分类匹配失败不影响 */ }
+            }
+            if (data.price && !formData.purchase_price) {
+              formData.purchase_price = data.price;
+            }
+          }
+        }
+      } catch(e) {
+        console.error('AI 识图失败（不影响图片保存）:', e);
+      }
     }
 
     // ===== Detail =====
@@ -2128,6 +2141,7 @@ const AppComp = {
           formData.current_value = a.current_value || null;
           formData.status = a.status || 'active';
           formData.notes = a.notes || '';
+          formData.image = a.image || '';
           formData.warranty_months = a.warranty_months || null;
           formData.warranty_start_date = a.warranty_start_date || '';
         } catch (e) { console.error('Load asset for edit error:', e); }
@@ -2181,7 +2195,7 @@ const AppComp = {
 
     // ===== Delete Asset =====
     async function deleteAsset(assetId, fromDetail) {
-      if (!confirm('确定删除此资产？')) return;
+      if (!confirm('确定删除此资产?')) return;
       try {
         await api('/assets/' + assetId, { method: 'DELETE' });
         if (fromDetail) closeDetail();
@@ -2234,7 +2248,7 @@ const AppComp = {
     }
 
     async function deleteMaintenance(mId) {
-      if (!confirm('确定删除此维护记录？')) return;
+      if (!confirm('确定删除此维护记录?')) return;
       try {
         await api('/maintenances/' + mId, { method: 'DELETE' });
         if (detailAsset.value) {
@@ -2249,7 +2263,15 @@ const AppComp = {
     const wishes = ref([]);
     const wishesLoading = ref(false);
     const showWishForm = ref(false);
-    const wishForm = reactive({ name: '', target_price: null, target_date: '', note: '' });
+    const wishEditId = ref(null);
+    const wishForm = reactive({ name: '', price: null, target_price: null, target_date: '', note: '' });
+
+    const wishTotalValue = computed(() => {
+      return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
+    });
+    const wishDoneCount = computed(() => {
+      return wishes.value.filter(w => w.is_done).length;
+    });
 
     async function loadWishes() {
       wishesLoading.value = true;
@@ -2259,32 +2281,53 @@ const AppComp = {
     }
 
     function openWishForm() {
+      wishEditId.value = null;
       wishForm.name = '';
+      wishForm.price = null;
       wishForm.target_price = null;
       wishForm.target_date = '';
       wishForm.note = '';
       showWishForm.value = true;
     }
 
+    function editWish(w) {
+      wishEditId.value = w.id;
+      wishForm.name = w.name || '';
+      wishForm.price = w.price || null;
+      wishForm.target_price = w.target_price || null;
+      wishForm.target_date = w.target_date || '';
+      wishForm.note = w.note || '';
+      showWishForm.value = true;
+    }
+
     async function submitWishForm() {
       if (!wishForm.name.trim()) { alert('请输入心愿名称'); return; }
+      const body = {
+        name: wishForm.name.trim(),
+        price: wishForm.price || null,
+        target_price: wishForm.target_price || null,
+        target_date: wishForm.target_date || null,
+        note: wishForm.note || null,
+      };
       try {
-        await api('/wishes', {
-          method: 'POST',
-          body: JSON.stringify({
-            name: wishForm.name.trim(),
-            target_price: wishForm.target_price || null,
-            target_date: wishForm.target_date || null,
-            note: wishForm.note || null,
-          })
-        });
+        if (wishEditId.value) {
+          await api('/wishes/' + wishEditId.value, {
+            method: 'PUT',
+            body: JSON.stringify(body)
+          });
+        } else {
+          await api('/wishes', {
+            method: 'POST',
+            body: JSON.stringify(body)
+          });
+        }
         showWishForm.value = false;
         loadWishes();
-      } catch (e) { alert('添加心愿失败: ' + e.message); }
+      } catch (e) { alert((wishEditId.value ? '编辑' : '添加') + '心愿失败: ' + e.message); }
     }
 
     async function deleteWish(wishId) {
-      if (!confirm('确定删除此心愿？')) return;
+      if (!confirm('确定删除此心愿?')) return;
       try {
         await api('/wishes/' + wishId, { method: 'DELETE' });
         loadWishes();
@@ -2300,7 +2343,7 @@ const AppComp = {
     }
 
     async function convertWish(w) {
-      if (!confirm('将此心愿转化为资产？')) return;
+      if (!confirm('将此心愿转化为资产?')) return;
       try {
         await api('/wishes/' + w.id + '/convert', {
           method: 'POST',
@@ -2316,7 +2359,7 @@ const AppComp = {
 
     // ===== Settings =====
     async function deleteCategory(catId) {
-      if (!confirm('确定删除此分类？关联资产将变为未分类。')) return;
+      if (!confirm('确定删除此分类?关联资产将变为未分类。')) return;
       try {
         await api('/categories/' + catId, { method: 'DELETE' });
         loadCategories();
@@ -2324,7 +2367,7 @@ const AppComp = {
     }
 
     async function deleteChannel(chId) {
-      if (!confirm('确定删除此渠道？')) return;
+      if (!confirm('确定删除此渠道?')) return;
       try {
         await api('/channels/' + chId, { method: 'DELETE' });
         loadChannels();
@@ -2367,7 +2410,7 @@ const AppComp = {
       if (tab === 'timeline') loadTimeline();
     });
 
-    // Watch assets changes — stats uses local computed, so auto-updates
+    // Watch assets changes - stats uses local computed, so auto-updates
     // Re-load timeline when assets change for current tab
     watch(assets, () => {
       if (activeTab.value === 'timeline') {
@@ -2460,8 +2503,9 @@ const AppComp = {
       visibleCategories, visibleCategoryList,
       isCategoryVisible, toggleCategoryVisibility,
       // Wishes
-      wishes, wishesLoading, showWishForm, wishForm,
-      openWishForm, submitWishForm, deleteWish, toggleWish, convertWish,
+      wishes, wishesLoading, showWishForm, wishEditId, wishForm,
+      wishTotalValue, wishDoneCount,
+      openWishForm, editWish, submitWishForm, deleteWish, toggleWish, convertWish,
       // Settings
       deleteCategory, deleteChannel, exportJSON,
       // Helpers
