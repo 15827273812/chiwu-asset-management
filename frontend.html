@@ -1054,7 +1054,7 @@ html, body {
       <p>还没有心愿,点击 + 添加第一个</p>
     </div>
     <div v-else>
-      <div v-for="w in filteredWishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
+      <div v-for="w in wishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
         <div class="swipe-inner"
              @touchstart="swipeTouchStart($event, 'swipe-wish-' + w.id)"
              @touchmove="swipeTouchMove($event, 'swipe-wish-' + w.id)"
@@ -2558,6 +2558,7 @@ const AppComp = {
     }
 
     async function submitAssetForm() {
+      closeAllSwipe();
       if (!formData.name.trim()) { alert('请输入资产名称'); return; }
       const body = {
         name: formData.name.trim(),
@@ -2606,6 +2607,7 @@ const AppComp = {
 
     // ===== Delete Asset =====
     async function deleteAsset(assetId, fromDetail) {
+      closeAllSwipe();
       if (!confirm('确定删除此资产?')) return;
       try {
         await api('/assets/' + assetId, { method: 'DELETE' });
@@ -2695,23 +2697,21 @@ const AppComp = {
     const wishTotal = ref(0);
     const wishDisplayCount = ref(20);
     const wishesLoadingMore = ref(false);
-    let wishCache = [];
-    let wishCacheReady = false;
-    const wishHasMore = computed(() => {
-      const source = wishCacheReady ? wishCache : wishCache.length ? wishCache : wishes.value;
-      return wishDisplayCount.value < source.length;
-    });
+    const wishHasMore = computed(() => wishDisplayCount.value < wishes.value.length);
 
     const wishTotalValue = computed(() => {
       return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
     });
-        const wishDoneCount = computed(() => {
+    const wishDoneCount = computed(() => {
       return wishes.value.filter(w => w.is_done).length;
     });
-        const filteredWishes = computed(() => {
-      const source = wishCacheReady ? wishCache : wishCache.length ? wishCache : wishes.value;
-      return source.slice(0, wishDisplayCount.value);
+    
+    /** filteredWishes: 带分页切片，直接依赖 wishes.value（响应式 ref） */
+    const filteredWishes = computed(() => {
+      return wishes.value.slice(0, wishDisplayCount.value);
     });
+    
+    // computed filteredWishes 直接用 wishes，按 displayCount 切片
 
     // ===== Wish Product Suggest =====
     const wishSuggestResults = ref([]);
@@ -2813,6 +2813,14 @@ const AppComp = {
       });
     });
     
+    // 关闭所有 swipe 操作
+    function closeAllSwipe() {
+      document.querySelectorAll('.swipe-wrap.show-delete').forEach(el => {
+        el.classList.remove('show-delete');
+        const inner = el.querySelector('.swipe-inner');
+        if (inner) { inner.style.transform = ''; inner.style.transition = ''; }
+      });
+    }
 
 
     // ===== Product Icon Helper =====
@@ -2886,43 +2894,22 @@ const AppComp = {
         async function loadWishes() {
       wishesLoading.value = true;
       wishDisplayCount.value = 20;
-      wishCache = [];
-      wishCacheReady = false;
+      wishPage.value = 1;
       try {
         const result = await api('/wishes?page=1&page_size=200');
         wishes.value = result.items || result;
         wishTotal.value = result.total || wishes.value.length;
-        wishCache = [...wishes.value]; // 200 条作为缓存种子（深拷贝，防止引用共享）
       }
       catch (e) { console.error('Load wishes error:', e); }
       finally { wishesLoading.value = false; }
-      // 后台拉满缓存
-      loadFullWishCache();
-    }
-
-    async function loadFullWishCache() {
-      try {
-        let all = [...wishCache];
-        let p = 2;
-        while (true) {
-          const r = await api('/wishes?page=' + p + '&page_size=200');
-          const items = r.items || [];
-          all = all.concat(items);
-          if (r.page >= r.total_pages) break;
-          p++;
-        }
-        wishCache = all;
-        wishCacheReady = true;
-      } catch(e) { console.error('Wish cache error:', e); }
     }
 
     function loadMoreWishes() {
       if (wishesLoadingMore.value) return;
-      const source = wishCacheReady ? wishCache : wishCache.length ? wishCache : wishes.value;
-      if (wishDisplayCount.value >= source.length) return;
+      if (wishDisplayCount.value >= wishes.value.length) return;
       wishesLoadingMore.value = true;
       wishDisplayCount.value += 20;
-      if (wishDisplayCount.value > source.length) wishDisplayCount.value = source.length;
+      if (wishDisplayCount.value > wishes.value.length) wishDisplayCount.value = wishes.value.length;
       wishesLoadingMore.value = false;
     }
 
@@ -2953,6 +2940,8 @@ const AppComp = {
     }
 
     async function submitWishForm() {
+      // 关闭所有滑动操作
+      closeAllSwipe();
       if (!wishForm.name.trim()) { alert('请输入心愿名称'); return; }
       const body = {
         name: wishForm.name.trim(),
@@ -2969,9 +2958,9 @@ const AppComp = {
             method: 'PUT',
             body: JSON.stringify(body)
           });
-          // 编辑：直接替换 wishCache 中的对应项
-          const idx = wishCache.findIndex(w => w.id === wishEditId.value);
-          if (idx !== -1) wishCache.splice(idx, 1, created);
+          // 编辑：直接 splice 替换 wishes.value
+          const idx = wishes.value.findIndex(w => w.id === wishEditId.value);
+          if (idx !== -1) wishes.value.splice(idx, 1, created);
         } else {
           const created = await api('/wishes', {
             method: 'POST',
@@ -2980,8 +2969,8 @@ const AppComp = {
           // 补充缺失的关联字段
           created.category_name = wishCategoryName.value || null;
           created.is_done = false;
-          // 新增：插入缓存（filteredWishes 从 wishCache 切片）
-          wishCache.unshift(created);
+          // 新增：直接 unshift 到 wishes.value
+          wishes.value.unshift(created);
           wishTotal.value++;
         }
         showWishForm.value = false;
@@ -2989,11 +2978,11 @@ const AppComp = {
     }
 
     async function deleteWish(wishId) {
+      closeAllSwipe();
       if (!confirm('确定删除此心愿?')) return;
       try {
         await api('/wishes/' + wishId, { method: 'DELETE' });
-        // 直接 filter，不调 loadWishes
-        wishCache = wishCache.filter(w => w.id !== wishId);
+        wishes.value = wishes.value.filter(w => w.id !== wishId);
         wishTotal.value--;
       } catch (e) { alert('删除失败: ' + e.message); }
     }
