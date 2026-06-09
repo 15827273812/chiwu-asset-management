@@ -845,15 +845,15 @@ body {
             <div class="swipe-content">
               <div class="card" @click="openDetail(a)">
                 <div class="card-top-row">
-                  <div style="font-size:16px;font-weight:600">{{ a.category_icon || '📦' }} {{ a.name }}</div>
-                  <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span>
+                  <div style="font-size:16px;font-weight:600">{{ getProductIcon(a.name) }} {{ a.name }}</div>
+                  <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span><span v-if="a.warranty_months > 0 && a.warranty_status === 'warrantying'" class="tag" style="background:rgba(52,199,89,0.15);color:#34c759;font-size:11px;margin-left:4px">保障中</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:flex-start">
                   <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
                     <img v-if="a.image" :src="a.image" class="list-thumb-sm" alt="">
                     <span class="price-sm">¥{{ Number(a.purchase_price || 0).toLocaleString() }}</span>
                     <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
-                    <span v-if="a.warranty_months > 0" class="tag-sm" :class="'tag-' + (a.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:10px">{{ a.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
+
                   </div>
                   <div style="text-align:right;margin-top:4px">
                     <div class="price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
@@ -876,12 +876,12 @@ body {
           <div class="asset-grid-item">
             <div class="grid-thumb-wrap">
               <img v-if="a.image" :src="a.image" class="grid-thumb" alt="">
-              <div v-else class="grid-icon">{{ a.category_icon || '📦' }}</div>
+              <div v-else class="grid-icon">{{ getProductIcon(a.name) }}</div>
             </div>
             <div class="grid-name">{{ a.name }}</div>
             <div class="grid-price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
             <div class="grid-status">
-              <span class="status-tag" :class="'tag-' + a.status">{{ statusLabel(a.status) }}</span>
+              <span class="status-tag" :class="'tag-' + a.status">{{ statusLabel(a.status) }}</span><span v-if="a.warranty_months > 0 && a.warranty_status === 'warrantying'" class="status-tag" style="background:rgba(52,199,89,0.15);color:#34c759;margin-left:4px">保障中</span>
             </div>
           </div>
         </div>
@@ -919,6 +919,10 @@ body {
             <div class="lbl">活跃中 · {{ statsActivePct }}%</div>
           </div>
           <div class="meta-item">
+            <div class="num" style="color:var(--primary)">{{ statsWarrantyCount }}</div>
+            <div class="lbl">保障中</div>
+          </div>
+          <div class="meta-item">
             <div class="num" style="color:var(--warning)">¥{{ formatK(statsDiscardedValue) }}</div>
             <div class="lbl">已退役 · {{ statsDiscardedPct }}%</div>
           </div>
@@ -932,14 +936,12 @@ body {
       <!-- Card 2: 分类占比 -->
       <div class="card">
         <h3 style="font-size:15px;margin-bottom:8px">📊 分类占比</h3>
-        <div style="font-size:13px;color:var(--text-secondary);margin-bottom:8px">分类总金额: ¥{{ formatK(statsCatTotalValue) }}</div>
-        <div v-for="c in statsTopCategories" :key="c.name" class="cat-bar-wrap">
-          <div class="cat-bar-label">
-            <span class="cat-name">{{ c.icon || '📦' }} {{ c.name }}</span>
-            <span class="cat-val">¥{{ formatK(c.value) }}</span>
-          </div>
-          <div class="cat-bar-bg">
-            <div class="cat-bar-fill" :style="{width: (c.value / statsMaxCatValue * 100) + '%'}"></div>
+        <div style="display:flex;align-items:flex-end;gap:5px;min-height:150px;padding:12px 4px;overflow-x:auto">
+          <div v-for="c in statsTopCategories" :key="c.name" style="flex:1;min-width:32px;display:flex;flex-direction:column;align-items:center">
+            <span style="font-size:11px;color:var(--text-secondary);margin-bottom:2px">{{ c.pct }}%</span>
+            <div style="width:24px;border-radius:4px 4px 0 0;transition:height 0.5s;min-height:3px;background:c.color||'var(--primary)'" :style="{height: Math.max(c.value/statsMaxCatValue*130, 3) + 'px'}"></div>
+            <span style="font-size:18px;margin-top:5px">{{ c.icon || '📦' }}</span>
+            <span style="font-size:10px;color:var(--text);margin-top:2px;max-width:36px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center">{{ c.name }}</span>
           </div>
         </div>
       </div>
@@ -1018,6 +1020,8 @@ body {
                   <span v-if="w.price">价值 ¥{{ w.price }}</span>
                   <span v-if="w.target_price">目标 ¥{{ w.target_price }}</span>
                   <span v-if="w.target_date">期限 {{ w.target_date }}</span>
+                  <span v-if="w.category_name" style="font-size:12px;color:#8b7355">{{ w.category_name }}</span>
+                  <span v-if="w.channel_name" style="font-size:12px;color:var(--primary)">{{ w.channel_name }}</span>
                   <span v-if="w.converted_asset_id" style="color:var(--success)">已转化</span>
                 </div>
                 <div v-if="w.note" style="font-size:12px;color:var(--text-secondary);margin-top:4px">{{ w.note }}</div>
@@ -1238,7 +1242,7 @@ body {
     <div class="detail-header">
       <button class="detail-back" @click="closeDetail">←</button>
       <span class="detail-title">{{ detailAsset?.name }}</span>
-      <span class="tag" :class="'tag-' + (detailAsset?.status || '')" style="font-size:12px;margin-left:8px">{{ statusLabel(detailAsset?.status) }}</span>
+      <span class="tag" :class="'tag-' + detailAsset?.status" style="font-size:12px;margin-left:8px">{{ statusLabel(detailAsset?.status) }}</span>
     </div>
     <!-- Image -->
     <div class="detail-section" v-if="detailAsset?.image">
@@ -1249,7 +1253,7 @@ body {
       <div class="detail-grid">
         <div class="detail-item">
           <div class="label">分类</div>
-          <div class="value">{{ detailAsset?.category_icon || '📦' }} {{ detailAsset?.category_name || '未分类' }}</div>
+          <div class="value">{{ getProductIcon(detailAsset?.name) }} {{ detailAsset?.category_name || '未分类' }}</div>
         </div>
         <div class="detail-item">
           <div class="label">渠道</div>
@@ -1276,7 +1280,7 @@ body {
           <div class="value" style="display:flex;align-items:center;gap:6px">
             <span>{{ detailAsset.warranty_months }}个月</span>
             <span v-if="detailAsset.warranty_end_date" style="font-size:12px;color:var(--text-secondary);margin-left:4px">至 {{ detailAsset.warranty_end_date }}</span>
-            <span class="tag" :class="'tag-' + (detailAsset.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:11px">{{ detailAsset.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
+            <span class="tag" :class="'tag-' + (detailAsset.warranty_status === 'warrantying' ? 'active' : 'discarded')" style="font-size:11px">{{ detailAsset.warranty_status === 'warrantying' ? '保障中' : '已过期' }}</span>
           </div>
         </div>
         <div class="detail-item" v-if="detailAsset?.warranty_months > 0">
@@ -1393,9 +1397,9 @@ body {
           <label>状态</label>
           <select v-model="formData.status">
             <option value="active">在用</option>
-            <option value="sold">已出售</option>
-            <option value="discarded">报废/赠送</option>
-            <option value="lost">丢失</option>
+            <option value="sold">已售出</option>
+            <option value="discarded">已退役</option>
+            <option value="lost">已丢失</option>
           </select>
         </div>
       </div>
@@ -1472,6 +1476,38 @@ body {
             <input id="wishDatePicker" type="date" v-model="wishForm.target_date" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;cursor:pointer;z-index:5;border:none;padding:0">
           </div>
         </div>
+      </div>
+      <div class="form-group" style="position:relative">
+        <label>分类</label>
+        <div style="position:relative">
+          <input type="text" readonly
+            :value="wishCategoryName || '选择分类'"
+            style="cursor:default;background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box"
+            @click="toggleWishCategoryPicker">
+          <span v-if="wishForm.category_id" style="position:absolute;right:36px;top:50%;transform:translateY(-50%);color:var(--text-secondary);font-size:16px;cursor:pointer" @click.stop="wishForm.category_id=null; wishCategoryName=''">✕</span>
+          <span style="position:absolute;right:10px;top:50%;transform:translateY(-50%);color:var(--text-secondary)">▼</span>
+        </div>
+        <!-- Category picker dropup -->
+        <div v-if="showWishCategoryPicker" class="category-picker" @click.stop>
+          <div class="cat-list-scroll">
+            <div v-for="cat in categories" :key="cat.id" class="cat-group">
+              <div class="cat-parent" @click="selectWishCategory(cat.id, cat.name + ' ' + (cat.icon||''))">
+                <span>{{ cat.icon }} {{ cat.name }}</span>
+                <span style="font-size:11px;color:var(--text-secondary)">{{ cat.asset_count }}</span>
+              </div>
+              <div v-for="ch in (cat.children||[])" :key="ch.id" class="cat-child" @click.stop="selectWishCategory(ch.id, (cat.icon||'') + ' ' + ch.name)">
+                <span>{{ cat.icon }} {{ ch.name }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label>渠道</label>
+        <select v-model="wishForm.channel_id" style="width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;background:var(--bg);color:var(--text)">
+          <option :value="null">不指定</option>
+          <option v-for="ch in channels" :key="ch.id" :value="ch.id">{{ ch.name }}</option>
+        </select>
       </div>
       <div class="form-group">
         <label>备注</label>
@@ -1657,6 +1693,7 @@ const AppComp = {
     const statsDiscardedCount = computed(() => statsFilteredAssets.value.filter(a => a.status === 'discarded' || a.status === 'lost').length);
     const statsSoldCount = computed(() => statsFilteredAssets.value.filter(a => a.status === 'sold').length);
 
+    const statsWarrantyCount = computed(() => assets.value.filter(a => a.warranty_months > 0 && a.warranty_status === 'warrantying').length);
     const statsActivePct = computed(() => {
       const t = statsTotalCount.value;
       return t === 0 ? 0 : Math.round(statsActiveCount.value / t * 100);
@@ -1868,12 +1905,21 @@ const AppComp = {
       { key: '', label: '全部' },
       { key: 'active', label: '活跃中' },
       { key: 'warranty', label: '保障中' },
-      { key: 'retired', label: '已退役' },
+      { key: 'discarded', label: '已退役' },
       { key: 'sold', label: '已售出' },
     ];
     function statusLabel(s) {
       const map = { active: '活跃中', sold: '已售出', discarded: '已退役', lost: '已丢失', retired: '已退役' };
-      return map[s] || s;
+      return map[s] || '未知';
+    }
+    // Combined display status: if warranty is active, show '保障中', else show asset status
+    function displayStatus(a) {
+      if (!a) return '未知';
+      return a.status || 'unknown';
+    }
+    function displayStatusLabel(a) {
+      const map = { warranty: '保障中', active: '活跃中', sold: '已售出', discarded: '已退役', lost: '已丢失' };
+      return map[displayStatus(a)] || '未知';
     }
 
     // ===== Assets =====
@@ -1911,7 +1957,11 @@ const AppComp = {
         list = list.filter(a => (a.name || '').toLowerCase().includes(q) || (a.notes || '').toLowerCase().includes(q));
       }
       if (assetStatusFilter.value) {
-        list = list.filter(a => a.status === assetStatusFilter.value);
+        if (assetStatusFilter.value === 'warranty') {
+          list = list.filter(a => a.warranty_months > 0 && a.warranty_status === 'warrantying');
+        } else {
+          list = list.filter(a => a.status === assetStatusFilter.value);
+        }
       }
       // Advanced filters
       if (advFilterCat.value) {
@@ -1944,7 +1994,7 @@ const AppComp = {
       try {
         const params = new URLSearchParams();
         if (assetSearch.value) params.set('search', assetSearch.value);
-        if (assetStatusFilter.value) params.set('status', assetStatusFilter.value);
+        if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
         const qs = params.toString();
         const rawAssets = await api('/assets' + (qs ? '?' + qs : ''));
       // 前端计算保修状态
@@ -1970,7 +2020,7 @@ const AppComp = {
           if (end) {
             const ey = end.getFullYear(), em = String(end.getMonth()+1).padStart(2,'0'), ed = String(end.getDate()).padStart(2,'0');
             a.warranty_end_date = ey + '-' + em + '-' + ed;
-            a.warranty_status = today <= end ? 'active' : 'expired';
+            a.warranty_status = today <= end ? 'warrantying' : 'expired';
           }
         }
       });
@@ -2298,7 +2348,9 @@ const AppComp = {
     const wishesLoading = ref(false);
     const showWishForm = ref(false);
     const wishEditId = ref(null);
-    const wishForm = reactive({ name: '', price: null, target_price: null, target_date: '', note: '' });
+    const showWishCategoryPicker = ref(false);
+    const wishCategoryName = ref('');
+    const wishForm = reactive({ name: '', price: null, target_price: null, target_date: '', note: '', category_id: null, channel_id: null });
 
     const wishTotalValue = computed(() => {
       return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
@@ -2400,20 +2452,94 @@ const AppComp = {
     function getProductIcon(name) {
       if (!name) return '📦';
       const n = name.toLowerCase();
-      if (n.includes('iphone') || n.includes('手机') || n.includes('华为') || n.includes('小米')) return '📱';
-      if (n.includes('macbook') || n.includes('笔记本') || n.includes('电脑')) return '💻';
-      if (n.includes('ipad') || n.includes('平板')) return '📱';
-      if (n.includes('switch') || n.includes('游戏') || n.includes('ps5')) return '🎮';
-      if (n.includes('耳机') || n.includes('airpods') || n.includes('ear')) return '🎧';
-      if (n.includes('相机') || n.includes('镜头') || n.includes('camera')) return '📷';
-      if (n.includes('手表') || n.includes('watch')) return '⌚';
-      if (n.includes('风扇') || n.includes('空调') || n.includes('冰箱') || n.includes('洗衣机')) return '🔧';
-      if (n.includes('沙发') || n.includes('桌子') || n.includes('床')) return '🛋️';
-      if (n.includes('车') || n.includes('汽车') || n.includes('bike')) return '🚗';
-      if (n.includes('书')) return '📖';
-      if (n.includes('衣服') || n.includes('鞋') || n.includes('bag') || n.includes('包')) return '👟';
-      if (n.includes('电视') || n.includes('显示器')) return '🖥️';
-      if (n.includes('音响') || n.includes('sound')) return '🔊';
+      // Phones
+      if (n.includes('iphone') || n.includes('手机') || n.includes('华为') || n.includes('小米')
+        || n.includes('samsung') || n.includes('三星') || n.includes('oppo') || n.includes('vivo')
+        || n.includes('realme') || n.includes('一加') || n.includes('oneplus')) return '📱';
+      // Computers
+      if (n.includes('macbook') || n.includes('笔记本') || n.includes('电脑') || n.includes('thinkpad')
+        || n.includes('联想') || n.includes('dell') || n.includes('surface') || n.includes('rog')
+        || n.includes('华硕') || n.includes('hp') || n.includes('chromebook')
+        || n.includes('台式机') || n.includes('主机') || n.includes('mac mini') || n.includes('imac'))
+        return '💻';
+      // Tablets
+      if (n.includes('ipad') || n.includes('平板') || n.includes('tab')) return '📱';
+      // Headphones
+      if (n.includes('airpods') || n.includes('耳机') || n.includes('earphone') || n.includes('headphone')
+        || n.includes('buds') || n.includes('freebuds')) return '🎧';
+      // Watches
+      if (n.includes('手表') || n.includes('watch') || n.includes('手环') || n.includes('band')
+        || n.includes('gt ') || n.includes('gtr')) return '⌚';
+      // Displays / TVs
+      if (n.includes('电视') || n.includes('tv') || n.includes('显示器') || n.includes('monitor')
+        || n.includes('屏幕') || n.includes('投影') || n.includes('projector')) return '🖥️';
+      // Furniture
+      if (n.includes('桌') || n.includes('椅') || n.includes('床') || n.includes('柜') || n.includes('沙发')
+        || n.includes('家具') || n.includes('书架') || n.includes('床头柜')) return '🪑';
+      // Keyboards
+      if (n.includes('键盘') || n.includes('keyboard')) return '⌨️';
+      // Mice
+      if (n.includes('鼠标') || n.includes('mouse')) return '🖱️';
+      // Cameras
+      if (n.includes('相机') || n.includes('camera') || n.includes('镜头') || n.includes('摄像机')
+        || n.includes('gopro') || n.includes('insta')) return '📷';
+      // Gaming
+      if (n.includes('游戏') || n.includes('ps ') || n.includes('ps4') || n.includes('ps5')
+        || n.includes('switch') || n.includes('xbox') || n.includes('steam') || n.includes('deck')
+        || n.includes('手柄') || n.includes('controller')) return '🎮';
+      // Bags
+      if (n.includes('包') || n.includes('bag') || n.includes('背包') || n.includes('书包')
+        || n.includes('手提') || n.includes('挎包')) return '🎒';
+      // Shoes
+      if (n.includes('鞋') || n.includes('shoe') || n.includes('sneaker') || n.includes('跑鞋')
+        || n.includes('运动鞋')) return '👟';
+      // Clothes
+      if (n.includes('衣') || n.includes('服') || n.includes('shirt') || n.includes('jacket')
+        || n.includes('hoodie') || n.includes('裤') || n.includes('外套') || n.includes('羽绒')
+        || n.includes('短袖')) return '👕';
+      // Vehicles
+      if (n.includes('车') || n.includes('car') || n.includes('bike') || n.includes('电动车')
+        || n.includes('电动') || n.includes('摩托') || n.includes('自行车')) return '🚗';
+      // Books
+      if (n.includes('书') || n.includes('book') || n.includes('杂志') || n.includes('kindle')) return '📚';
+      // Home appliances - matching "空调" with air conditioner icon
+      if (n.includes('空调') || n.includes('冰箱') || n.includes('洗衣机') || n.includes('家电')
+        || n.includes('热水器') || n.includes('微波炉') || n.includes('烤箱') || n.includes('洗碗机')
+        || n.includes('抽油烟机') || n.includes('电饭煲') || n.includes('电磁炉')
+        || n.includes('净水器') || n.includes('空气净化') || n.includes('风扇') || n.includes('吸尘器')
+        || n.includes('扫地机') || n.includes('拖地') || n.includes('烘干机')
+        || n.includes('咖啡机') || n.includes('豆浆机') || n.includes('破壁机')) return '🏠';
+      // Lights
+      if (n.includes('灯') || n.includes('light') || n.includes('台灯') || n.includes('灯泡')) return '💡';
+      // Chargers / Cables
+      if (n.includes('充电') || n.includes('充电器') || n.includes('cable') || n.includes('数据线')
+        || n.includes('线') || n.includes('转换器') || n.includes('hub') || n.includes('扩展坞')
+        || n.includes('移动电源') || n.includes('充电宝') || n.includes('无线充')) return '🔌';
+      // Speakers
+      if (n.includes('音箱') || n.includes('speaker') || n.includes('音响') || n.includes('soundbar')
+        || n.includes('homepod') || n.includes('echo') || n.includes('jbl') || n.includes('bose')) return '🔊';
+      // Storage
+      if (n.includes('硬盘') || n.includes('ssd') || n.includes('nas')
+        || n.includes('u盘') || n.includes('存储') || n.includes('sd卡') || n.includes('tf卡')
+        || n.includes('内存')) return '💾';
+      // Router/Network
+      if (n.includes('路由器') || n.includes('router') || n.includes('交换机') || n.includes('wifi')
+        || n.includes('mesh') || n.includes('网线')) return '🌐';
+      // Printer
+      if (n.includes('打印') || n.includes('printer') || n.includes('扫描') || n.includes('scanner')
+        || n.includes('复印')) return '🖨️';
+      // Food/Drink
+      if (n.includes('咖啡') || n.includes('coffee') || n.includes('杯子') || n.includes('杯')
+        || n.includes('水壶') || n.includes('保温') || n.includes('饭盒')) return '☕';
+      // Musical instruments
+      if (n.includes('吉他') || n.includes('guitar') || n.includes('钢琴') || n.includes('piano')
+        || n.includes('乐器') || n.includes('小提琴') || n.includes('电子琴')) return '🎸';
+      // Sports
+      if (n.includes('球') || n.includes('拍') || n.includes('运动') || n.includes('健身')
+        || n.includes('瑜伽') || n.includes('哑铃')) return '⚽';
+      // Pet
+      if (n.includes('猫') || n.includes('狗') || n.includes('宠物') || n.includes('cat')
+        || n.includes('dog') || n.includes('粮') || n.includes('笼')) return '🐾';
       return '📦';
     }
 
@@ -2431,6 +2557,9 @@ const AppComp = {
       wishForm.target_price = null;
       wishForm.target_date = '';
       wishForm.note = '';
+      wishForm.category_id = null;
+      wishForm.channel_id = null;
+      wishCategoryName.value = '';
       showWishForm.value = true;
     }
 
@@ -2441,6 +2570,9 @@ const AppComp = {
       wishForm.target_price = w.target_price || null;
       wishForm.target_date = w.target_date || '';
       wishForm.note = w.note || '';
+      wishForm.category_id = w.category_id || null;
+      wishForm.channel_id = w.channel_id || null;
+      wishCategoryName.value = w.category_name ? (w.category_icon || '') + ' ' + w.category_name : '';
       showWishForm.value = true;
     }
 
@@ -2452,6 +2584,8 @@ const AppComp = {
         target_price: wishForm.target_price || null,
         target_date: wishForm.target_date || null,
         note: wishForm.note || null,
+        category_id: wishForm.category_id || null,
+        channel_id: wishForm.channel_id || null,
       };
       try {
         if (wishEditId.value) {
@@ -2493,12 +2627,24 @@ const AppComp = {
           method: 'POST',
           body: JSON.stringify({
             name: w.name,
-            target_price: w.target_price || null,
+            category_id: w.category_id || null,
+            channel_id: w.channel_id || null,
+            purchase_price: w.price || null,
           })
         });
         loadWishes();
         loadAssets();
       } catch (e) { alert('转化失败: ' + e.message); }
+    }
+
+    // ===== Wish Category/Channel Helpers =====
+    function toggleWishCategoryPicker() {
+      showWishCategoryPicker.value = !showWishCategoryPicker.value;
+    }
+    function selectWishCategory(catId, display) {
+      wishForm.category_id = catId;
+      wishCategoryName.value = display;
+      showWishCategoryPicker.value = false;
     }
 
     // ===== Settings =====
@@ -2600,7 +2746,7 @@ const AppComp = {
       // Categories & Channels
       categories, channels,
       // Assets
-      assets, assetsLoading, assetSearch, assetStatusFilter, statusFilters,
+      assets, assetsLoading, assetSearch, assetStatusFilter, statusFilters, displayStatus, displayStatusLabel,
       filteredAssets, loadAssets, filterAssets,
       formWarrantyEnd,
       calcWarrantyEnd,
@@ -2631,7 +2777,7 @@ const AppComp = {
       // Stats (rewritten, local computed)
       statsTimeFilter, statsTimeFilterOptions,
       statsTotalValue, statsActiveValue, statsDiscardedValue, statsSoldValue,
-      statsActivePct, statsDiscardedPct, statsSoldPct,
+      statsActivePct, statsWarrantyCount, statsDiscardedPct, statsSoldPct,
       statsCategoryValues, statsCatTotalValue, statsMaxCatValue,
       statsTopCategories, statsDonutGradient, catPieStyle, catColors,
       statsDailyCostTop, statsTopCatCount,
@@ -2650,6 +2796,7 @@ const AppComp = {
       wishes, wishesLoading, showWishForm, wishEditId, wishForm,
       wishTotalValue, wishDoneCount, wishSuggestResults,
       openWishForm, editWish, searchProductSuggestWish, selectWishSuggest,
+      toggleWishCategoryPicker, selectWishCategory, showWishCategoryPicker, wishCategoryName,
       submitWishForm, deleteWish, toggleWish, convertWish,
       swipeTouchStart, swipeTouchMove, swipeTouchEnd, getProductIcon,
       // Settings

@@ -61,6 +61,8 @@ class WishCreate(BaseModel):
     price: Optional[float] = None
     target_date: Optional[str] = None
     note: Optional[str] = None
+    category_id: Optional[int] = None
+    channel_id: Optional[int] = None
 
 class WishUpdate(BaseModel):
     name: Optional[str] = None
@@ -68,6 +70,8 @@ class WishUpdate(BaseModel):
     price: Optional[float] = None
     target_date: Optional[str] = None
     note: Optional[str] = None
+    category_id: Optional[int] = None
+    channel_id: Optional[int] = None
     is_done: Optional[bool] = None
 
 # ------ 辅助函数 ------
@@ -286,11 +290,19 @@ def delete_maintenance(m_id: int, db: Session = Depends(get_db)):
 # ------ 心愿单 API ------
 @router.get("/wishes")
 def list_wishes(db: Session = Depends(get_db)):
-    ws = db.query(WishItem).order_by(WishItem.created_at.desc()).all()
+    ws = db.query(WishItem).options(
+        joinedload(WishItem.category),
+        joinedload(WishItem.channel)
+    ).order_by(WishItem.created_at.desc()).all()
     return [{"id": w.id, "name": w.name, "target_price": w.target_price,
              "target_date": w.target_date.isoformat() if w.target_date else None,
              "price": w.price,
              "note": w.note, "is_done": w.is_done,
+             "category_id": w.category_id,
+             "category_name": w.category.name if w.category else None,
+             "category_icon": w.category.icon if w.category else None,
+             "channel_id": w.channel_id,
+             "channel_name": w.channel.name if w.channel else None,
              "converted_asset_id": w.converted_asset_id,
              "created_at": w.created_at.isoformat() if w.created_at else None} for w in ws]
 
@@ -301,12 +313,16 @@ def create_wish(data: WishCreate, db: Session = Depends(get_db)):
     if data.price: w.price = data.price
     if data.target_date: w.target_date = datetime.date.fromisoformat(data.target_date)
     if data.note: w.note = data.note
+    if data.category_id is not None: w.category_id = data.category_id
+    if data.channel_id is not None: w.channel_id = data.channel_id
     db.add(w)
     db.commit()
     db.refresh(w)
     return {"id": w.id, "name": w.name, "target_price": w.target_price,
             "target_date": w.target_date.isoformat() if w.target_date else None,
             "price": w.price,
+            "category_id": w.category_id,
+            "channel_id": w.channel_id,
             "is_done": False}
 
 @router.post("/wishes/{wish_id}/convert")
@@ -318,6 +334,15 @@ def convert_wish_to_asset(wish_id: int, data: AssetCreate, db: Session = Depends
     for field in ["category_id","channel_id","purchase_price","current_value","notes"]:
         val = getattr(data, field, None)
         if val is not None: setattr(a, field, val)
+    # Auto-sync: if user didn't pass category_id/channel_id, inherit from wish
+    if data.category_id is None and w.category_id is not None:
+        a.category_id = w.category_id
+    if data.channel_id is None and w.channel_id is not None:
+        a.channel_id = w.channel_id
+    if data.purchase_price is None and w.price is not None:
+        a.purchase_price = w.price
+    if data.current_value is None and w.price is not None:
+        a.current_value = w.price
     if data.purchase_date:
         a.purchase_date = datetime.date.fromisoformat(data.purchase_date)
     db.add(a)
@@ -333,15 +358,23 @@ def update_wish(wish_id: int, data: WishUpdate, db: Session = Depends(get_db)):
     w = db.query(WishItem).filter(WishItem.id == wish_id).first()
     if not w:
         raise HTTPException(404, "心愿不存在")
-    for field in ["name","target_price","price","note","is_done"]:
+    for field in ["name","target_price","price","note","category_id","channel_id","is_done"]:
         val = getattr(data, field, None)
         if val is not None: setattr(w, field, val)
     if data.target_date: w.target_date = datetime.date.fromisoformat(data.target_date)
     db.commit()
     db.refresh(w)
+    w = db.query(WishItem).options(
+        joinedload(WishItem.category),
+        joinedload(WishItem.channel)
+    ).filter(WishItem.id == wish_id).first()
     return {"id": w.id, "name": w.name, "target_price": w.target_price,
             "price": w.price,
             "target_date": w.target_date.isoformat() if w.target_date else None,
+            "category_id": w.category_id,
+            "channel_id": w.channel_id,
+            "category_name": w.category.name if w.category else None,
+            "channel_name": w.channel.name if w.channel else None,
             "is_done": w.is_done}
 
 @router.delete("/wishes/{wish_id}")

@@ -123,12 +123,8 @@ class WishItem(Base):
     price = Column(Float, nullable=True)
     target_date = Column(Date, nullable=True)
     note = Column(Text, nullable=True)
-    category_id = Column(Integer, ForeignKey("categories.id"), nullable=True)
-    channel_id = Column(Integer, ForeignKey("channels.id"), nullable=True)
     is_done = Column(Boolean, default=False)
     converted_asset_id = Column(Integer, ForeignKey("assets.id"), nullable=True)
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
     converted_asset = relationship("Asset")
-    category = relationship("Category", foreign_keys=[category_id])
-    channel = relationship("Channel", foreign_keys=[channel_id])
