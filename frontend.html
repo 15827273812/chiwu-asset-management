@@ -659,13 +659,20 @@ html, body {
   justify-content: space-between;
   gap: 8px;
   margin-bottom: 12px;
-  flex-wrap: wrap;
 }
 .asset-filter-left {
   display: flex;
-  gap: 6px;
-  flex-wrap: wrap;
+  gap: 4px;
   flex: 1;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.asset-filter-left::-webkit-scrollbar { display: none; }
+.asset-filter-left .status-filter {
+  padding: 4px 8px;
+  border-radius: 12px;
+  font-size: 11px;
+  flex-shrink: 0;
 }
 .asset-filter-right {
   display: flex;
@@ -1714,6 +1721,24 @@ const AppComp = {
         timelineHasMore.value = result.page < result.total_pages;
       } catch (e) { console.error('Load timeline error:', e); }
       finally { timelineLoading.value = false; }
+      // 如果筛选状态选择了，一次性加载全部匹配数据
+      if (timelineFilterStatus.value && timelineHasMore.value) {
+        const baseUrl = '/assets?sort=purchase_date&order=desc&page_size=200&status=' + encodeURIComponent(timelineFilterStatus.value);
+        let page = 2;
+        while (true) {
+          try {
+            const r2 = await api(baseUrl + '&page=' + page);
+            const items = r2.items || [];
+            items.forEach(a => calcWarrantyStatus(a));
+            timelineAssets.value = timelineAssets.value.concat(items);
+            timelinePage.value = page;
+            timelineHasMore.value = r2.page < r2.total_pages;
+            if (!timelineHasMore.value) break;
+            page++;
+            await new Promise(r => setTimeout(r, 50));
+          } catch(e) { break; }
+        }
+      }
     }
 
     async function loadMoreTimeline() {
@@ -2046,6 +2071,7 @@ const AppComp = {
       { key: 'active', label: '活跃中' },
       { key: 'warranty', label: '保障中' },
       { key: 'discarded', label: '已退役' },
+      { key: 'lost', label: '已丢失' },
       { key: 'sold', label: '已售出' },
     ];
     function statusLabel(s) {
@@ -2210,7 +2236,32 @@ const AppComp = {
       finally { assetsLoadingMore.value = false; }
     }
 
-    function filterAssets() { loadAssets(); }
+    async function filterAssets() {
+      // 筛选时一次性加载全部匹配数据
+      await loadAssets();
+      // 如果还有更多页，后台加载完
+      if (assetHasMore.value) {
+        const params = new URLSearchParams();
+        if (assetSearch.value) params.set('search', assetSearch.value);
+        if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
+        params.set('page_size', '200');
+        let page = 2;
+        while (true) {
+          params.set('page', String(page));
+          try {
+            const result = await api('/assets?' + params.toString());
+            const items = result.items || [];
+            items.forEach(a => calcWarrantyStatus(a));
+            assets.value = assets.value.concat(items);
+            assetPage.value = page;
+            assetHasMore.value = result.page < result.total_pages;
+            if (!assetHasMore.value) break;
+            page++;
+            await new Promise(r => setTimeout(r, 50)); // 小间隔避免阻塞
+          } catch(e) { break; }
+        }
+      }
+    }
 
     // ===== Camera (removed: getUserMedia not available in this environment) =====
     const showCamera = ref(false);
@@ -3060,8 +3111,9 @@ const AppComp = {
     // ===== Infinite Scroll: Asset Sentinel =====
     const assetSentinelRef = ref(null);
     let assetObserver = null;
-    watch(assetSentinelRef, (el) => {
+    function setupAssetObserver() {
       if (assetObserver) assetObserver.disconnect();
+      const el = assetSentinelRef.value;
       if (!el) return;
       assetObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && assetHasMore.value && !assetsLoadingMore.value) {
@@ -3069,19 +3121,15 @@ const AppComp = {
         }
       }, { rootMargin: '200px' });
       assetObserver.observe(el);
-    });
-    // Re-observe when hasMore changes (after page loaded)
-    watch(assetHasMore, (hasMore) => {
-      if (hasMore && assetSentinelRef.value && assetObserver) {
-        assetObserver.unobserve(assetSentinelRef.value);
-        assetObserver.observe(assetSentinelRef.value);
-      }
-    });
+    }
+    watch(assetSentinelRef, () => nextTick(() => setupAssetObserver()));
+    watch(assetHasMore, () => nextTick(() => setupAssetObserver()));
     // ===== Infinite Scroll: Timeline Sentinel =====
     const timelineSentinelRef = ref(null);
     let timelineObserver = null;
-    watch(timelineSentinelRef, (el) => {
+    function setupTimelineObserver() {
       if (timelineObserver) timelineObserver.disconnect();
+      const el = timelineSentinelRef.value;
       if (!el) return;
       timelineObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && timelineHasMore.value && !timelineLoadingMore.value) {
@@ -3089,18 +3137,20 @@ const AppComp = {
         }
       }, { rootMargin: '200px' });
       timelineObserver.observe(el);
+    }
+    watch(timelineSentinelRef, (el) => {
+      nextTick(() => setupTimelineObserver());
     });
-    watch(timelineHasMore, (hasMore) => {
-      if (hasMore && timelineSentinelRef.value && timelineObserver) {
-        timelineObserver.unobserve(timelineSentinelRef.value);
-        timelineObserver.observe(timelineSentinelRef.value);
-      }
+    watch(timelineHasMore, () => {
+      nextTick(() => setupTimelineObserver());
+    });
     });
     // ===== Infinite Scroll: Wishes Sentinel =====
     const wishSentinelRef = ref(null);
     let wishObserver = null;
-    watch(wishSentinelRef, (el) => {
+    function setupWishObserver() {
       if (wishObserver) wishObserver.disconnect();
+      const el = wishSentinelRef.value;
       if (!el) return;
       wishObserver = new IntersectionObserver((entries) => {
         if (entries[0].isIntersecting && wishHasMore.value && !wishesLoadingMore.value) {
@@ -3108,13 +3158,9 @@ const AppComp = {
         }
       }, { rootMargin: '200px' });
       wishObserver.observe(el);
-    });
-    watch(wishHasMore, (hasMore) => {
-      if (hasMore && wishSentinelRef.value && wishObserver) {
-        wishObserver.unobserve(wishSentinelRef.value);
-        wishObserver.observe(wishSentinelRef.value);
-      }
-    });
+    }
+    watch(wishSentinelRef, () => nextTick(() => setupWishObserver()));
+    watch(wishHasMore, () => nextTick(() => setupWishObserver()));
 
 
     // Computed: list of parent categories that are visible
