@@ -1054,7 +1054,7 @@ html, body {
       <p>还没有心愿,点击 + 添加第一个</p>
     </div>
     <div v-else>
-      <div v-for="w in wishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
+      <div v-for="w in filteredWishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
         <div class="swipe-inner"
              @touchstart="swipeTouchStart($event, 'swipe-wish-' + w.id)"
              @touchmove="swipeTouchMove($event, 'swipe-wish-' + w.id)"
@@ -1116,7 +1116,7 @@ html, body {
           <select v-model="timelineFilterStatus">
             <option value="">全部</option>
             <option value="active">活跃中</option>
-            <option value="sold">已出售</option>
+            <option value="sold">已售出</option>
             <option value="discarded">已退役</option>
             <option value="lost">已丢失</option>
           </select>
@@ -1683,13 +1683,37 @@ const AppComp = {
     // ===== Timeline Pagination =====
     const timelinePage = ref(1);
     const timelineTotal = ref(0);
-    const timelineHasMore = ref(false);
+    const timelineDisplayCount = ref(20);
+    let timelineCache = [];
+    let timelineCacheReady = false;
+    const timelineHasMore = computed(() => {
+      const source = timelineCacheReady ? timelineCache : timelineCache.length ? timelineCache : timelineAssets.value;
+      return timelineDisplayCount.value < source.length;
+    });
 
     const filteredTimeline = computed(() => {
-      let list = timelineAssets.value;
+      // 优先用资产缓存（全量），其次用自己的缓存，最后用首次加载数据
+      let source;
+      if (assetCacheReady && allAssetsCache.length) {
+        // allAssetsCache 未排序，时间轴需要按 purchase_date 倒序
+        source = allAssetsCache;
+      } else if (timelineCacheReady || timelineCache.length) {
+        source = timelineCache;
+      } else {
+        source = timelineAssets.value;
+      }
+      let list = source;
+      // 从 allAssetsCache 取数据时需要按购买日期倒序
+      if (source === allAssetsCache && !list._sorted) {
+        list = [...list];
+        list.sort((a, b) => {
+          const da = a.purchase_date || '2000-01-01';
+          const db = b.purchase_date || '2000-01-01';
+          return db.localeCompare(da);
+        });
+      }
       if (timelineFilterCat.value) {
         const catId = Number(timelineFilterCat.value);
-        // Get all sub-category IDs for this category
         const subIds = [catId];
         categories.value.forEach(c => {
           if (c.parent_id === catId) subIds.push(c.id);
@@ -1699,7 +1723,7 @@ const AppComp = {
       if (timelineFilterStatus.value) {
         list = list.filter(a => a.status === timelineFilterStatus.value);
       }
-      return list;
+      return list.slice(0, timelineDisplayCount.value);
     });
 
     function resetTimelineFilter() {
@@ -1709,52 +1733,64 @@ const AppComp = {
 
     async function loadTimeline() {
       timelineLoading.value = true;
-      timelinePage.value = 1;
+      timelineDisplayCount.value = 20;
+      timelineCache = [];
+      timelineCacheReady = false;
       try {
-        let url = '/assets?sort=purchase_date&order=desc&page=1&page_size=20';
-        if (timelineFilterStatus.value) url += '&status=' + encodeURIComponent(timelineFilterStatus.value);
-        const result = await api(url);
+        // 如果资产缓存已就绪，直接用
+        if (assetCacheReady && allAssetsCache.length) {
+          timelineCache = allAssetsCache;
+          timelineCacheReady = true;
+          timelineAssets.value = allAssetsCache;
+          timelineTotal.value = allAssetsCache.length;
+          timelineLoading.value = false;
+          return;
+        }
+        const result = await api('/assets?sort=purchase_date&order=desc&page=1&page_size=200');
         const items = result.items || result;
         items.forEach(a => calcWarrantyStatus(a));
         timelineAssets.value = items;
         timelineTotal.value = result.total || items.length;
-        timelineHasMore.value = result.page < result.total_pages;
+        timelineCache = items;  // 200 条作为缓存种子
       } catch (e) { console.error('Load timeline error:', e); }
       finally { timelineLoading.value = false; }
-      // 如果筛选状态选择了，一次性加载全部匹配数据
-      if (timelineFilterStatus.value && timelineHasMore.value) {
-        const baseUrl = '/assets?sort=purchase_date&order=desc&page_size=200&status=' + encodeURIComponent(timelineFilterStatus.value);
-        let page = 2;
-        while (true) {
-          try {
-            const r2 = await api(baseUrl + '&page=' + page);
-            const items = r2.items || [];
-            items.forEach(a => calcWarrantyStatus(a));
-            timelineAssets.value = timelineAssets.value.concat(items);
-            timelinePage.value = page;
-            timelineHasMore.value = r2.page < r2.total_pages;
-            if (!timelineHasMore.value) break;
-            page++;
-            await new Promise(r => setTimeout(r, 50));
-          } catch(e) { break; }
-        }
-      }
+      // 后台拉满缓存
+      if (!assetCacheReady) loadTimelineCache();
     }
 
-    async function loadMoreTimeline() {
-      if (timelineLoadingMore.value || !timelineHasMore.value) return;
-      timelineLoadingMore.value = true;
-      const nextPage = timelinePage.value + 1;
+    async function loadTimelineCache() {
+      if (assetCacheReady) {
+        timelineCache = allAssetsCache;
+        timelineCacheReady = true;
+        return;
+      }
       try {
-        let url = '/assets?sort=purchase_date&order=desc&page=' + nextPage + '&page_size=20';
-        if (timelineFilterStatus.value) url += '&status=' + encodeURIComponent(timelineFilterStatus.value);
-        const result = await api(url);
-        items.forEach(a => calcWarrantyStatus(a));
-        timelineAssets.value = timelineAssets.value.concat(items);
-        timelinePage.value = nextPage;
-        timelineHasMore.value = result.page < result.total_pages;
-      } catch (e) { console.error('Load more timeline error:', e); }
-      finally { timelineLoadingMore.value = false; }
+        let all = [...timelineCache];
+        let p = 2;
+        while (true) {
+          const r = await api('/assets?sort=purchase_date&order=desc&page=' + p + '&page_size=200');
+          const items = r.items || [];
+          items.forEach(a => calcWarrantyStatus(a));
+          all = all.concat(items);
+          if (r.page >= r.total_pages) break;
+          p++;
+        }
+        timelineCache = all;
+        timelineCacheReady = true;
+      } catch(e) { console.error('Timeline cache error:', e); }
+    }
+
+    function loadMoreTimeline() {
+      if (timelineLoadingMore.value) return;
+      let source;
+      if (assetCacheReady && allAssetsCache.length) source = allAssetsCache;
+      else if (timelineCacheReady || timelineCache.length) source = timelineCache;
+      else source = timelineAssets.value;
+      if (timelineDisplayCount.value >= source.length) return;
+      timelineLoadingMore.value = true;
+      timelineDisplayCount.value += 20;
+      if (timelineDisplayCount.value > source.length) timelineDisplayCount.value = source.length;
+      timelineLoadingMore.value = false;
     }
 
     // ===== Stats (local computed) =====
@@ -2089,16 +2125,23 @@ const AppComp = {
     }
 
     // ===== Assets =====
-    const assets = ref([]);
+    const assets = ref([]);          // 用户看到的资产列表（分页切片显示）
     const assetsLoading = ref(false);
     const assetsLoadingMore = ref(false);
     const assetSearch = ref('');
     const assetStatusFilter = ref('');
+    let allAssetsCache = [];          // 全量缓存（首次加载后台拉满）
+    let assetsCacheLoading = false;
+    let assetCacheReady = false;        // 缓存是否拉满
+    const assetDisplayCount = ref(20);
     // ===== Pagination =====
     const assetPage = ref(1);
     const assetTotal = ref(0);
     const assetTotalPages = ref(0);
-    const assetHasMore = ref(false);
+    const assetHasMore = computed(() => {
+      const source = assetCacheReady ? allAssetsCache : allAssetsCache.length ? allAssetsCache : assets.value;
+      return assetDisplayCount.value < source.length;
+    });
 
     // ===== Layout & Advanced Filter =====
     const layoutView = ref(localStorage.getItem('chiwu_layout_view') || 'list');
@@ -2123,7 +2166,17 @@ const AppComp = {
     }
 
     const filteredAssets = computed(() => {
-      let list = assets.value;
+      // 如果缓存已就绪，纯前端过滤
+      if (assetCacheReady && allAssetsCache.length) return filterSlice(allAssetsCache);
+      // 如果缓存正在加载中但已有一部分，先用已有缓存
+      if (allAssetsCache.length) return filterSlice(allAssetsCache);
+      // 缓存尚未就绪，回退 assets（前20条）
+      return assets.value.slice(0, assetDisplayCount.value);
+    });
+
+    // 纯前端过滤+切片（方便多处复用）
+    function filterSlice(arr) {
+      let list = arr;
       if (assetSearch.value) {
         const q = assetSearch.value.toLowerCase();
         list = list.filter(a => (a.name || '').toLowerCase().includes(q) || (a.notes || '').toLowerCase().includes(q));
@@ -2135,7 +2188,6 @@ const AppComp = {
           list = list.filter(a => a.status === assetStatusFilter.value);
         }
       }
-      // Advanced filters
       if (advFilterCat.value) {
         const catId = Number(advFilterCat.value);
         const subIds = [catId];
@@ -2163,8 +2215,8 @@ const AppComp = {
         const max = Number(advFilterDaysMax.value);
         list = list.filter(a => (a.holding_days || 0) <= max);
       }
-      return list;
-    });
+      return list.slice(0, assetDisplayCount.value);
+    }
 
     // 计算保修状态（共用函数）
     function calcWarrantyStatus(a) {
@@ -2194,73 +2246,59 @@ const AppComp = {
 
     async function loadAssets() {
       assetsLoading.value = true;
-      assetPage.value = 1;
+      assetDisplayCount.value = 20;
+      allAssetsCache = [];
+      assetCacheReady = false;
       try {
-        const params = new URLSearchParams();
-        params.set('page', '1');
-        params.set('page_size', '20');
-        if (assetSearch.value) params.set('search', assetSearch.value);
-        if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
-        const qs = params.toString();
-        const result = await api('/assets' + (qs ? '?' + qs : ''));
+        // 先拿总数
+        const meta = await api('/assets?page=1&page_size=1');
+        assetTotal.value = meta.total || 0;
+        // 首次拉 200 条，足够展示和初步筛选
+        const result = await api('/assets?page=1&page_size=200');
         const items = result.items || result;
-        const today = new Date();
         items.forEach(a => calcWarrantyStatus(a));
+        allAssetsCache = items;
         assets.value = items;
-        assetTotal.value = result.total || items.length;
-        assetTotalPages.value = result.total_pages || 1;
-        assetHasMore.value = result.page < result.total_pages;
+        assetTotalPages.value = Math.ceil((meta.total || items.length) / 200);
+        // 后台拉满缓存
+        loadAllAssetsCache();
       } catch (e) { console.error('Load assets error:', e); }
       finally { assetsLoading.value = false; }
     }
 
-    async function loadMoreAssets() {
-      if (assetsLoadingMore.value || !assetHasMore.value) return;
-      assetsLoadingMore.value = true;
-      const nextPage = assetPage.value + 1;
+    async function loadAllAssetsCache() {
+      if (assetsCacheLoading) return;
+      assetsCacheLoading = true;
       try {
-        const params = new URLSearchParams();
-        params.set('page', String(nextPage));
-        params.set('page_size', '20');
-        if (assetSearch.value) params.set('search', assetSearch.value);
-        if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
-        const qs = params.toString();
-        const result = await api('/assets' + (qs ? '?' + qs : ''));
-        const items = result.items || result;
-        const today = new Date();
-        items.forEach(a => calcWarrantyStatus(a));
-        assets.value = assets.value.concat(items);
-        assetPage.value = nextPage;
-        assetHasMore.value = result.page < result.total_pages;
-      } catch (e) { console.error('Load more assets error:', e); }
-      finally { assetsLoadingMore.value = false; }
+        const pages = assetTotalPages.value;
+        if (pages <= 1) { assetCacheReady = true; return; }
+        let all = [...allAssetsCache]; // 已有 200 条
+        for (let p = 2; p <= pages; p++) {
+          const r = await api('/assets?page=' + p + '&page_size=200');
+          const items = r.items || [];
+          items.forEach(a => calcWarrantyStatus(a));
+          all = all.concat(items);
+        }
+        allAssetsCache = all;
+        assetCacheReady = true;
+        assetTotal.value = allAssetsCache.length;
+      } catch(e) { console.error('Cache load error:', e); }
+      finally { assetsCacheLoading = false; }
     }
 
-    async function filterAssets() {
-      // 筛选时一次性加载全部匹配数据
-      await loadAssets();
-      // 如果还有更多页，后台加载完
-      if (assetHasMore.value) {
-        const params = new URLSearchParams();
-        if (assetSearch.value) params.set('search', assetSearch.value);
-        if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
-        params.set('page_size', '200');
-        let page = 2;
-        while (true) {
-          params.set('page', String(page));
-          try {
-            const result = await api('/assets?' + params.toString());
-            const items = result.items || [];
-            items.forEach(a => calcWarrantyStatus(a));
-            assets.value = assets.value.concat(items);
-            assetPage.value = page;
-            assetHasMore.value = result.page < result.total_pages;
-            if (!assetHasMore.value) break;
-            page++;
-            await new Promise(r => setTimeout(r, 50)); // 小间隔避免阻塞
-          } catch(e) { break; }
-        }
-      }
+    function loadMoreAssets() {
+      if (assetsLoadingMore.value) return;
+      const source = assetCacheReady ? allAssetsCache : allAssetsCache.length ? allAssetsCache : assets.value;
+      if (assetDisplayCount.value >= source.length) return;
+      assetsLoadingMore.value = true;
+      assetDisplayCount.value += 20;
+      if (assetDisplayCount.value > source.length) assetDisplayCount.value = source.length;
+      assetsLoadingMore.value = false;
+    }
+
+    function filterAssets() {
+      // 筛选时重置显示条数
+      assetDisplayCount.value = 20;
     }
 
     // ===== Camera (removed: getUserMedia not available in this environment) =====
@@ -2618,14 +2656,24 @@ const AppComp = {
     // Wish pagination
     const wishPage = ref(1);
     const wishTotal = ref(0);
-    const wishHasMore = ref(false);
+    const wishDisplayCount = ref(20);
     const wishesLoadingMore = ref(false);
+    let wishCache = [];
+    let wishCacheReady = false;
+    const wishHasMore = computed(() => {
+      const source = wishCacheReady ? wishCache : wishCache.length ? wishCache : wishes.value;
+      return wishDisplayCount.value < source.length;
+    });
 
     const wishTotalValue = computed(() => {
       return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
     });
         const wishDoneCount = computed(() => {
       return wishes.value.filter(w => w.is_done).length;
+    });
+        const filteredWishes = computed(() => {
+      const source = wishCacheReady ? wishCache : wishCache.length ? wishCache : wishes.value;
+      return source.slice(0, wishDisplayCount.value);
     });
 
     // ===== Wish Product Suggest =====
@@ -2870,29 +2918,45 @@ const AppComp = {
 
         async function loadWishes() {
       wishesLoading.value = true;
-      wishPage.value = 1;
+      wishDisplayCount.value = 20;
+      wishCache = [];
+      wishCacheReady = false;
       try {
-        const result = await api('/wishes?page=1&page_size=20');
+        const result = await api('/wishes?page=1&page_size=200');
         wishes.value = result.items || result;
         wishTotal.value = result.total || wishes.value.length;
-        wishHasMore.value = result.page < result.total_pages;
+        wishCache = wishes.value; // 200 条作为缓存种子
       }
       catch (e) { console.error('Load wishes error:', e); }
       finally { wishesLoading.value = false; }
+      // 后台拉满缓存
+      loadFullWishCache();
     }
 
-    async function loadMoreWishes() {
-      if (wishesLoadingMore.value || !wishHasMore.value) return;
-      wishesLoadingMore.value = true;
-      const nextPage = wishPage.value + 1;
+    async function loadFullWishCache() {
       try {
-        const result = await api('/wishes?page=' + nextPage + '&page_size=20');
-        const items = result.items || result;
-        wishes.value = wishes.value.concat(items);
-        wishPage.value = nextPage;
-        wishHasMore.value = result.page < result.total_pages;
-      } catch (e) { console.error('Load more wishes error:', e); }
-      finally { wishesLoadingMore.value = false; }
+        let all = [...wishCache];
+        let p = 2;
+        while (true) {
+          const r = await api('/wishes?page=' + p + '&page_size=200');
+          const items = r.items || [];
+          all = all.concat(items);
+          if (r.page >= r.total_pages) break;
+          p++;
+        }
+        wishCache = all;
+        wishCacheReady = true;
+      } catch(e) { console.error('Wish cache error:', e); }
+    }
+
+    function loadMoreWishes() {
+      if (wishesLoadingMore.value) return;
+      const source = wishCacheReady ? wishCache : wishCache.length ? wishCache : wishes.value;
+      if (wishDisplayCount.value >= source.length) return;
+      wishesLoadingMore.value = true;
+      wishDisplayCount.value += 20;
+      if (wishDisplayCount.value > source.length) wishDisplayCount.value = source.length;
+      wishesLoadingMore.value = false;
     }
 
     function openWishForm() {
@@ -3027,31 +3091,11 @@ const AppComp = {
     }
 
     async function loadAllAssetsForStats() {
-      // Fetch all remaining pages to build complete stats
-      if (assetTotalPages.value <= 1) return;
-      try {
-        const totalExisting = assets.value.length;
-        if (assetTotal.value > totalExisting) {
-          const params = new URLSearchParams();
-          params.set('page_size', '200');
-          if (assetSearch.value) params.set('search', assetSearch.value);
-          if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
-          const qs = params.toString();
-          const allResult = await api('/assets?page=1&' + qs);
-          const allItems = allResult.items || allResult;
-          const totalPages = allResult.total_pages || 1;
-          let allList = [...allItems];
-          for (let p = 2; p <= totalPages && p <= 50; p++) {
-            try {
-              const r = await api('/assets?page=' + p + '&page_size=200&' + qs);
-              const moreItems = r.items || [];
-              allList = allList.concat(moreItems);
-            } catch(e) { break; }
-          }
-          allList.forEach(a => calcWarrantyStatus(a));
-          assets.value = allList;
-        }
-      } catch (e) { /* silent */ }
+      // 确保缓存拉满
+      if (!allAssetsCache.length && assetTotal.value > 0) {
+        await loadAllAssetsCache();
+      }
+      // allAssetsCache 已包含全部数据，stats 的 computed 直接用它
     }
 
     // ===== Initialization =====
@@ -3143,7 +3187,6 @@ const AppComp = {
     });
     watch(timelineHasMore, () => {
       nextTick(() => setupTimelineObserver());
-    });
     });
     // ===== Infinite Scroll: Wishes Sentinel =====
     const wishSentinelRef = ref(null);
@@ -3243,7 +3286,7 @@ const AppComp = {
       isCategoryVisible, toggleCategoryVisibility,
       // Wishes
       wishes, wishesLoading, wishesLoadingMore, showWishForm, wishEditId, wishForm,
-      wishTotalValue, wishDoneCount, wishSuggestResults, loadMoreWishes,
+      wishTotalValue, wishDoneCount, filteredWishes, wishSuggestResults, loadMoreWishes,
       wishTotal, wishHasMore, wishSentinelRef,
       openWishForm, editWish, searchProductSuggestWish, selectWishSuggest,
       toggleWishCategoryPicker, selectWishCategory, showWishCategoryPicker, wishCategoryName,
