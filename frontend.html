@@ -2350,7 +2350,7 @@ const AppComp = {
         category_id: formData.category_id || null,
         channel_id: formData.channel_id || null,
         purchase_price: formData.purchase_price || null,
-        purchase_date: formData.purchase_date || null,
+        purchase_date: formData.purchase_date || new Date().toISOString().slice(0, 10),
         target_price: formData.target_price || null,
         residual_value: formData.residual_value || null,
         target_date: formData.target_date || null,
