@@ -2820,7 +2820,7 @@ const AppComp = {
 
     async function exportExcel() {
       try {
-        window.open(API_BASE + '/export/excel', '_blank');
+        window.open(API_BASE + '/api/export/excel', '_blank');
       } catch (e) { alert('导出失败: ' + e.message); }
     }
 
