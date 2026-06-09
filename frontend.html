@@ -1050,7 +1050,7 @@ body {
   <!-- ===== Tab: Timeline ===== -->
   <div v-show="activeTab === 'timeline'">
     <div class="timeline-header">
-      <h1>时间线</h1>
+      <h1>时间轴</h1>
       <button class="timeline-filter-btn" :class="{active: showTimelineFilter}"
         @click="showTimelineFilter = !showTimelineFilter">⫸</button>
     </div>
@@ -1085,7 +1085,7 @@ body {
     <div v-if="timelineLoading" class="loading">加载中...</div>
     <div v-else-if="filteredTimeline.length === 0" class="empty-state">
       <div class="empty-icon">🕐</div>
-      <p>暂无时间线记录</p>
+      <p>暂无时间轴记录</p>
     </div>
     <div v-else>
       <div v-for="(a, idx) in filteredTimeline" :key="a.id" class="timeline-item">
@@ -1233,9 +1233,9 @@ body {
       <div class="setting-item">
         <div>
           <div class="setting-label">导出数据</div>
-          <div class="setting-desc">下载所有资产为 JSON</div>
+          <div class="setting-desc">导出所有资产为 Excel</div>
         </div>
-        <button class="btn btn-primary" style="flex:none;padding:8px 16px;font-size:13px" @click="exportJSON">JSON</button>
+        <button class="btn btn-primary" style="flex:none;padding:8px 16px;font-size:13px" @click="exportExcel">Excel</button>
       </div>
     </div>
     <div class="card">
@@ -1633,7 +1633,13 @@ const AppComp = {
     const filteredTimeline = computed(() => {
       let list = timelineAssets.value;
       if (timelineFilterCat.value) {
-        list = list.filter(a => String(a.category_id) === String(timelineFilterCat.value));
+        const catId = Number(timelineFilterCat.value);
+        // Get all sub-category IDs for this category
+        const subIds = [catId];
+        categories.value.forEach(c => {
+          if (c.parent_id === catId) subIds.push(c.id);
+        });
+        list = list.filter(a => subIds.includes(Number(a.category_id)));
       }
       if (timelineFilterStatus.value) {
         list = list.filter(a => a.status === timelineFilterStatus.value);
@@ -2027,7 +2033,12 @@ const AppComp = {
       }
       // Advanced filters
       if (advFilterCat.value) {
-        list = list.filter(a => String(a.category_id) === String(advFilterCat.value));
+        const catId = Number(advFilterCat.value);
+        const subIds = [catId];
+        categories.value.forEach(c => {
+          if (c.parent_id === catId) subIds.push(c.id);
+        });
+        list = list.filter(a => subIds.includes(Number(a.category_id)));
       }
       if (advFilterChannel.value) {
         list = list.filter(a => String(a.channel_id) === String(advFilterChannel.value));
@@ -2580,6 +2591,16 @@ const AppComp = {
     function getProductIcon(name) {
       if (!name) return '📦';
       const n = name.toLowerCase();
+      // Vehicles
+      if (n.includes('车') || n.includes('car') || n.includes('tesla') || n.includes('model 3')
+        || n.includes('model y') || n.includes('model s') || n.includes('model x')
+        || n.includes('byd') || n.includes('比亚迪') || n.includes('奇瑞') || n.includes('艾瑞泽')
+        || n.includes('瑞虎') || n.includes('风云') || n.includes('星途') || n.includes('捷途')
+        || n.includes('蔚来') || n.includes('理想') || n.includes('小鹏') || n.includes('极氪')
+        || n.includes('问界') || n.includes('奔驰') || n.includes('宝马') || n.includes('奥迪')
+        || n.includes('大众') || n.includes('丰田') || n.includes('本田') || n.includes('保时捷')
+        || n.includes('雅迪') || n.includes('九号') || n.includes('小牛') || n.includes('爱玛')
+        || n.includes('电瓶车') || n.includes('摩托')) return '🚗';
       // Phones
       if (n.includes('iphone') || n.includes('手机') || n.includes('华为') || n.includes('小米')
         || n.includes('samsung') || n.includes('三星') || n.includes('oppo') || n.includes('vivo')
@@ -2795,16 +2816,9 @@ const AppComp = {
       } catch (e) { alert('删除渠道失败: ' + e.message); }
     }
 
-    async function exportJSON() {
+    async function exportExcel() {
       try {
-        const allAssets = await api('/assets');
-        const blob = new Blob([JSON.stringify(allAssets, null, 2)], { type: 'application/json' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'chiwu_assets_' + new Date().toISOString().slice(0, 10) + '.json';
-        a.click();
-        URL.revokeObjectURL(url);
+        window.open(API_BASE + '/export/excel', '_blank');
       } catch (e) { alert('导出失败: ' + e.message); }
     }
 
@@ -2935,7 +2949,7 @@ const AppComp = {
       submitWishForm, deleteWish, toggleWish, convertWish,
       swipeTouchStart, swipeTouchMove, swipeTouchEnd, getProductIcon,
       // Settings
-      deleteCategory, deleteChannel, exportJSON,
+      deleteCategory, deleteChannel, exportExcel,
       // Helpers
       statusLabel, formatK,
     };

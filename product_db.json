@@ -8866,5 +8866,311 @@
     "year": 2025,
     "icon": "mdi:projector",
     "keywords": "影音, 投影, 当贝, X6"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎3x PLUS",
+    "category": "车辆",
+    "price": 59900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎5x 超级英雄版",
+    "category": "车辆",
+    "price": 69900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎7 PLUS",
+    "category": "车辆",
+    "price": 99900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎7 高能版",
+    "category": "车辆",
+    "price": 109900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎8 PRO",
+    "category": "车辆",
+    "price": 119900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎8 PLUS",
+    "category": "车辆",
+    "price": 109900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎9",
+    "category": "车辆",
+    "price": 152900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 瑞虎9 C-DM",
+    "category": "车辆",
+    "price": 169900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 瑞虎, SUV, 混动"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 艾瑞泽5 PLUS",
+    "category": "车辆",
+    "price": 69900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 艾瑞泽, 轿车"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 艾瑞泽8",
+    "category": "车辆",
+    "price": 108900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 艾瑞泽, 轿车"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 艾瑞泽8 高能版",
+    "category": "车辆",
+    "price": 128900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 艾瑞泽, 轿车"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 艾瑞泽GT",
+    "category": "车辆",
+    "price": 139900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 艾瑞泽, 轿车"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 风云A8",
+    "category": "车辆",
+    "price": 119900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 风云, 混动"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 风云A8L",
+    "category": "车辆",
+    "price": 139900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 风云, 混动"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 风云T6",
+    "category": "车辆",
+    "price": 129900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 风云, 混动, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 风云T9",
+    "category": "车辆",
+    "price": 149900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 风云, 混动, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 风云T10",
+    "category": "车辆",
+    "price": 215900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 风云, 混动, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 iCAR 03",
+    "category": "车辆",
+    "price": 119800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, iCAR, 纯电, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 iCAR 03T",
+    "category": "车辆",
+    "price": 139800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, iCAR, 纯电, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 iCAR V23",
+    "category": "车辆",
+    "price": 99800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, iCAR, 纯电, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 欧萌达",
+    "category": "车辆",
+    "price": 99900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 欧萌达, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 探索06",
+    "category": "车辆",
+    "price": 119900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 探索, SUV"
+  },
+  {
+    "brand": "奇瑞",
+    "name": "奇瑞 探索06 C-DM",
+    "category": "车辆",
+    "price": 139900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 奇瑞, 探索, 混动, SUV"
+  },
+  {
+    "brand": "星途",
+    "name": "星途 凌云",
+    "category": "车辆",
+    "price": 139900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 星途, 奇瑞, SUV"
+  },
+  {
+    "brand": "星途",
+    "name": "星途 瑶光",
+    "category": "车辆",
+    "price": 172800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 星途, 奇瑞, SUV"
+  },
+  {
+    "brand": "星途",
+    "name": "星途 揽月",
+    "category": "车辆",
+    "price": 199900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 星途, 奇瑞, SUV"
+  },
+  {
+    "brand": "星途",
+    "name": "星途 追风",
+    "category": "车辆",
+    "price": 109900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 星途, 奇瑞, SUV"
+  },
+  {
+    "brand": "星途",
+    "name": "星途 瑶光 C-DM",
+    "category": "车辆",
+    "price": 192800,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 星途, 奇瑞, 混动, SUV"
+  },
+  {
+    "brand": "捷途",
+    "name": "捷途 X70 PLUS",
+    "category": "车辆",
+    "price": 89900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 捷途, 奇瑞, SUV"
+  },
+  {
+    "brand": "捷途",
+    "name": "捷途 X90 PLUS",
+    "category": "车辆",
+    "price": 129900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 捷途, 奇瑞, SUV"
+  },
+  {
+    "brand": "捷途",
+    "name": "捷途 大圣",
+    "category": "车辆",
+    "price": 95900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 捷途, 奇瑞, SUV"
+  },
+  {
+    "brand": "捷途",
+    "name": "捷途 旅行者",
+    "category": "车辆",
+    "price": 159900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 捷途, 奇瑞, SUV"
+  },
+  {
+    "brand": "捷途",
+    "name": "捷途 山海T1",
+    "category": "车辆",
+    "price": 169900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 捷途, 奇瑞, 混动, SUV"
+  },
+  {
+    "brand": "捷途",
+    "name": "捷途 山海T2",
+    "category": "车辆",
+    "price": 189900,
+    "year": 2025,
+    "icon": "mdi:car",
+    "keywords": "车辆, 捷途, 奇瑞, 混动, SUV"
   }
 ]
