@@ -3,8 +3,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import declarative_base, sessionmaker
 from config import DB_PATH
 
-MYSQL_URL = "mysql+pymysql://root:chiwu2026@localhost:3306/chiwu?charset=utf8mb4"
-engine = create_engine(MYSQL_URL, pool_pre_ping=True)
+engine = create_engine(f"sqlite:///{DB_PATH}", connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(bind=engine, autoflush=False)
 Base = declarative_base()
 

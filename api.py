@@ -174,6 +174,8 @@ def list_assets(
     status: Optional[str] = Query(None),
     sort: str = Query("created_at"),
     order: str = Query("desc"),
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=200),
     db: Session = Depends(get_db)
 ):
     q = db.query(Asset)
@@ -196,8 +198,16 @@ def list_assets(
     else:
         q = q.order_by(sort_col.desc())
     
-    assets = q.all()
-    return [asset_to_dict(a, db) for a in assets]
+    total = q.count()
+    total_pages = max(1, (total + page_size - 1) // page_size)
+    assets = q.offset((page - 1) * page_size).limit(page_size).all()
+    return {
+        "items": [asset_to_dict(a, db) for a in assets],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": total_pages,
+    }
 
 @router.get("/assets/{asset_id}")
 def get_asset(asset_id: int, db: Session = Depends(get_db)):
@@ -347,16 +357,24 @@ def delete_maintenance(m_id: int, db: Session = Depends(get_db)):
 
 # ------ 心愿单 API ------
 @router.get("/wishes")
-def list_wishes(db: Session = Depends(get_db)):
-    ws = db.query(WishItem).options(
+def list_wishes(
+    page: int = Query(1, ge=1),
+    page_size: int = Query(20, ge=1, le=200),
+    db: Session = Depends(get_db)
+):
+    q = db.query(WishItem).options(
         joinedload(WishItem.category),
         joinedload(WishItem.channel)
-    ).order_by(WishItem.created_at.desc()).all()
+    ).order_by(WishItem.created_at.desc())
+    total = q.count()
+    total_pages = max(1, (total + page_size - 1) // page_size)
+    ws = q.offset((page - 1) * page_size).limit(page_size).all()
     @lru_cache(maxsize=128)
     def _asset_image(asset_id):
         a = db.query(Asset).filter(Asset.id == asset_id).first()
         return a.image if a else None
-    return [{"id": w.id, "name": w.name, "target_price": w.target_price,
+    return {
+        "items": [{"id": w.id, "name": w.name, "target_price": w.target_price,
              "target_date": w.target_date.isoformat() if w.target_date else None,
              "price": w.price,
              "note": w.note, "is_done": w.is_done,
@@ -367,7 +385,12 @@ def list_wishes(db: Session = Depends(get_db)):
              "channel_name": w.channel.name if w.channel else None,
              "converted_asset_id": w.converted_asset_id,
              "image": _asset_image(w.converted_asset_id) if w.converted_asset_id else None,
-             "created_at": w.created_at.isoformat() if w.created_at else None} for w in ws]
+             "created_at": w.created_at.isoformat() if w.created_at else None} for w in ws],
+        "total": total,
+        "page": page,
+        "page_size": page_size,
+        "total_pages": total_pages,
+    }
 
 @router.post("/wishes", status_code=201)
 def create_wish(data: WishCreate, db: Session = Depends(get_db)):

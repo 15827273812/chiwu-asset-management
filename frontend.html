@@ -41,6 +41,7 @@ body {
   max-width: 480px; margin: 0 auto; min-height: 100vh;
   padding-bottom: 80px; position: relative;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 /* ===== Tab Bar ===== */
@@ -531,6 +532,7 @@ body {
 .asset-grid {
   display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
   padding: 0 16px;
+  width: 100%; overflow: hidden;
 }
 .asset-grid .card { margin: 0; padding: 12px; }
 .asset-grid .card:active { transform: scale(0.96); }
@@ -790,7 +792,7 @@ body {
           </div>
           <div class="item">
             <div class="num">{{ filteredAssets.length }}</div>
-            <div class="lbl">资产数量</div>
+            <div class="lbl">当前显示 · 共{{ assetTotal }}条</div>
           </div>
         </div>
       </div>
@@ -893,6 +895,11 @@ body {
             </div>
           </div>
         </div>
+      </div>
+      <!-- Load More Sentinel -->
+      <div ref="assetSentinelRef" style="text-align:center;padding:16px 0">
+        <div v-if="assetsLoadingMore" style="font-size:13px;color:var(--text-secondary)">加载更多...</div>
+        <div v-else-if="assetHasMore" style="font-size:13px;color:var(--text-secondary)">- 滑动加载更多 -</div>
       </div>
     </div>
   </div>
@@ -1044,6 +1051,11 @@ body {
           </div>
         </div>
       </div>
+      <!-- Load More Sentinel -->
+      <div ref="wishSentinelRef" style="text-align:center;padding:16px 0">
+        <div v-if="wishesLoadingMore" style="font-size:13px;color:var(--text-secondary)">加载更多...</div>
+        <div v-else-if="wishHasMore" style="font-size:13px;color:var(--text-secondary)">- 滑动加载更多 -</div>
+      </div>
     </div>
   </div>
 
@@ -1109,6 +1121,11 @@ body {
             </div>
           </div>
         </div>
+      </div>
+      <!-- Load More Sentinel -->
+      <div ref="timelineSentinelRef" style="text-align:center;padding:16px 0">
+        <div v-if="timelineLoadingMore" style="font-size:13px;color:var(--text-secondary)">加载更多...</div>
+        <div v-else-if="timelineHasMore" style="font-size:13px;color:var(--text-secondary)">- 滑动加载更多 -</div>
       </div>
     </div>
   </div>
@@ -1626,9 +1643,14 @@ const AppComp = {
     // ===== Timeline =====
     const timelineAssets = ref([]);
     const timelineLoading = ref(false);
+    const timelineLoadingMore = ref(false);
     const showTimelineFilter = ref(false);
     const timelineFilterCat = ref('');
     const timelineFilterStatus = ref('');
+    // ===== Timeline Pagination =====
+    const timelinePage = ref(1);
+    const timelineTotal = ref(0);
+    const timelineHasMore = ref(false);
 
     const filteredTimeline = computed(() => {
       let list = timelineAssets.value;
@@ -1654,10 +1676,31 @@ const AppComp = {
 
     async function loadTimeline() {
       timelineLoading.value = true;
+      timelinePage.value = 1;
       try {
-        timelineAssets.value = await api('/assets?sort=purchase_date&order=desc');
+        const result = await api('/assets?sort=purchase_date&order=desc&page=1&page_size=20');
+        const items = result.items || result;
+        items.forEach(a => calcWarrantyStatus(a));
+        timelineAssets.value = items;
+        timelineTotal.value = result.total || items.length;
+        timelineHasMore.value = result.page < result.total_pages;
       } catch (e) { console.error('Load timeline error:', e); }
       finally { timelineLoading.value = false; }
+    }
+
+    async function loadMoreTimeline() {
+      if (timelineLoadingMore.value || !timelineHasMore.value) return;
+      timelineLoadingMore.value = true;
+      const nextPage = timelinePage.value + 1;
+      try {
+        const result = await api('/assets?sort=purchase_date&order=desc&page=' + nextPage + '&page_size=20');
+        const items = result.items || result;
+        items.forEach(a => calcWarrantyStatus(a));
+        timelineAssets.value = timelineAssets.value.concat(items);
+        timelinePage.value = nextPage;
+        timelineHasMore.value = result.page < result.total_pages;
+      } catch (e) { console.error('Load more timeline error:', e); }
+      finally { timelineLoadingMore.value = false; }
     }
 
     // ===== Stats (local computed) =====
@@ -1993,8 +2036,14 @@ const AppComp = {
     // ===== Assets =====
     const assets = ref([]);
     const assetsLoading = ref(false);
+    const assetsLoadingMore = ref(false);
     const assetSearch = ref('');
     const assetStatusFilter = ref('');
+    // ===== Pagination =====
+    const assetPage = ref(1);
+    const assetTotal = ref(0);
+    const assetTotalPages = ref(0);
+    const assetHasMore = ref(false);
 
     // ===== Layout & Advanced Filter =====
     const layoutView = ref(localStorage.getItem('chiwu_layout_view') || 'list');
@@ -2062,44 +2111,74 @@ const AppComp = {
       return list;
     });
 
+    // 计算保修状态（共用函数）
+    function calcWarrantyStatus(a) {
+      if (a.warranty_months && a.warranty_months > 0) {
+        const today = new Date();
+        let end = a.warranty_end_date ? new Date(a.warranty_end_date) : null;
+        if (!end) {
+          let start;
+          if (a.warranty_start_date) {
+            start = new Date(a.warranty_start_date);
+          } else if (a.purchase_date) {
+            start = new Date(a.purchase_date);
+            a.warranty_start_date = a.purchase_date;
+          }
+          if (start) {
+            end = new Date(start);
+            end.setMonth(end.getMonth() + Number(a.warranty_months));
+          }
+        }
+        if (end) {
+          const ey = end.getFullYear(), em = String(end.getMonth()+1).padStart(2,'0'), ed = String(end.getDate()).padStart(2,'0');
+          a.warranty_end_date = ey + '-' + em + '-' + ed;
+          a.warranty_status = today <= end ? 'warrantying' : 'expired';
+        }
+      }
+    }
+
     async function loadAssets() {
       assetsLoading.value = true;
+      assetPage.value = 1;
       try {
         const params = new URLSearchParams();
+        params.set('page', '1');
+        params.set('page_size', '20');
         if (assetSearch.value) params.set('search', assetSearch.value);
         if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
         const qs = params.toString();
-        const rawAssets = await api('/assets' + (qs ? '?' + qs : ''));
-      // 前端计算保修状态
-      const today = new Date();
-      rawAssets.forEach(a => {
-        if (a.warranty_months && a.warranty_months > 0) {
-          // 优先用后端返回的 warranty_end_date
-          let end = a.warranty_end_date ? new Date(a.warranty_end_date) : null;
-          if (!end) {
-            // 前端自己算
-            let start;
-            if (a.warranty_start_date) {
-              start = new Date(a.warranty_start_date);
-            } else if (a.purchase_date) {
-              start = new Date(a.purchase_date);
-              a.warranty_start_date = a.purchase_date;
-            }
-            if (start) {
-              end = new Date(start);
-              end.setMonth(end.getMonth() + Number(a.warranty_months));
-            }
-          }
-          if (end) {
-            const ey = end.getFullYear(), em = String(end.getMonth()+1).padStart(2,'0'), ed = String(end.getDate()).padStart(2,'0');
-            a.warranty_end_date = ey + '-' + em + '-' + ed;
-            a.warranty_status = today <= end ? 'warrantying' : 'expired';
-          }
-        }
-      });
-      assets.value = rawAssets;
+        const result = await api('/assets' + (qs ? '?' + qs : ''));
+        const items = result.items || result;
+        const today = new Date();
+        items.forEach(a => calcWarrantyStatus(a));
+        assets.value = items;
+        assetTotal.value = result.total || items.length;
+        assetTotalPages.value = result.total_pages || 1;
+        assetHasMore.value = result.page < result.total_pages;
       } catch (e) { console.error('Load assets error:', e); }
       finally { assetsLoading.value = false; }
+    }
+
+    async function loadMoreAssets() {
+      if (assetsLoadingMore.value || !assetHasMore.value) return;
+      assetsLoadingMore.value = true;
+      const nextPage = assetPage.value + 1;
+      try {
+        const params = new URLSearchParams();
+        params.set('page', String(nextPage));
+        params.set('page_size', '20');
+        if (assetSearch.value) params.set('search', assetSearch.value);
+        if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
+        const qs = params.toString();
+        const result = await api('/assets' + (qs ? '?' + qs : ''));
+        const items = result.items || result;
+        const today = new Date();
+        items.forEach(a => calcWarrantyStatus(a));
+        assets.value = assets.value.concat(items);
+        assetPage.value = nextPage;
+        assetHasMore.value = result.page < result.total_pages;
+      } catch (e) { console.error('Load more assets error:', e); }
+      finally { assetsLoadingMore.value = false; }
     }
 
     function filterAssets() { loadAssets(); }
@@ -2456,6 +2535,11 @@ const AppComp = {
     const showWishCategoryPicker = ref(false);
     const wishCategoryName = ref('');
     const wishForm = reactive({ name: '', price: null, target_price: null, target_date: '', note: '', category_id: null, channel_id: null });
+    // Wish pagination
+    const wishPage = ref(1);
+    const wishTotal = ref(0);
+    const wishHasMore = ref(false);
+    const wishLoadingMore = ref(false);
 
     const wishTotalValue = computed(() => {
       return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
@@ -2706,9 +2790,29 @@ const AppComp = {
 
         async function loadWishes() {
       wishesLoading.value = true;
-      try { wishes.value = await api('/wishes'); }
+      wishPage.value = 1;
+      try {
+        const result = await api('/wishes?page=1&page_size=20');
+        wishes.value = result.items || result;
+        wishTotal.value = result.total || wishes.value.length;
+        wishHasMore.value = result.page < result.total_pages;
+      }
       catch (e) { console.error('Load wishes error:', e); }
       finally { wishesLoading.value = false; }
+    }
+
+    async function loadMoreWishes() {
+      if (wishesLoadingMore.value || !wishHasMore.value) return;
+      wishesLoadingMore.value = true;
+      const nextPage = wishPage.value + 1;
+      try {
+        const result = await api('/wishes?page=' + nextPage + '&page_size=20');
+        const items = result.items || result;
+        wishes.value = wishes.value.concat(items);
+        wishPage.value = nextPage;
+        wishHasMore.value = result.page < result.total_pages;
+      } catch (e) { console.error('Load more wishes error:', e); }
+      finally { wishesLoadingMore.value = false; }
     }
 
     function openWishForm() {
@@ -2842,6 +2946,34 @@ const AppComp = {
       catch (e) { console.error('Load channels error:', e); }
     }
 
+    async function loadAllAssetsForStats() {
+      // Fetch all remaining pages to build complete stats
+      if (assetTotalPages.value <= 1) return;
+      try {
+        const totalExisting = assets.value.length;
+        if (assetTotal.value > totalExisting) {
+          const params = new URLSearchParams();
+          params.set('page_size', '200');
+          if (assetSearch.value) params.set('search', assetSearch.value);
+          if (assetStatusFilter.value && assetStatusFilter.value !== 'warranty') params.set('status', assetStatusFilter.value);
+          const qs = params.toString();
+          const allResult = await api('/assets?page=1&' + qs);
+          const allItems = allResult.items || allResult;
+          const totalPages = allResult.total_pages || 1;
+          let allList = [...allItems];
+          for (let p = 2; p <= totalPages && p <= 50; p++) {
+            try {
+              const r = await api('/assets?page=' + p + '&page_size=200&' + qs);
+              const moreItems = r.items || [];
+              allList = allList.concat(moreItems);
+            } catch(e) { break; }
+          }
+          allList.forEach(a => calcWarrantyStatus(a));
+          assets.value = allList;
+        }
+      } catch (e) { /* silent */ }
+    }
+
     // ===== Initialization =====
     onMounted(async () => {
       await Promise.all([loadCategories(), loadChannels()]);
@@ -2855,6 +2987,10 @@ const AppComp = {
     watch(activeTab, async (tab) => {
       if (tab === 'wishes') loadWishes();
       if (tab === 'timeline') loadTimeline();
+      if (tab === 'stats' && assetTotalPages.value > 1) {
+        // Load all remaining pages for stats calculations
+        await loadAllAssetsForStats();
+      }
     });
 
     // Watch assets changes - stats uses local computed, so auto-updates
@@ -2888,6 +3024,65 @@ const AppComp = {
       formWarrantyEnd.value = formData.warranty_start_date || '';
     }
 
+    // ===== Infinite Scroll: Asset Sentinel =====
+    const assetSentinelRef = ref(null);
+    let assetObserver = null;
+    watch(assetSentinelRef, (el) => {
+      if (assetObserver) assetObserver.disconnect();
+      if (!el) return;
+      assetObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && assetHasMore.value && !assetsLoadingMore.value) {
+          loadMoreAssets();
+        }
+      }, { rootMargin: '200px' });
+      assetObserver.observe(el);
+    });
+    // Re-observe when hasMore changes (after page loaded)
+    watch(assetHasMore, (hasMore) => {
+      if (hasMore && assetSentinelRef.value && assetObserver) {
+        assetObserver.unobserve(assetSentinelRef.value);
+        assetObserver.observe(assetSentinelRef.value);
+      }
+    });
+    // ===== Infinite Scroll: Timeline Sentinel =====
+    const timelineSentinelRef = ref(null);
+    let timelineObserver = null;
+    watch(timelineSentinelRef, (el) => {
+      if (timelineObserver) timelineObserver.disconnect();
+      if (!el) return;
+      timelineObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && timelineHasMore.value && !timelineLoadingMore.value) {
+          loadMoreTimeline();
+        }
+      }, { rootMargin: '200px' });
+      timelineObserver.observe(el);
+    });
+    watch(timelineHasMore, (hasMore) => {
+      if (hasMore && timelineSentinelRef.value && timelineObserver) {
+        timelineObserver.unobserve(timelineSentinelRef.value);
+        timelineObserver.observe(timelineSentinelRef.value);
+      }
+    });
+    // ===== Infinite Scroll: Wishes Sentinel =====
+    const wishSentinelRef = ref(null);
+    let wishObserver = null;
+    watch(wishSentinelRef, (el) => {
+      if (wishObserver) wishObserver.disconnect();
+      if (!el) return;
+      wishObserver = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting && wishHasMore.value && !wishLoadingMore.value) {
+          loadMoreWishes();
+        }
+      }, { rootMargin: '200px' });
+      wishObserver.observe(el);
+    });
+    watch(wishHasMore, (hasMore) => {
+      if (hasMore && wishSentinelRef.value && wishObserver) {
+        wishObserver.unobserve(wishSentinelRef.value);
+        wishObserver.observe(wishSentinelRef.value);
+      }
+    });
+
 
     // Computed: list of parent categories that are visible
     const visibleCategoryList = computed(() => {
@@ -2903,8 +3098,9 @@ const AppComp = {
       // Categories & Channels
       categories, channels,
       // Assets
-      assets, assetsLoading, assetSearch, assetStatusFilter, statusFilters, displayStatus, displayStatusLabel,
-      filteredAssets, loadAssets, filterAssets,
+      assets, assetsLoading, assetsLoadingMore, assetSearch, assetStatusFilter, statusFilters, displayStatus, displayStatusLabel,
+      filteredAssets, loadAssets, loadMoreAssets, filterAssets,
+      assetTotal, assetTotalPages, assetHasMore, assetSentinelRef,
       formWarrantyEnd,
       calcWarrantyEnd,
       dtTouchStart, dtTouchEnd,
@@ -2940,9 +3136,10 @@ const AppComp = {
       statsTopCategories, statsDonutGradient, catPieStyle, catColors,
       statsDailyCostTop, statsTopCatCount,
       // Timeline
-      timelineAssets, timelineLoading, showTimelineFilter,
+      timelineAssets, timelineLoading, timelineLoadingMore, showTimelineFilter,
       timelineFilterCat, timelineFilterStatus,
       filteredTimeline, resetTimelineFilter,
+      timelineTotal, timelineHasMore, timelineSentinelRef,
       // Settings collapsible
       showStatsSettingsSection, showCatsSection, showChannelsSection,
       catCollapseState, isCatCollapsed, toggleCatCollapse,
@@ -2951,8 +3148,9 @@ const AppComp = {
       visibleCategories, visibleCategoryList,
       isCategoryVisible, toggleCategoryVisibility,
       // Wishes
-      wishes, wishesLoading, showWishForm, wishEditId, wishForm,
+      wishes, wishesLoading, wishesLoadingMore, showWishForm, wishEditId, wishForm,
       wishTotalValue, wishDoneCount, wishSuggestResults,
+      wishTotal, wishHasMore, wishSentinelRef,
       openWishForm, editWish, searchProductSuggestWish, selectWishSuggest,
       toggleWishCategoryPicker, selectWishCategory, showWishCategoryPicker, wishCategoryName,
       submitWishForm, deleteWish, toggleWish, convertWish,
