@@ -489,7 +489,7 @@ async def ai_recognize(file: UploadFile = File(...)):
                                     },
                                     {
                                         "type": "text",
-                                        "text": "请识别这张图片中的物品，返回以下 JSON 格式（不要包含 markdown 代码块）：{\"name\": \"物品名称\", \"brand\": \"品牌\", \"category\": \"分类\", \"price\": 预估价格（数字）}"
+                                        "text": "请识别这张图片中的物品，返回以下 JSON 格式（不要包含 markdown 代码块，category 请使用最具体的物品类型，如 电脑/手机/平板/耳机/音响/电视/冰箱/空调/洗衣机/相机/镜头/鞋/包/手表 等，不要用'电子产品''家电'这种大类名）：{\"name\": \"物品名称\", \"brand\": \"品牌\", \"category\": \"具体分类\", \"price\": 预估价格（数字）}"
                                     }
                                 ]
                             }

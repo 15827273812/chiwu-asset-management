@@ -2178,11 +2178,18 @@ const AppComp = {
                   const catName = data.category || data.brand;
                   for (const c of cats) {
                     if (c.children && c.children.length > 0) {
-                      for (const child of c.children) {
-                        if (child.name.includes(catName) || catName.includes(child.name)) {
-                          formData.category_id = child.id;
-                          break;
+                      // 先检查父分类名是否匹配
+                      if (c.name.includes(catName) || catName.includes(c.name)) {
+                        // 父分类匹配上了 —— 尝试在子分类中找名称最接近的
+                        let matchedChild = null;
+                        for (const child of c.children) {
+                          if (child.name.includes(catName) || catName.includes(child.name)) {
+                            matchedChild = child;
+                            break;
+                          }
                         }
+                        formData.category_id = matchedChild ? matchedChild.id : c.children[0].id;
+                        break;
                       }
                     } else if (c.name.includes(catName) || catName.includes(c.name)) {
                       formData.category_id = c.id;
