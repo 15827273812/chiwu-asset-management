@@ -55,11 +55,43 @@ class Asset(Base):
         return (self.purchase_price or 0) + self.total_maintenance_cost
 
     @property
+    def net_cost(self):
+        """净成本 = 购买价 + 维护费 - 残值（优先手动残值，无则按品类自动算）"""
+        residual = self.residual_value
+        if residual is None:
+            # 自动残值（品类折旧率表）
+            residual = self._auto_residual_value() or 0
+        return max(0, self.tco - residual)
+
+    # 品类残值率配置（顶级分类ID → 年折旧率）
+    _DEPRECIATION_RATES = {
+        1: 0.15, 7: 0.20, 14: 0.15, 19: 0.15, 23: 0.20,
+        29: 0.20, 33: 0.15, 37: 0.10, 42: 0.25, 47: 0.15,
+        53: 0.15, 57: 0.20,
+    }
+
+    def _auto_residual_value(self):
+        if not self.purchase_price or not self.purchase_date:
+            return None
+        days = self.holding_days
+        if days < 365:
+            return round(self.purchase_price * 0.8, 2)
+        # 查品类
+        rate = 0.20
+        if self.category_id:
+            # 简单用自身 category_id（因为子类没存父子关系）
+            rate = self._DEPRECIATION_RATES.get(self.category_id, 0.20)
+        years = days / 365.0
+        value = self.purchase_price * ((1 - rate) ** years)
+        return round(max(value, 0), 2)
+
+    @property
     def daily_cost(self):
+        """日均成本 = net_cost / 持有天数（减去残值的实际日均支出）"""
         days = self.holding_days
         if days <= 0 or not self.purchase_price:
             return None
-        return round(self.tco / days, 2)
+        return round(self.net_cost / days, 2)
 
     @property
     def warranty_status(self):

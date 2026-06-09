@@ -853,7 +853,7 @@ body {
             <div class="swipe-content">
               <div class="card" @click="openDetail(a)">
                 <div class="card-top-row">
-                  <div style="font-size:16px;font-weight:600">{{ getProductIcon(a.name) }} {{ a.name }}</div>
+                  <div style="font-size:16px;font-weight:600">{{ getProductIcon(a.name) || a.category_icon }} {{ a.name }}</div>
                   <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span><span v-if="a.warranty_months > 0 && a.warranty_status === 'warrantying'" class="tag" style="background:rgba(52,199,89,0.15);color:#34c759;font-size:11px;margin-left:4px">保障中</span>
                 </div>
                 <div style="display:flex;justify-content:space-between;align-items:flex-start">
@@ -884,7 +884,7 @@ body {
           <div class="asset-grid-item">
             <div class="grid-thumb-wrap">
               <img v-if="a.image" :src="a.image" class="grid-thumb" alt="">
-              <div v-else class="grid-icon">{{ getProductIcon(a.name) }}</div>
+              <div v-else class="grid-icon">{{ getProductIcon(a.name) || a.category_icon }}</div>
             </div>
             <div class="grid-name">{{ a.name }}</div>
             <div class="grid-price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
@@ -1021,7 +1021,8 @@ body {
              @touchend="swipeTouchEnd($event, 'swipe-wish-' + w.id)">
           <div class="swipe-content">
             <div class="card wish-card">
-              <div class="wish-icon">{{ getProductIcon(w.name) }}</div>
+              <img v-if="w.image" :src="w.image" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;margin-top:2px">
+              <div v-else class="wish-icon">{{ getProductIcon(w.name) || w.category_icon }}</div>
               <div class="wish-info">
                 <div class="wish-name" :class="{'done-text': w.is_done}">{{ w.name }}</div>
                 <div class="wish-meta">
@@ -1094,8 +1095,9 @@ body {
         </div>
         <div class="timeline-card">
           <div class="card" @click="toggleSwipe('swipe-' + a.id); openDetail(a)">
-            <div>
-              <span class="timeline-icon">{{ a.category_icon || '📦' }}</span>
+            <div style="display:flex;align-items:center;gap:10px">
+              <img v-if="a.image" :src="a.image" style="width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0">
+              <span v-else class="timeline-icon">{{ getProductIcon(a.name) || a.category_icon }}</span>
               <span class="timeline-card-content">
                 <strong>{{ a.name }}</strong>
                 <span style="color:var(--text-secondary)"> · {{ a.purchase_date }}</span>
@@ -1261,7 +1263,7 @@ body {
       <div class="detail-grid">
         <div class="detail-item">
           <div class="label">分类</div>
-          <div class="value">{{ getProductIcon(detailAsset?.name) }} {{ detailAsset?.category_name || '未分类' }}</div>
+          <div class="value">{{ getProductIcon(detailAsset?.name) || detailAsset?.category_icon }} {{ detailAsset?.category_name || '未分类' }}</div>
         </div>
         <div class="detail-item">
           <div class="label">渠道</div>
@@ -1301,28 +1303,8 @@ body {
     <!-- Cost & Daily Cost Card (参考设计稿) -->
     <div class="detail-section">
       <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center;margin-bottom:12px;border:1px solid var(--border)">
-        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">日均成本</div>
-        <div style="display:flex;justify-content:center;gap:32px">
-          <div>
-            <div style="font-size:22px;font-weight:700;color:var(--danger)">¥{{ detailAsset?.daily_cost || 0 }}</div>
-            <div style="font-size:11px;color:var(--text-secondary)">当前</div>
-          </div>
-          <div style="width:1px;background:var(--border)"></div>
-          <div>
-            <div style="font-size:22px;font-weight:700;color:var(--success)">¥{{ detailTargetDaily }}</div>
-            <div style="font-size:11px;color:var(--text-secondary)">目标</div>
-          </div>
-        </div>
-        <div v-if="detailTargetDaily > 0" style="margin-top:12px">
-          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-secondary);margin-bottom:4px">
-            <span>进度</span>
-            <span>{{ detailProgressPct }}%</span>
-          </div>
-          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
-            <div :style="{width: detailProgressPct + '%', height:'100%', background:'var(--primary)', borderRadius:'3px', transition:'width 0.5s'}"></div>
-          </div>
-          <div style="font-size:11px;color:var(--text-secondary);margin-top:6px">预计达成日期：{{ detailTargetDateStr }} · 还剩 {{ detailRemainingDays }} 天</div>
-        </div>
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:4px">日均成本</div>
+        <div style="font-size:28px;font-weight:700;color:var(--danger)">¥{{ detailAsset?.daily_cost || 0 }}</div>
       </div>
       <div class="detail-grid">
         <div class="detail-item">
@@ -1338,22 +1320,22 @@ body {
           <div class="value">{{ assetMaintenances.length }} 条</div>
         </div>
       </div>
-      <!-- Residual Value -->
-      <div class="detail-section">
-        <div class="detail-grid">
-          <div class="detail-item">
-            <div class="label">预估残值</div>
-            <div class="value">¥{{ detailAsset?.residual_value || detailAsset?.auto_residual_value || '-' }}</div>
-          </div>
-          <div class="detail-item">
-            <div class="label">保值率</div>
-            <div class="value">{{ detailAsset?.residual_rate || 0 }}%</div>
-          </div>
-        </div>
-      </div>
       <div v-if="detailAsset?.notes" style="margin-top:12px">
         <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
         <div style="font-size:14px;margin-top:4px">{{ detailAsset.notes }}</div>
+      </div>
+    </div>
+    <!-- Residual Value -->
+    <div class="detail-section">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="label">预估残值</div>
+          <div class="value">¥{{ detailAsset?.residual_value || detailAsset?.auto_residual_value || '-' }}</div>
+        </div>
+        <div class="detail-item">
+          <div class="label">保值率</div>
+          <div class="value">{{ detailAsset?.residual_rate || 0 }}%</div>
+        </div>
       </div>
     </div>
     <!-- Maintenance -->
@@ -1431,13 +1413,9 @@ body {
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label>当前价值 (¥)</label>
-          <input type="number" v-model.number="formData.current_value" placeholder="留空同购买价" step="0.01">
-        </div>
-        <div class="form-group">
-          <label>目标价格 (¥)</label>
-          <input type="number" v-model.number="formData.target_price" placeholder="用于计算目标日均成本" step="0.01">
+        <div class="form-group" style="opacity:0.7">
+          <label>当前价值 (¥) <span style="font-size:11px;color:var(--text-secondary)">= 残值</span></label>
+          <input type="text" readonly :value="formData.residual_value ? '¥' + formData.residual_value : (formData.purchase_price ? '自动计算中...' : '¥0')" style="background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box">
         </div>
         <div class="form-group">
           <label>预估残值 (¥)</label>
@@ -1445,13 +1423,6 @@ body {
         </div>
       </div>
       <div class="form-row">
-        <div class="form-group">
-          <label>目标日期</label>
-          <div style="position:relative">
-            <input type="text" readonly :value="formData.target_date || '点击选择日期'" style="cursor:default;background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box">
-            <input id="targetDatePicker" type="date" v-model="formData.target_date" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;cursor:pointer;z-index:5;border:none;padding:0">
-          </div>
-        </div>
         <div class="form-group">
           <label>状态</label>
           <select v-model="formData.status">
@@ -2274,6 +2245,21 @@ const AppComp = {
       warranty_months: null, warranty_start_date: ''
     });
     watch(() => [formData.purchase_date, formData.warranty_months, formData.warranty_start_date], () => { calcWarrantyEnd(); }, { deep: true });
+    // 输入名称时自动匹配分类
+    watch(() => formData.name, async (name) => {
+      if (!name || name.trim().length < 2) return;
+      // 只在尚未手动选择分类时自动匹配
+      if (formData.category_id) return;
+      try {
+        const res = await fetch(API_BASE + "/api/search-products?q=" + encodeURIComponent(name.trim()));
+        if (res.ok) {
+          const products = await res.json();
+          if (products.length > 0 && products[0].category_id) {
+            formData.category_id = products[0].category_id;
+          }
+        }
+      } catch(e) {}
+    }, { debounce: 400 });
     const showSuggest = ref(false);
     const suggestResults = ref([]);
     let suggestTimer = null;
@@ -2352,7 +2338,6 @@ const AppComp = {
         channel_id: formData.channel_id || null,
         purchase_price: formData.purchase_price || null,
         purchase_date: formData.purchase_date || null,
-        current_value: formData.current_value || null,
         target_price: formData.target_price || null,
         residual_value: formData.residual_value || null,
         target_date: formData.target_date || null,
@@ -2481,6 +2466,7 @@ const AppComp = {
       wishForm.name = p.name;
       if (p.price) wishForm.price = p.price;
       if (p.icon) wishForm.icon = p.icon;
+      if (p.category_id) wishForm.category_id = p.category_id;
       wishSuggestResults.value = [];
     }
 
@@ -2549,6 +2535,48 @@ const AppComp = {
 
 
     // ===== Product Icon Helper =====
+    let productIconCache = null;
+    function getProductIconFromDB(name) {
+      if (!name) return null;
+      if (!productIconCache) {
+        // 内联产品图标映射（从 product_db.json 提取的核心产品图标匹配）
+        productIconCache = [
+          // 手机
+          { match: /iphone|iphome|苹果.*手机|华为.*手机|小米.*手机|oppo|vivo|samsung.*galaxy|一加|真我|荣耀.*手机/ig, icon: '📱' },
+          // 电脑
+          { match: /macbook|mac ?(pro|air|mini|studio|book)|thinkpad|xps|surface|拯救者|外星人|rog|天选|小新/ig, icon: '💻' },
+          // 平板
+          { match: /ipad|matepad|galaxy tab|surface pro|联想.*pad|小米.*pad/ig, icon: '📱' },
+          // 耳机
+          { match: /airpods|wh-1000|xm[456]|sony.*耳机|bose|freebuds|buds ?pro|buds ?live/galaxy.*buds/ig, icon: '🎧' },
+          // 手表
+          { match: /apple watch|galaxy watch|watch ?(ultra|gt|pro)|手环|band ?[0-9]/ig, icon: '⌚' },
+          // 显示器/电视
+          { match: /显示器|monitor|电视|tv|投影|projector/ig, icon: '🖥️' },
+          // 键盘
+          { match: /键盘|keyboard/ig, icon: '⌨️' },
+          // 鼠标
+          { match: /鼠标|mouse/ig, icon: '🖱️' },
+          // 相机
+          { match: /相机|camera|镜头|lens|gopro|insta360|索尼.*相机|尼康|canon|eos/ig, icon: '📷' },
+          // 游戏机
+          { match: /ps[45]|switch|xbox|steam deck|掌机/ig, icon: '🎮' },
+          // 音箱
+          { match: /homepod|echo|jbl|bose.*音响|sonos|soundbar/ig, icon: '🔊' },
+          // 存储
+          { match: /ssd|硬盘|nas|u盘|sd卡|tf卡|存储/ig, icon: '💾' },
+          // 路由器
+          { match: /路由|router|mesh|wifi[0-9]?/ig, icon: '🌐' },
+          // 打印机
+          { match: /打印|printer|扫描|scanner/ig, icon: '🖨️' },
+        ];
+      }
+      for (const entry of productIconCache) {
+        if (entry.match.test(name)) return entry.icon;
+      }
+      return null;
+    }
+
     function getProductIcon(name) {
       if (!name) return '📦';
       const n = name.toLowerCase();
@@ -2566,7 +2594,7 @@ const AppComp = {
       if (n.includes('ipad') || n.includes('平板') || n.includes('tab')) return '📱';
       // Headphones
       if (n.includes('airpods') || n.includes('耳机') || n.includes('earphone') || n.includes('headphone')
-        || n.includes('buds') || n.includes('freebuds')) return '🎧';
+        || n.includes('buds') || n.includes('freebuds') || n.includes('wh-1000')) return '🎧';
       // Watches
       if (n.includes('手表') || n.includes('watch') || n.includes('手环') || n.includes('band')
         || n.includes('gt ') || n.includes('gtr')) return '⌚';
@@ -2640,6 +2668,9 @@ const AppComp = {
       // Pet
       if (n.includes('猫') || n.includes('狗') || n.includes('宠物') || n.includes('cat')
         || n.includes('dog') || n.includes('粮') || n.includes('笼')) return '🐾';
+      // product_db.json 匹配
+      const dbIcon = getProductIconFromDB(name);
+      if (dbIcon) return dbIcon;
       return '📦';
     }
 

@@ -1,3 +1,4 @@
+from functools import lru_cache
 import datetime, json, os
 from fastapi import APIRouter, Depends, Query, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session, joinedload
@@ -91,11 +92,11 @@ def get_category_root_id(db, category_id):
     """递归找到顶级分类ID"""
     if not category_id:
         return None
-    cat = db.query(models.Category).filter(models.Category.id == category_id).first()
+    cat = db.query(Category).filter(Category.id == category_id).first()
     if not cat:
         return None
     while cat.parent_id:
-        cat = db.query(models.Category).filter(models.Category.id == cat.parent_id).first()
+        cat = db.query(Category).filter(Category.id == cat.parent_id).first()
         if not cat:
             return None
     return cat.id
@@ -140,7 +141,7 @@ def asset_to_dict(a: Asset, db: Session):
         "channel_name": ch_name,
         "purchase_price": a.purchase_price,
         "purchase_date": a.purchase_date.isoformat() if a.purchase_date else None,
-        "current_value": a.current_value,
+        "current_value": a.residual_value if a.residual_value is not None else auto_residual_value(a, db),
         "target_price": a.target_price,
         "target_date": a.target_date.isoformat() if a.target_date else None,
         "status": a.status,
@@ -152,6 +153,7 @@ def asset_to_dict(a: Asset, db: Session):
         "total_maintenance_cost": a.total_maintenance_cost,
         "tco": a.tco,
         "daily_cost": a.daily_cost,
+        "net_cost": a.net_cost,
         "warranty_months": a.warranty_months,
         "warranty_start_date": a.warranty_start_date.isoformat() if a.warranty_start_date else None,
         "warranty_end_date": a.warranty_end_date.isoformat() if a.warranty_end_date else None,
@@ -350,6 +352,10 @@ def list_wishes(db: Session = Depends(get_db)):
         joinedload(WishItem.category),
         joinedload(WishItem.channel)
     ).order_by(WishItem.created_at.desc()).all()
+    @lru_cache(maxsize=128)
+    def _asset_image(asset_id):
+        a = db.query(Asset).filter(Asset.id == asset_id).first()
+        return a.image if a else None
     return [{"id": w.id, "name": w.name, "target_price": w.target_price,
              "target_date": w.target_date.isoformat() if w.target_date else None,
              "price": w.price,
@@ -360,6 +366,7 @@ def list_wishes(db: Session = Depends(get_db)):
              "channel_id": w.channel_id,
              "channel_name": w.channel.name if w.channel else None,
              "converted_asset_id": w.converted_asset_id,
+             "image": _asset_image(w.converted_asset_id) if w.converted_asset_id else None,
              "created_at": w.created_at.isoformat() if w.created_at else None} for w in ws]
 
 @router.post("/wishes", status_code=201)
@@ -575,6 +582,21 @@ async def export_excel(db: Session = Depends(get_db)):
 # ------ 产品搜索 API ------
 PRODUCT_DB_PATH = os.path.join(os.path.dirname(__file__), "product_db.json")
 
+# product_db.json 的分类名称 → 数据库 category.id 映射
+PRODUCT_CATEGORY_MAP = {
+    "手机": 2, "电脑": 3, "平板": 4,
+    "音频": 6, "影音": 6,  # 耳机/音响
+    "家电": 7,  # 家电根分类
+    "摄影": 15, "相机": 15,  # 相机
+    "车辆": 20,  # 汽车
+    "家具": 24,  # 沙发/椅
+    "游戏": 34,  # 游戏机
+    "VR": 34,    # 游戏机 (VR归入游戏娱乐)
+    "手表": 38,
+    "存储": 50, "外设": 48,
+    "充电配件": 51, "网络设备": 52,
+}
+
 @router.get("/search-products")
 def search_products(q: str = Query("", min_length=0)):
     """本地产品数据库搜索"""
@@ -613,7 +635,12 @@ def search_products(q: str = Query("", min_length=0)):
             results.append((score, p))
     
     results.sort(key=lambda x: -x[0])
-    return [p for _, p in results[:15]]
+    final = []
+    for _, p in results[:15]:
+        item = dict(p)
+        item["category_id"] = PRODUCT_CATEGORY_MAP.get(item.get("category", ""))
+        final.append(item)
+    return final
 
 # ------ 统计 API ------
 @router.get("/stats")
