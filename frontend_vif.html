@@ -724,7 +724,7 @@ body {
   </div>
 
   <!-- ===== Tab: Assets ===== -->
-  <div v-show="activeTab === 'assets'">
+  <div v-if="activeTab === 'assets'">
     <div class="page-header">
       <h1>资产</h1>
       <div class="header-actions">
@@ -858,7 +858,7 @@ body {
   </div>
 
   <!-- ===== Tab: Stats (rewritten) ===== -->
-  <div v-show="activeTab === 'stats'">
+  <div v-if="activeTab === 'stats'">
     <div class="page-header"><h1>统计</h1></div>
     <template v-if="assetsLoading">
       <div class="loading">加载中...</div>
@@ -945,7 +945,7 @@ body {
   </div>
 
   <!-- ===== Tab: Wishes ===== -->
-  <div v-show="activeTab === 'wishes'">
+  <div v-if="activeTab === 'wishes'">
     <div class="page-header">
       <h1>心愿</h1>
       <div class="header-actions">
@@ -980,7 +980,7 @@ body {
   </div>
 
   <!-- ===== Tab: Timeline ===== -->
-  <div v-show="activeTab === 'timeline'">
+  <div v-if="activeTab === 'timeline'">
     <div class="timeline-header">
       <h1>时间线</h1>
       <button class="timeline-filter-btn" :class="{active: showTimelineFilter}"
@@ -1045,7 +1045,7 @@ body {
   </div>
 
   <!-- ===== Tab: Settings ===== -->
-  <div v-show="activeTab === 'settings'">
+  <div v-if="activeTab === 'settings'">
     <div class="page-header"><h1>设置</h1></div>
     <div class="card">
       <h3 style="font-size:15px;margin-bottom:8px">🎨 外观</h3>
@@ -1063,7 +1063,7 @@ body {
         <h3 style="font-size:15px">📊 统计设置</h3>
         <span class="collapsible-arrow" :class="{open: showStatsSettingsSection}">▾</span>
       </div>
-      <div v-show="showStatsSettingsSection" class="collapsible-body">
+      <div v-if="showStatsSettingsSection" class="collapsible-body">
         <div class="setting-item">
           <div>
             <div class="setting-label">分类占比显示数量</div>
@@ -1116,7 +1116,7 @@ body {
         <h3 style="font-size:15px">📂 分类管理</h3>
         <span class="collapsible-arrow" :class="{open: showCatsSection}">▾</span>
       </div>
-      <div v-show="showCatsSection" class="collapsible-body">
+      <div v-if="showCatsSection" class="collapsible-body">
         <!-- Multi-level collapsible categories -->
         <div v-for="cat in categories" :key="cat.id">
           <!-- Parent row with collapsible arrow -->
@@ -1149,7 +1149,7 @@ body {
         <h3 style="font-size:15px">🛒 渠道管理</h3>
         <span class="collapsible-arrow" :class="{open: showChannelsSection}">▾</span>
       </div>
-      <div v-show="showChannelsSection" class="collapsible-body">
+      <div v-if="showChannelsSection" class="collapsible-body">
         <div v-for="ch in channels" :key="ch.id" class="setting-item">
           <div>
             <div class="setting-label">{{ ch.name }}</div>
