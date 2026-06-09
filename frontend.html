@@ -939,7 +939,7 @@ body {
         <div style="display:flex;align-items:flex-end;gap:5px;min-height:150px;padding:12px 4px;overflow-x:auto">
           <div v-for="c in statsTopCategories" :key="c.name" style="flex:1;min-width:32px;display:flex;flex-direction:column;align-items:center">
             <span style="font-size:11px;color:var(--text-secondary);margin-bottom:2px">{{ c.pct }}%</span>
-            <div style="width:24px;border-radius:4px 4px 0 0;transition:height 0.5s;min-height:3px;background:c.color||'var(--primary)'" :style="{height: Math.max(c.value/statsMaxCatValue*130, 3) + 'px'}"></div>
+            <div :style="{height: Math.max(c.value/statsMaxCatValue*130, 3)+'px', width:'24px', borderRadius:'4px 4px 0 0', transition:'height 0.5s', minHeight:'3px', background: c.color || 'var(--primary)'}"></div>
             <span style="font-size:18px;margin-top:5px">{{ c.icon || '📦' }}</span>
             <span style="font-size:10px;color:var(--text);margin-top:2px;max-width:36px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center">{{ c.name }}</span>
           </div>
@@ -1264,8 +1264,8 @@ body {
           <div class="value">{{ detailAsset?.purchase_date || '-' }}</div>
         </div>
         <div class="detail-item">
-          <div class="label">持有天数</div>
-          <div class="value">{{ detailAsset?.holding_days }} 天</div>
+          <div class="label">使用天数</div>
+          <div class="value">{{ detailAsset?.holding_days || 0 }} 天</div>
         </div>
         <div class="detail-item">
           <div class="label">购买价格</div>
@@ -1275,25 +1275,47 @@ body {
           <div class="label">当前价值</div>
           <div class="value"><span class="price">{{ detailAsset?.current_value ? '¥' + Number(detailAsset.current_value).toLocaleString() : '-' }}</span></div>
         </div>
-<div class="detail-item" v-if="detailAsset?.warranty_months > 0">
-          <div class="label">保修期限</div>
-          <div class="value" style="display:flex;align-items:center;gap:6px">
-            <span>{{ detailAsset.warranty_months }}个月</span>
-            <span v-if="detailAsset.warranty_end_date" style="font-size:12px;color:var(--text-secondary);margin-left:4px">至 {{ detailAsset.warranty_end_date }}</span>
-            <span class="tag" :class="'tag-' + (detailAsset.warranty_status === 'warrantying' ? 'active' : 'discarded')" style="font-size:11px">{{ detailAsset.warranty_status === 'warrantying' ? '保障中' : '已过期' }}</span>
-          </div>
+</div></div>
+    <!-- Warranty Info -->
+    <div class="detail-section" v-if="detailAsset?.warranty_months > 0">
+      <h3>🛡️ 保障信息</h3>
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="label">保障期限</div>
+          <div class="value">{{ detailAsset.warranty_months }} 个月</div>
         </div>
-        <div class="detail-item" v-if="detailAsset?.warranty_months > 0">
-
-      </div>
-      <div v-if="detailAsset?.notes" style="margin-top:12px">
-        <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
-        <div style="font-size:14px;margin-top:4px">{{ detailAsset.notes }}</div>
+        <div class="detail-item" v-if="detailAsset.warranty_end_date">
+          <div class="label">保障到期</div>
+          <div class="value">{{ detailAsset.warranty_end_date }} <span class="tag" :class="'tag-' + (detailAsset.warranty_status === 'warrantying' ? 'active' : 'discarded')" style="font-size:11px;margin-left:6px">{{ detailAsset.warranty_status === 'warrantying' ? '保障中' : '已过期' }}</span></div>
+        </div>
       </div>
     </div>
-    <!-- Cost Summary -->
+    <!-- Cost & Daily Cost Card (参考设计稿) -->
     <div class="detail-section">
-      <h3>💰 费用统计</h3>
+      <div style="background:var(--bg);border-radius:12px;padding:16px;text-align:center;margin-bottom:12px;border:1px solid var(--border)">
+        <div style="font-size:12px;color:var(--text-secondary);margin-bottom:8px">日均成本</div>
+        <div style="display:flex;justify-content:center;gap:32px">
+          <div>
+            <div style="font-size:22px;font-weight:700;color:var(--danger)">¥{{ detailAsset?.daily_cost || 0 }}</div>
+            <div style="font-size:11px;color:var(--text-secondary)">当前</div>
+          </div>
+          <div style="width:1px;background:var(--border)"></div>
+          <div>
+            <div style="font-size:22px;font-weight:700;color:var(--success)">¥{{ detailTargetDaily }}</div>
+            <div style="font-size:11px;color:var(--text-secondary)">目标</div>
+          </div>
+        </div>
+        <div v-if="detailTargetDaily > 0" style="margin-top:12px">
+          <div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-secondary);margin-bottom:4px">
+            <span>进度</span>
+            <span>{{ detailProgressPct }}%</span>
+          </div>
+          <div style="height:6px;background:var(--border);border-radius:3px;overflow:hidden">
+            <div :style="{width: detailProgressPct + '%', height:'100%', background:'var(--primary)', borderRadius:'3px', transition:'width 0.5s'}"></div>
+          </div>
+          <div style="font-size:11px;color:var(--text-secondary);margin-top:6px">预计达成日期：{{ detailTargetDateStr }} · 还剩 {{ detailRemainingDays }} 天</div>
+        </div>
+      </div>
       <div class="detail-grid">
         <div class="detail-item">
           <div class="label">维护总费用</div>
@@ -1304,13 +1326,13 @@ body {
           <div class="value">¥{{ detailAsset?.tco || 0 }}</div>
         </div>
         <div class="detail-item">
-          <div class="label">日均成本</div>
-          <div class="value" style="color:var(--danger)">¥{{ detailAsset?.daily_cost || 0 }}</div>
-        </div>
-        <div class="detail-item">
           <div class="label">维护记录</div>
           <div class="value">{{ assetMaintenances.length }} 条</div>
         </div>
+      </div>
+      <div v-if="detailAsset?.notes" style="margin-top:12px">
+        <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
+        <div style="font-size:14px;margin-top:4px">{{ detailAsset.notes }}</div>
       </div>
     </div>
     <!-- Maintenance -->
@@ -1336,7 +1358,6 @@ body {
       <button class="btn btn-danger" @click="deleteAsset(detailAsset.id, true)">🗑️ 删除</button>
     </div>
   </div>
-</div>
 
 <!-- ===== Asset Form Sheet ===== -->
   <template v-if="showAssetForm">
@@ -1392,6 +1413,19 @@ body {
         <div class="form-group">
           <label>当前价值 (¥)</label>
           <input type="number" v-model.number="formData.current_value" placeholder="留空同购买价" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>目标价格 (¥)</label>
+          <input type="number" v-model.number="formData.target_price" placeholder="用于计算目标日均成本" step="0.01">
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>目标日期</label>
+          <div style="position:relative">
+            <input type="text" readonly :value="formData.target_date || '点击选择日期'" style="cursor:default;background:var(--bg);color:var(--text);width:100%;padding:10px 12px;border:1px solid var(--border);border-radius:8px;font-size:15px;box-sizing:border-box">
+            <input id="targetDatePicker" type="date" v-model="formData.target_date" style="opacity:0;width:100%;height:100%;position:absolute;top:0;left:0;cursor:pointer;z-index:5;border:none;padding:0">
+          </div>
         </div>
         <div class="form-group">
           <label>状态</label>
@@ -1657,6 +1691,38 @@ const AppComp = {
       }
       return true;
     }
+    // Detail view computed values (参考设计稿)
+    const detailTargetDaily = computed(() => {
+      if (!detailAsset.value) return 0;
+      // 目标日均成本 = target_price / 预期使用天数
+      // 如果没有目标价格，默认为当前日均成本的一半
+      const target = detailAsset.value.target_price;
+      if (target) {
+        const days = detailAsset.value.holding_days || 1;
+        return Math.max(0, (target / (days + detailRemainingDays.value)));
+      }
+      return 0;
+    });
+    const detailRemainingDays = computed(() => {
+      if (!detailAsset.value) return 0;
+      let targetDate = detailAsset.value.target_date;
+      if (!targetDate) return 365; // 默认一年
+      const now = new Date();
+      const target = new Date(targetDate);
+      const diff = Math.ceil((target - now) / (1000*60*60*24));
+      return Math.max(1, diff);
+    });
+    const detailTargetDateStr = computed(() => {
+      return detailAsset.value?.target_date || '未设定';
+    });
+    const detailProgressPct = computed(() => {
+      if (!detailAsset.value || detailTargetDaily.value <= 0) return 0;
+      const current = detailAsset.value.daily_cost || 0;
+      const target = detailTargetDaily.value;
+      if (target >= current) return 100;
+      const pct = (target / current) * 100;
+      return Math.max(0, Math.round(pct * 100) / 100);
+    });
     const statsFilteredAssets = computed(() => {
       let list = assets.value;
       // Filter by visible categories
@@ -2153,7 +2219,7 @@ const AppComp = {
           // 用到期日判断保修状态
           const endD = detail.warranty_end_date ? new Date(detail.warranty_end_date) : null;
           if (endD) {
-            detail.warranty_status = new Date() <= endD ? 'active' : 'expired';
+            detail.warranty_status = new Date() <= endD ? 'warrantying' : 'expired';
           }
         }
         assetMaintenances.value = detail.maintenances || [];
@@ -2179,7 +2245,7 @@ const AppComp = {
     const formData = reactive({
       name: '', category_id: null, channel_id: null,
       purchase_price: null, purchase_date: '',
-      current_value: null, status: 'active', notes: '', image: '',
+      current_value: null, target_price: null, target_date: '', status: 'active', notes: '', image: '',
       warranty_months: null, warranty_start_date: ''
     });
     watch(() => [formData.purchase_date, formData.warranty_months, formData.warranty_start_date], () => { calcWarrantyEnd(); }, { deep: true });
@@ -2223,6 +2289,8 @@ const AppComp = {
           formData.purchase_price = a.purchase_price || null;
           formData.purchase_date = a.purchase_date || '';
           formData.current_value = a.current_value || null;
+          formData.target_price = a.target_price || null;
+          formData.target_date = a.target_date || '';
           formData.status = a.status || 'active';
           formData.notes = a.notes || '';
           formData.image = a.image || '';
@@ -2236,6 +2304,8 @@ const AppComp = {
         formData.purchase_price = null;
         formData.purchase_date = '';
         formData.current_value = null;
+        formData.target_price = null;
+        formData.target_date = '';
         formData.status = 'active';
         formData.notes = '';
         formData.image = '';
@@ -2256,6 +2326,8 @@ const AppComp = {
         purchase_price: formData.purchase_price || null,
         purchase_date: formData.purchase_date || null,
         current_value: formData.current_value || null,
+        target_price: formData.target_price || null,
+        target_date: formData.target_date || null,
         status: formData.status,
         notes: formData.notes || null,
         image: formData.image || null,
@@ -2765,6 +2837,7 @@ const AppComp = {
       filteredTotalValue, filteredAvgDailyCost,
       // Detail
       showDetail, detailAsset, assetMaintenances, maintenancesLoading,
+      detailTargetDaily, detailRemainingDays, detailTargetDateStr, detailProgressPct,
       openDetail, closeDetail,
       // Asset Form
       showAssetForm, formEditId, formData, showSuggest, suggestResults,

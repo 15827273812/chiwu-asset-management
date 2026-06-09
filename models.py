@@ -20,6 +20,8 @@ class Asset(Base):
     purchase_price = Column(Float, nullable=True)
     purchase_date = Column(Date, nullable=True)
     current_value = Column(Float, nullable=True)
+    target_price = Column(Float, nullable=True)  # 目标价格（来自心愿或手动设定）
+    target_date = Column(Date, nullable=True)    # 目标日期
     status = Column(String(20), default="active")
     currency_code = Column(String(3), default="CNY")
     sort_index = Column(Integer, default=0)

@@ -16,6 +16,8 @@ class AssetCreate(BaseModel):
     purchase_price: Optional[float] = None
     purchase_date: Optional[str] = None
     current_value: Optional[float] = None
+    target_price: Optional[float] = None
+    target_date: Optional[str] = None
     status: str = "active"
     currency_code: str = "CNY"
     cover_photo: Optional[str] = None
@@ -32,6 +34,8 @@ class AssetUpdate(BaseModel):
     purchase_price: Optional[float] = None
     purchase_date: Optional[str] = None
     current_value: Optional[float] = None
+    target_price: Optional[float] = None
+    target_date: Optional[str] = None
     status: Optional[str] = None
     cover_photo: Optional[str] = None
     image: Optional[str] = None
@@ -92,6 +96,8 @@ def asset_to_dict(a: Asset, db: Session):
         "purchase_price": a.purchase_price,
         "purchase_date": a.purchase_date.isoformat() if a.purchase_date else None,
         "current_value": a.current_value,
+        "target_price": a.target_price,
+        "target_date": a.target_date.isoformat() if a.target_date else None,
         "status": a.status,
         "currency_code": a.currency_code,
         "cover_photo": a.cover_photo,
@@ -161,7 +167,7 @@ def get_asset(asset_id: int, db: Session = Depends(get_db)):
 @router.post("/assets", status_code=201)
 def create_asset(data: AssetCreate, db: Session = Depends(get_db)):
     a = Asset(name=data.name)
-    for field in ["category_id","channel_id","purchase_price","current_value","status","currency_code","cover_photo","image","notes","warranty_months"]:
+    for field in ["category_id","channel_id","purchase_price","current_value","target_price","target_date","status","currency_code","cover_photo","image","notes","warranty_months"]:
         val = getattr(data, field, None)
         if val is not None:
             setattr(a, field, val)
@@ -182,6 +188,8 @@ def update_asset(asset_id: int, data: AssetUpdate, db: Session = Depends(get_db)
     updates = data.model_dump(exclude_unset=True)
     for key, val in updates.items():
         if key == "purchase_date" and val:
+            setattr(a, key, datetime.date.fromisoformat(val))
+        elif key == "target_date" and val:
             setattr(a, key, datetime.date.fromisoformat(val))
         elif key == "warranty_start_date" and val:
             a.warranty_start_date = datetime.date.fromisoformat(val)
@@ -343,6 +351,10 @@ def convert_wish_to_asset(wish_id: int, data: AssetCreate, db: Session = Depends
         a.purchase_price = w.price
     if data.current_value is None and w.price is not None:
         a.current_value = w.price
+    if data.target_price is None and w.target_price is not None:
+        a.target_price = w.target_price
+    if data.target_date is None and w.target_date is not None:
+        a.target_date = w.target_date
     if data.purchase_date:
         a.purchase_date = datetime.date.fromisoformat(data.purchase_date)
     db.add(a)
