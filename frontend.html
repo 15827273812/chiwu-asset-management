@@ -1696,12 +1696,15 @@ const AppComp = {
     const timelineDisplayCount = ref(20);
     let timelineCache = [];
     let timelineCacheReady = false;
+    const timelineVersion = ref(0); // 用于手动触发 filteredTimeline 重算
     const timelineHasMore = computed(() => {
       const source = timelineCacheReady ? timelineCache : timelineCache.length ? timelineCache : timelineAssets.value;
       return timelineDisplayCount.value < source.length;
     });
 
     const filteredTimeline = computed(() => {
+      // 依赖版本号，手动触发重算
+      void timelineVersion.value;
       // 优先用资产缓存（全量），其次用自己的缓存，最后用首次加载数据
       let source;
       if (assetCacheReady && allAssetsCache.length) {
@@ -2584,12 +2587,15 @@ const AppComp = {
             const cidx = allAssetsCache.findIndex(a => a.id === formEditId.value);
             if (cidx !== -1) allAssetsCache[cidx] = updated;
           }
+          timelineVersion.value++;  // 通知时间轴刷新
         } else {
           const created = await api('/assets', { method: 'POST', body: JSON.stringify(body) });
           // 新增：前端直接插入已创建的资产到列表
           calcWarrantyStatus(created);
           assets.value.unshift(created);
+          if (allAssetsCache.length) allAssetsCache.unshift(created);
           assetTotal.value++;
+          timelineVersion.value++;  // 通知时间轴刷新
         }
         showAssetForm.value = false;
         if (showDetail.value && detailAsset.value) {
@@ -2608,6 +2614,7 @@ const AppComp = {
         if (allAssetsCache.length) {
           allAssetsCache = allAssetsCache.filter(a => a.id !== assetId);
         }
+        timelineVersion.value++;  // 通知时间轴刷新
         assetTotal.value = Math.max(0, assetTotal.value - 1);
         if (fromDetail) closeDetail();
         // 后台静默刷新
@@ -2640,7 +2647,7 @@ const AppComp = {
       if (!maintForm.title.trim()) { alert('请输入维护标题'); return; }
       if (!detailAsset.value) return;
       try {
-        await api('/maintenances', {
+        const created = await api('/maintenances', {
           method: 'POST',
           body: JSON.stringify({
             asset_id: detailAsset.value.id,
@@ -2651,21 +2658,26 @@ const AppComp = {
           })
         });
         showMaintForm.value = false;
-        loadMaintenances(detailAsset.value.id);
-        // Refresh detail to update costs
-        const detail = await api('/assets/' + detailAsset.value.id);
-        detailAsset.value = detail;
+        // 即时新增维护记录
+        assetMaintenances.value.push(created);
+        // 更新详情页的维护成本
+        detailAsset.value.total_maintenance_cost = (detailAsset.value.total_maintenance_cost || 0) + (created.amount || 0);
       } catch (e) { alert('保存维护记录失败: ' + e.message); }
     }
 
     async function deleteMaintenance(mId) {
       if (!confirm('确定删除此维护记录?')) return;
       try {
+        // 删除前拿到 amount
+        const deletedItem = assetMaintenances.value.find(m => m.id === mId);
         await api('/maintenances/' + mId, { method: 'DELETE' });
         if (detailAsset.value) {
-          loadMaintenances(detailAsset.value.id);
-          const detail = await api('/assets/' + detailAsset.value.id);
-          detailAsset.value = detail;
+          // 即时删除，不调 loadMaintenances
+          assetMaintenances.value = assetMaintenances.value.filter(m => m.id !== mId);
+          // 同步成本
+          if (deletedItem?.amount) {
+            detailAsset.value.total_maintenance_cost = (detailAsset.value.total_maintenance_cost || 0) - deletedItem.amount;
+          }
         }
       } catch (e) { alert('删除失败: ' + e.message); }
     }
@@ -2723,7 +2735,19 @@ const AppComp = {
       wishForm.name = p.name;
       if (p.price) wishForm.price = p.price;
       if (p.icon) wishForm.icon = p.icon;
-      if (p.category_id) wishForm.category_id = p.category_id;
+      if (p.category_id) {
+        wishForm.category_id = p.category_id;
+        // 设置分类显示名
+        const cat = categories.value.find(c => c.id === p.category_id || (c.children || []).some(ch => ch.id === p.category_id));
+        if (cat) {
+          if (cat.id === p.category_id) {
+            wishCategoryName.value = (cat.icon || '') + ' ' + cat.name;
+          } else {
+            const ch = (cat.children || []).find(c => c.id === p.category_id);
+            wishCategoryName.value = (cat.icon || '') + ' ' + (ch ? ch.name : '');
+          }
+        }
+      }
       wishSuggestResults.value = [];
     }
 
@@ -2868,7 +2892,7 @@ const AppComp = {
         const result = await api('/wishes?page=1&page_size=200');
         wishes.value = result.items || result;
         wishTotal.value = result.total || wishes.value.length;
-        wishCache = wishes.value; // 200 条作为缓存种子
+        wishCache = [...wishes.value]; // 200 条作为缓存种子（深拷贝，防止引用共享）
       }
       catch (e) { console.error('Load wishes error:', e); }
       finally { wishesLoading.value = false; }
@@ -2941,18 +2965,26 @@ const AppComp = {
       };
       try {
         if (wishEditId.value) {
-          await api('/wishes/' + wishEditId.value, {
+          const created = await api('/wishes/' + wishEditId.value, {
             method: 'PUT',
             body: JSON.stringify(body)
           });
+          // 编辑：直接替换 wishCache 中的对应项
+          const idx = wishCache.findIndex(w => w.id === wishEditId.value);
+          if (idx !== -1) wishCache.splice(idx, 1, created);
         } else {
-          await api('/wishes', {
+          const created = await api('/wishes', {
             method: 'POST',
             body: JSON.stringify(body)
           });
+          // 补充缺失的关联字段
+          created.category_name = wishCategoryName.value || null;
+          created.is_done = false;
+          // 新增：插入缓存（filteredWishes 从 wishCache 切片）
+          wishCache.unshift(created);
+          wishTotal.value++;
         }
         showWishForm.value = false;
-        loadWishes();
       } catch (e) { alert((wishEditId.value ? '编辑' : '添加') + '心愿失败: ' + e.message); }
     }
 
@@ -2960,7 +2992,9 @@ const AppComp = {
       if (!confirm('确定删除此心愿?')) return;
       try {
         await api('/wishes/' + wishId, { method: 'DELETE' });
-        loadWishes();
+        // 直接 filter，不调 loadWishes
+        wishCache = wishCache.filter(w => w.id !== wishId);
+        wishTotal.value--;
       } catch (e) { alert('删除失败: ' + e.message); }
     }
 

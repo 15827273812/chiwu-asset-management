@@ -616,67 +616,27 @@ async def export_excel(db: Session = Depends(get_db)):
     )
 
 # ------ 产品搜索 API ------
-PRODUCT_DB_PATH = os.path.join(os.path.dirname(__file__), "product_db.json")
-
-# product_db.json 的分类名称 → 数据库 category.id 映射
-PRODUCT_CATEGORY_MAP = {
-    "手机": 2, "电脑": 3, "平板": 4,
-    "音频": 6, "影音": 6,  # 耳机/音响
-    "家电": 7,  # 家电根分类
-    "摄影": 15, "相机": 15,  # 相机
-    "车辆": 20,  # 汽车
-    "家具": 24,  # 沙发/椅
-    "游戏": 34,  # 游戏机
-    "VR": 34,    # 游戏机 (VR归入游戏娱乐)
-    "手表": 38,
-    "存储": 50, "外设": 48,
-    "充电配件": 51, "网络设备": 52,
-}
-
 @router.get("/search-products")
-def search_products(q: str = Query("", min_length=0)):
-    """本地产品数据库搜索"""
-    if not os.path.exists(PRODUCT_DB_PATH):
-        return []
-    try:
-        with open(PRODUCT_DB_PATH, "r", encoding="utf-8") as f:
-            products = json.load(f)
-    except:
-        return []
-    
-    if not q.strip():
-        return products[:20]
-    
-    q_lower = q.lower().strip()
-    results = []
-    for p in products:
-        score = 0
-        name = p.get("name", "").lower()
-        brand = p.get("brand", "").lower()
-        category = p.get("category", "").lower()
-        keywords = [kw.lower() for kw in p.get("keywords", [])]
-        
-        if q_lower in name:
-            score += 10
-        if q_lower in brand:
-            score += 5
-        if q_lower in category:
-            score += 3
-        for kw in keywords:
-            if q_lower in kw:
-                score += 2
-                break
-        
-        if score > 0:
-            results.append((score, p))
-    
-    results.sort(key=lambda x: -x[0])
-    final = []
-    for _, p in results[:15]:
-        item = dict(p)
-        item["category_id"] = PRODUCT_CATEGORY_MAP.get(item.get("category", ""))
-        final.append(item)
-    return final
+def search_products(q: str = Query("", min_length=0), db: Session = Depends(get_db)):
+    """从 products 表搜索产品，返回含 category_id 的数据"""
+    query = db.query(Product)
+    if q.strip():
+        q_lower = q.strip().lower()
+        query = query.filter(
+            Product.name.ilike(f"%{q_lower}%") |
+            Product.brand.ilike(f"%{q_lower}%")
+        )
+    results = query.limit(15).all()
+    return [{
+        "id": p.id,
+        "name": p.name,
+        "brand": p.brand,
+        "price": p.price,
+        "category": p.category,
+        "category_id": p.category_id,
+        "icon": p.icon,
+        "year": p.year,
+    } for p in results]
 
 # ------ 统计 API ------
 @router.get("/stats")

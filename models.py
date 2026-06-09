@@ -156,6 +156,7 @@ class Product(Base):
     name = Column(String(200), nullable=False, index=True)
     brand = Column(String(50), nullable=True)
     category = Column(String(50), nullable=True)  # 品类名（手机/手表/电脑...）
+    category_id = Column(Integer, nullable=True)  # 关联 categories.id
     price = Column(Float, nullable=True)          # 参考价
     year = Column(Integer, nullable=True)         # 发布年份
     icon = Column(String(50), nullable=True)      # mdi:xxx
