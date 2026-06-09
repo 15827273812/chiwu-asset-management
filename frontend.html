@@ -7,6 +7,8 @@
 <script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.min.css">
 <style>
+[v-cloak] #app-loading { display: flex; }
+[v-cloak] { display: none !important; }
 /* ===== CSS Variables ===== */
 :root {
   --bg: #f5f5f7;
@@ -738,7 +740,13 @@ body {
 </head>
 <body>
 
-<div id="app">
+<div id="app" v-cloak>
+  <!-- Skeleton loading screen, visible before Vue boots -->
+  <div id="app-loading" style="position:fixed;inset:0;background:var(--bg,#f5f5f7);display:flex;align-items:center;justify-content:center;z-index:9999;flex-direction:column;gap:12px">
+    <div style="width:48px;height:48px;border:3px solid var(--border,#e5e5ea);border-top-color:var(--primary,#3A7C6C);border-radius:50%;animation:spin 0.8s linear infinite"></div>
+    <div style="font-size:14px;color:var(--text-secondary,#86868b)">持有清单加载中...</div>
+  </div>
+  <style>@keyframes spin{to{transform:rotate(360deg)}}</style>
   <!-- Tab Bar -->
   <div class="tab-bar">
     <button v-for="t in tabs" :key="t.id" class="tab-item" :class="{active: activeTab === t.id}" @click="switchTab(t.id)">
@@ -1330,6 +1338,19 @@ body {
           <div class="value">{{ assetMaintenances.length }} 条</div>
         </div>
       </div>
+      <!-- Residual Value -->
+      <div class="detail-section">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="label">预估残值</div>
+            <div class="value">¥{{ detailAsset?.residual_value || detailAsset?.auto_residual_value || '-' }}</div>
+          </div>
+          <div class="detail-item">
+            <div class="label">保值率</div>
+            <div class="value">{{ detailAsset?.residual_rate || 0 }}%</div>
+          </div>
+        </div>
+      </div>
       <div v-if="detailAsset?.notes" style="margin-top:12px">
         <div class="label" style="font-size:12px;color:var(--text-secondary)">备注</div>
         <div style="font-size:14px;margin-top:4px">{{ detailAsset.notes }}</div>
@@ -1417,6 +1438,10 @@ body {
         <div class="form-group">
           <label>目标价格 (¥)</label>
           <input type="number" v-model.number="formData.target_price" placeholder="用于计算目标日均成本" step="0.01">
+        </div>
+        <div class="form-group">
+          <label>预估残值 (¥)</label>
+          <input type="number" v-model.number="formData.residual_value" placeholder="二手可卖价，留空自动计算" step="0.01">
         </div>
       </div>
       <div class="form-row">
@@ -2245,7 +2270,7 @@ const AppComp = {
     const formData = reactive({
       name: '', category_id: null, channel_id: null,
       purchase_price: null, purchase_date: '',
-      current_value: null, target_price: null, target_date: '', status: 'active', notes: '', image: '',
+      current_value: null, target_price: null, residual_value: null, target_date: '', status: 'active', notes: '', image: '',
       warranty_months: null, warranty_start_date: ''
     });
     watch(() => [formData.purchase_date, formData.warranty_months, formData.warranty_start_date], () => { calcWarrantyEnd(); }, { deep: true });
@@ -2290,6 +2315,7 @@ const AppComp = {
           formData.purchase_date = a.purchase_date || '';
           formData.current_value = a.current_value || null;
           formData.target_price = a.target_price || null;
+          formData.residual_value = a.residual_value || null;
           formData.target_date = a.target_date || '';
           formData.status = a.status || 'active';
           formData.notes = a.notes || '';
@@ -2305,6 +2331,7 @@ const AppComp = {
         formData.purchase_date = '';
         formData.current_value = null;
         formData.target_price = null;
+        formData.residual_value = null;
         formData.target_date = '';
         formData.status = 'active';
         formData.notes = '';
@@ -2327,6 +2354,7 @@ const AppComp = {
         purchase_date: formData.purchase_date || null,
         current_value: formData.current_value || null,
         target_price: formData.target_price || null,
+        residual_value: formData.residual_value || null,
         target_date: formData.target_date || null,
         status: formData.status,
         notes: formData.notes || null,
@@ -2764,6 +2792,9 @@ const AppComp = {
     onMounted(async () => {
       await Promise.all([loadCategories(), loadChannels()]);
       await loadAssets();
+      // Hide skeleton loading
+      const loading = document.getElementById('app-loading');
+      if (loading) { loading.style.opacity = '0'; setTimeout(() => loading.remove(), 400); }
     });
 
     // Watch tab changes to load data

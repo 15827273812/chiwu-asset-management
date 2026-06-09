@@ -26,6 +26,7 @@ class AssetCreate(BaseModel):
     warranty_months: Optional[int] = None
     warranty_start_date: Optional[str] = None
     warranty_end_date: Optional[str] = None
+    residual_value: Optional[float] = None
 
 class AssetUpdate(BaseModel):
     name: Optional[str] = None
@@ -43,6 +44,7 @@ class AssetUpdate(BaseModel):
     warranty_months: Optional[int] = None
     warranty_start_date: Optional[str] = None
     warranty_end_date: Optional[str] = None
+    residual_value: Optional[float] = None
 
 class MaintenanceCreate(BaseModel):
     asset_id: int
@@ -78,6 +80,49 @@ class WishUpdate(BaseModel):
     channel_id: Optional[int] = None
     is_done: Optional[bool] = None
 
+# ------ 品类残值率配置 ------
+CATEGORY_DEPRECIATION_RATES = {
+    1: 0.15, 7: 0.20, 14: 0.15, 19: 0.15, 23: 0.20,
+    29: 0.20, 33: 0.15, 37: 0.10, 42: 0.25, 47: 0.15,
+    53: 0.15, 57: 0.20,
+}
+
+def get_category_root_id(db, category_id):
+    """递归找到顶级分类ID"""
+    if not category_id:
+        return None
+    cat = db.query(models.Category).filter(models.Category.id == category_id).first()
+    if not cat:
+        return None
+    while cat.parent_id:
+        cat = db.query(models.Category).filter(models.Category.id == cat.parent_id).first()
+        if not cat:
+            return None
+    return cat.id
+
+def auto_residual_value(asset, db):
+    """根据品类折旧率自动计算残值"""
+    if not asset.purchase_price or not asset.purchase_date:
+        return None
+    days = asset.holding_days
+    if days < 365:
+        return round(asset.purchase_price * 0.8, 2)  # 第一年内按80%
+
+    root_id = get_category_root_id(db, asset.category_id)
+    rate = CATEGORY_DEPRECIATION_RATES.get(root_id, 0.20)
+    years = days / 365.0
+    # 复利折旧: 价值 = price * (1-rate)^years
+    value = asset.purchase_price * ((1 - rate) ** years)
+    return round(max(value, 0), 2)
+
+def residual_rate(asset, db):
+    """保值率百分比"""
+    if not asset.purchase_price or asset.purchase_price == 0:
+        return None
+    rv = asset.residual_value or auto_residual_value(asset, db) or 0
+    rate = (rv / asset.purchase_price) * 100
+    return round(rate, 1)
+
 # ------ 辅助函数 ------
 def asset_to_dict(a: Asset, db: Session):
     # 预加载
@@ -111,6 +156,9 @@ def asset_to_dict(a: Asset, db: Session):
         "warranty_start_date": a.warranty_start_date.isoformat() if a.warranty_start_date else None,
         "warranty_end_date": a.warranty_end_date.isoformat() if a.warranty_end_date else None,
         "warranty_status": a.warranty_status,
+        "residual_value": a.residual_value,
+        "auto_residual_value": auto_residual_value(a, db),
+        "residual_rate": residual_rate(a, db),
         "maintenance_count": len(a.maintenances),
         "created_at": a.created_at.isoformat() if a.created_at else None,
         "updated_at": a.updated_at.isoformat() if a.updated_at else None,
@@ -167,7 +215,7 @@ def get_asset(asset_id: int, db: Session = Depends(get_db)):
 @router.post("/assets", status_code=201)
 def create_asset(data: AssetCreate, db: Session = Depends(get_db)):
     a = Asset(name=data.name)
-    for field in ["category_id","channel_id","purchase_price","current_value","target_price","target_date","status","currency_code","cover_photo","image","notes","warranty_months"]:
+    for field in ["category_id","channel_id","purchase_price","current_value","target_price","target_date","status","currency_code","cover_photo","image","notes","warranty_months","residual_value"]:
         val = getattr(data, field, None)
         if val is not None:
             setattr(a, field, val)

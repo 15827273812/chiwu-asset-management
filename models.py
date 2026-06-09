@@ -22,6 +22,7 @@ class Asset(Base):
     current_value = Column(Float, nullable=True)
     target_price = Column(Float, nullable=True)  # 目标价格（来自心愿或手动设定）
     target_date = Column(Date, nullable=True)    # 目标日期
+    residual_value = Column(Float, nullable=True)  # 预估残值（用户手动填）
     status = Column(String(20), default="active")
     currency_code = Column(String(3), default="CNY")
     sort_index = Column(Integer, default=0)
