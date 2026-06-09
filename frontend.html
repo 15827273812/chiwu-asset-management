@@ -43,6 +43,12 @@ body {
   -webkit-font-smoothing: antialiased;
   overflow-x: hidden;
 }
+html, body {
+  margin: 0; padding: 0;
+  overflow-x: hidden;
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
 
 /* ===== Tab Bar ===== */
 .tab-bar {
@@ -85,6 +91,7 @@ body {
   background: var(--card-bg); border-radius: var(--radius);
   box-shadow: var(--shadow); padding: 16px; margin: 0 16px 8px;
   transition: transform 0.15s;
+  width: 100%; overflow: hidden;
 }
 .card:active { transform: scale(0.98); }
 .card-flex { display: flex; justify-content: space-between; align-items: center; }
@@ -249,6 +256,19 @@ body {
 .swipe-btn-info { background: #3b82f6; }
 .swipe-actions { gap: 2px; }
 .swipe-actions .swipe-btn { min-width: 60px; font-size: 12px; }
+/* 资产列表滑动删除按钮缩小 */
+.asset-list .swipe-actions .swipe-btn { min-width: 40px; font-size: 11px; padding: 0 4px; }
+/* 回到顶部按钮 */
+.back-to-top {
+  position: fixed; right: 16px; bottom: 80px; z-index: 100;
+  width: 40px; height: 40px; border-radius: 50%;
+  background: var(--primary); color: #fff; border: none;
+  font-size: 18px; cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; transition: opacity 0.2s; pointer-events: none;
+}
+.back-to-top.show { opacity: 1; pointer-events: auto; }
 .wish-info .wish-name.done-text { text-decoration: line-through; color: var(--text-secondary); }
 .wish-info .wish-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; display: flex; gap: 8px; flex-wrap: wrap; }
 
@@ -423,6 +443,7 @@ body {
 }
 .timeline-card .card {
   padding: 12px; margin: 0;
+  width: 100%; overflow: hidden;
 }
 .timeline-card .card:active { transform: scale(0.98); }
 .timeline-icon {
@@ -846,7 +867,7 @@ body {
       </template>
 
       <!-- List View -->
-      <div v-if="layoutView === 'list'">
+      <div v-if="layoutView === 'list'" class="asset-list">
         <div v-for="a in filteredAssets" :key="a.id" class="swipe-wrap" :id="'swipe-' + a.id">
           <div class="swipe-inner"
                @touchstart="swipeTouchStart($event, 'swipe-' + a.id)"
@@ -856,16 +877,18 @@ body {
               <div class="card" @click="openDetail(a)">
                 <div class="card-top-row">
                   <div style="font-size:16px;font-weight:600">{{ getProductIcon(a.name) || a.category_icon }} {{ a.name }}</div>
-                  <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span><span v-if="a.warranty_months > 0 && a.warranty_status === 'warrantying'" class="tag" style="background:rgba(52,199,89,0.15);color:#34c759;font-size:11px;margin-left:4px">保障中</span>
                 </div>
-                <div style="display:flex;justify-content:space-between;align-items:flex-start">
-                  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
+                <div style="display:flex;align-items:flex-start;gap:8px">
+                  <div style="flex:1;min-width:0;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
                     <img v-if="a.image" :src="a.image" class="list-thumb-sm" alt="">
                     <span class="price-sm">¥{{ Number(a.purchase_price || 0).toLocaleString() }}</span>
                     <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
-
                   </div>
-                  <div style="text-align:right;margin-top:4px">
+                  <div style="flex-shrink:0;margin-top:4px">
+                    <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span>
+                    <span v-if="a.warranty_months > 0 && a.warranty_status === 'warrantying'" class="tag" style="background:rgba(52,199,89,0.15);color:#34c759;font-size:11px;margin-left:2px">保障中</span>
+                  </div>
+                  <div style="text-align:right;flex-shrink:0;margin-top:4px;min-width:65px">
                     <div class="price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
                     <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">{{ a.holding_days }}天</div>
                   </div>
@@ -903,6 +926,9 @@ body {
       </div>
     </div>
   </div>
+
+  <!-- 回到顶部按钮（资产/心愿页面可见） -->
+  <button class="back-to-top" :class="{ show: showBackToTop }" @click="scrollToTop">↑</button>
 
   <!-- ===== Tab: Stats (rewritten) ===== -->
   <div v-show="activeTab === 'stats'">
@@ -1084,8 +1110,8 @@ body {
             <option value="">全部</option>
             <option value="active">活跃中</option>
             <option value="sold">已出售</option>
-            <option value="discarded">报废</option>
-            <option value="lost">丢失</option>
+            <option value="discarded">已退役</option>
+            <option value="lost">已丢失</option>
           </select>
         </div>
         <div class="filter-actions">
@@ -1606,7 +1632,7 @@ body {
 </div>
 
 <script>
-const { createApp, ref, reactive, computed, onMounted, watch, nextTick } = Vue;
+const { createApp, ref, reactive, computed, onMounted, onUnmounted, watch, nextTick } = Vue;
 const API_BASE = window.location.origin;
 
 const AppComp = {
@@ -1678,7 +1704,9 @@ const AppComp = {
       timelineLoading.value = true;
       timelinePage.value = 1;
       try {
-        const result = await api('/assets?sort=purchase_date&order=desc&page=1&page_size=20');
+        let url = '/assets?sort=purchase_date&order=desc&page=1&page_size=20';
+        if (timelineFilterStatus.value) url += '&status=' + encodeURIComponent(timelineFilterStatus.value);
+        const result = await api(url);
         const items = result.items || result;
         items.forEach(a => calcWarrantyStatus(a));
         timelineAssets.value = items;
@@ -1693,8 +1721,9 @@ const AppComp = {
       timelineLoadingMore.value = true;
       const nextPage = timelinePage.value + 1;
       try {
-        const result = await api('/assets?sort=purchase_date&order=desc&page=' + nextPage + '&page_size=20');
-        const items = result.items || result;
+        let url = '/assets?sort=purchase_date&order=desc&page=' + nextPage + '&page_size=20';
+        if (timelineFilterStatus.value) url += '&status=' + encodeURIComponent(timelineFilterStatus.value);
+        const result = await api(url);
         items.forEach(a => calcWarrantyStatus(a));
         timelineAssets.value = timelineAssets.value.concat(items);
         timelinePage.value = nextPage;
@@ -2539,7 +2568,7 @@ const AppComp = {
     const wishPage = ref(1);
     const wishTotal = ref(0);
     const wishHasMore = ref(false);
-    const wishLoadingMore = ref(false);
+    const wishesLoadingMore = ref(false);
 
     const wishTotalValue = computed(() => {
       return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
@@ -2992,6 +3021,10 @@ const AppComp = {
         await loadAllAssetsForStats();
       }
     });
+    // Re-load timeline when filter changes
+    watch([timelineFilterStatus, timelineFilterCat], () => {
+      if (activeTab.value === 'timeline') loadTimeline();
+    });
 
     // Watch assets changes - stats uses local computed, so auto-updates
     // Re-load timeline when assets change for current tab
@@ -3070,7 +3103,7 @@ const AppComp = {
       if (wishObserver) wishObserver.disconnect();
       if (!el) return;
       wishObserver = new IntersectionObserver((entries) => {
-        if (entries[0].isIntersecting && wishHasMore.value && !wishLoadingMore.value) {
+        if (entries[0].isIntersecting && wishHasMore.value && !wishesLoadingMore.value) {
           loadMoreWishes();
         }
       }, { rootMargin: '200px' });
@@ -3088,6 +3121,21 @@ const AppComp = {
     const visibleCategoryList = computed(() => {
       if (visibleCategories.value === null) return categories.value;
       return categories.value.filter(cat => visibleCategories.value.includes(cat.id));
+    });
+
+    // ===== Back to Top =====
+    const showBackToTop = ref(false);
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    function onScroll() {
+      showBackToTop.value = window.scrollY > 600;
+    }
+    onMounted(() => {
+      window.addEventListener('scroll', onScroll);
+    });
+    onUnmounted(() => {
+      window.removeEventListener('scroll', onScroll);
     });
 
     return {
@@ -3138,7 +3186,7 @@ const AppComp = {
       // Timeline
       timelineAssets, timelineLoading, timelineLoadingMore, showTimelineFilter,
       timelineFilterCat, timelineFilterStatus,
-      filteredTimeline, resetTimelineFilter,
+      filteredTimeline, resetTimelineFilter, loadMoreTimeline,
       timelineTotal, timelineHasMore, timelineSentinelRef,
       // Settings collapsible
       showStatsSettingsSection, showCatsSection, showChannelsSection,
@@ -3149,7 +3197,7 @@ const AppComp = {
       isCategoryVisible, toggleCategoryVisibility,
       // Wishes
       wishes, wishesLoading, wishesLoadingMore, showWishForm, wishEditId, wishForm,
-      wishTotalValue, wishDoneCount, wishSuggestResults,
+      wishTotalValue, wishDoneCount, wishSuggestResults, loadMoreWishes,
       wishTotal, wishHasMore, wishSentinelRef,
       openWishForm, editWish, searchProductSuggestWish, selectWishSuggest,
       toggleWishCategoryPicker, selectWishCategory, showWishCategoryPicker, wishCategoryName,
@@ -3159,6 +3207,8 @@ const AppComp = {
       deleteCategory, deleteChannel, exportExcel,
       // Helpers
       statusLabel, formatK,
+      // Back to Top
+      showBackToTop, scrollToTop,
     };
   }
 };
