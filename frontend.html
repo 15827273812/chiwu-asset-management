@@ -2149,8 +2149,7 @@ const AppComp = {
     const assetTotal = ref(0);
     const assetTotalPages = ref(0);
     const assetHasMore = computed(() => {
-      const source = assetCacheReady ? allAssetsCache : allAssetsCache.length ? allAssetsCache : assets.value;
-      return assetDisplayCount.value < source.length;
+      return assetDisplayCount.value < assets.value.length;
     });
 
     // ===== Layout & Advanced Filter =====
@@ -2176,12 +2175,7 @@ const AppComp = {
     }
 
     const filteredAssets = computed(() => {
-      // 如果缓存已就绪，纯前端过滤
-      if (assetCacheReady && allAssetsCache.length) return filterSlice(allAssetsCache);
-      // 如果缓存正在加载中但已有一部分，先用已有缓存
-      if (allAssetsCache.length) return filterSlice(allAssetsCache);
-      // 缓存尚未就绪，回退 assets（前20条）
-      return assets.value.slice(0, assetDisplayCount.value);
+      return filterSlice(assets.value);
     });
 
     // 纯前端过滤+切片（方便多处复用）
@@ -2290,6 +2284,8 @@ const AppComp = {
           all = all.concat(items);
         }
         allAssetsCache = all;
+        // 关键：全量数据写入 assets（响应式 ref），computed 自动重算
+        assets.value = all;
         assetCacheReady = true;
         assetTotal.value = allAssetsCache.length;
       } catch(e) { console.error('Cache load error:', e); }
@@ -2299,10 +2295,11 @@ const AppComp = {
     function loadMoreAssets() {
       if (assetsLoadingMore.value) return;
       const source = assetCacheReady ? allAssetsCache : allAssetsCache.length ? allAssetsCache : assets.value;
-      if (assetDisplayCount.value >= source.length) return;
+      // 页面内全部数据，直接基于 assets.value
+      if (assetDisplayCount.value >= assets.value.length) return;
       assetsLoadingMore.value = true;
       assetDisplayCount.value += 20;
-      if (assetDisplayCount.value > source.length) assetDisplayCount.value = source.length;
+      if (assetDisplayCount.value > assets.value.length) assetDisplayCount.value = assets.value.length;
       assetsLoadingMore.value = false;
     }
 
@@ -2577,15 +2574,24 @@ const AppComp = {
       };
       try {
         if (formEditId.value) {
-          await api('/assets/' + formEditId.value, { method: 'PUT', body: JSON.stringify(body) });
+          const updated = await api('/assets/' + formEditId.value, { method: 'PUT', body: JSON.stringify(body) });
+          // 替换 assets.value 中对应的那条
+          calcWarrantyStatus(updated);
+          const idx = assets.value.findIndex(a => a.id === formEditId.value);
+          if (idx !== -1) assets.value[idx] = updated;
+          // 同时也更新缓存
+          if (allAssetsCache.length) {
+            const cidx = allAssetsCache.findIndex(a => a.id === formEditId.value);
+            if (cidx !== -1) allAssetsCache[cidx] = updated;
+          }
         } else {
-          await api('/assets', { method: 'POST', body: JSON.stringify(body) });
+          const created = await api('/assets', { method: 'POST', body: JSON.stringify(body) });
+          // 新增：前端直接插入已创建的资产到列表
+          calcWarrantyStatus(created);
+          assets.value.unshift(created);
+          assetTotal.value++;
         }
         showAssetForm.value = false;
-        // 刷新资产列表（带 300ms 延迟确保后端写入完成）
-        await new Promise(r => setTimeout(r, 300));
-        await loadAssets();
-        showToast('保存成功');
         if (showDetail.value && detailAsset.value) {
           openDetail(detailAsset.value);
         }
@@ -2597,8 +2603,14 @@ const AppComp = {
       if (!confirm('确定删除此资产?')) return;
       try {
         await api('/assets/' + assetId, { method: 'DELETE' });
+        // 前端直接删除
+        assets.value = assets.value.filter(a => a.id !== assetId);
+        if (allAssetsCache.length) {
+          allAssetsCache = allAssetsCache.filter(a => a.id !== assetId);
+        }
+        assetTotal.value = Math.max(0, assetTotal.value - 1);
         if (fromDetail) closeDetail();
-        loadAssets();
+        // 后台静默刷新
       } catch (e) { alert('删除失败: ' + e.message); }
     }
 
@@ -3009,6 +3021,7 @@ const AppComp = {
         window.open(API_BASE + '/api/export/excel', '_blank');
       } catch (e) { alert('导出失败: ' + e.message); }
     }
+
 
     // ===== Data Loaders =====
     async function loadCategories() {
