@@ -1546,6 +1546,42 @@
     "icon_url": "/static/product_icons/watch.svg"
   },
   {
+    "name": "华为 Watch GT 6 Pro",
+    "brand": "华为",
+    "category": "手表",
+    "price": 3499,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt6pro"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 6 46mm",
+    "brand": "华为",
+    "category": "手表",
+    "price": 2399,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt6"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
+    "name": "华为 Watch GT 6 41mm",
+    "brand": "华为",
+    "category": "手表",
+    "price": 2199,
+    "year": 2025,
+    "icon": "mdi:watch",
+    "keywords": [
+      "gt6"
+    ],
+    "icon_url": "/static/product_icons/watch.svg"
+  },
+  {
     "name": "三星 Galaxy Watch Ultra",
     "brand": "三星",
     "category": "手表",
@@ -3458,6 +3494,446 @@
     "keywords": [
       "ninebot"
     ],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E300P MK2",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 22999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E200P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 16999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E150",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 11999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E125",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 10499,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E100",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 E80C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 6399,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 MMAX 120P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 11999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot","mmax"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 MMAX 90",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 7999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot","mmax"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 MMAX 80",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot","mmax"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 MMAX 60",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot","mmax"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 M95C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 6199,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 M85C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5299,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 M80C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4599,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 N300P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 13999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 N200P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 9999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 N150P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 8999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 N100",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 6999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 N80C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4899,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 N70C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 3699,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F600",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 7999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F500",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F400",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F350",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5399,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F300",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4699,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F200",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 3999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F90M",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5399,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 F90",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 Q300",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 6999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 Q200",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 Q90",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 Q80C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4199,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 C90",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 5699,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 C80",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 C65",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4599,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 C60",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 C40",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 3499,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 A80",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4599,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 A65",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 3999,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 A40",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 3199,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 B80C",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4599,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 B110P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 7599,
+    "year": 2024,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 V50",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 X50",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 4999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot"],
+    "icon_url": "/static/product_icons/bike-electric.svg"
+  },
+  {
+    "name": "九号 电动车 MMAX 120P",
+    "brand": "九号",
+    "category": "车辆",
+    "price": 11999,
+    "year": 2025,
+    "icon": "mdi:bike-electric",
+    "keywords": ["ninebot","mmax"],
     "icon_url": "/static/product_icons/bike-electric.svg"
   },
   {

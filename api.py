@@ -4,12 +4,25 @@ from fastapi import APIRouter, Depends, Query, HTTPException, UploadFile, File
 from sqlalchemy.orm import Session, joinedload
 from typing import Optional
 from database import get_db
-from models import Asset, Category, Channel, Maintenance, WishItem
+from models import Asset, Category, Channel, Maintenance, Product, WishItem
 from pydantic import BaseModel
 
 router = APIRouter(prefix="/api")
 
 # ------ Pydantic Schemas ------
+class ProductOut(BaseModel):
+    id: int
+    name: str
+    brand: Optional[str] = None
+    category: Optional[str] = None
+    price: Optional[float] = None
+    year: Optional[int] = None
+    icon: Optional[str] = None
+    icon_url: Optional[str] = None
+    keywords: Optional[str] = None
+    class Config:
+        from_attributes = True
+
 class AssetCreate(BaseModel):
     name: str
     category_id: Optional[int] = None
@@ -708,3 +721,17 @@ def get_stats(db: Session = Depends(get_db)):
         "daily_cost_top": daily_cost_list[:10],
         "monthly_trend": [{"month": k, "count": v} for k, v in sorted(monthly.items())],
     }
+
+
+@router.get("/products", response_model=list[ProductOut])
+def list_products(q: Optional[str] = Query(None, max_length=100), db: Session = Depends(get_db)):
+    query = db.query(Product)
+    if q:
+        like = f"%{q}%"
+        query = query.filter(
+            Product.name.like(like) |
+            Product.brand.like(like) |
+            Product.keywords.like(like)
+        )
+    products = query.order_by(Product.id).all()
+    return products

@@ -1649,6 +1649,16 @@ const AppComp = {
     const isDark = ref(window.matchMedia('(prefers-color-scheme: dark)').matches);
     const categories = ref([]);
     const channels = ref([]);
+    const productDB = ref([]);
+    let productDBLoaded = false;
+    async function loadProductDB() {
+      if (productDBLoaded) return;
+      productDBLoaded = true;
+      try {
+        const res = await fetch(API_BASE + '/api/products');
+        if (res.ok) productDB.value = await res.json();
+      } catch(e) { console.error('Load product DB error:', e); }
+    }
 
     // ===== formatK helper =====
     function formatK(val) {
@@ -2572,7 +2582,10 @@ const AppComp = {
           await api('/assets', { method: 'POST', body: JSON.stringify(body) });
         }
         showAssetForm.value = false;
-        loadAssets();
+        // 刷新资产列表（带 300ms 延迟确保后端写入完成）
+        await new Promise(r => setTimeout(r, 300));
+        await loadAssets();
+        showToast('保存成功');
         if (showDetail.value && detailAsset.value) {
           openDetail(detailAsset.value);
         }
@@ -2767,152 +2780,70 @@ const AppComp = {
 
 
     // ===== Product Icon Helper =====
-    let productIconCache = null;
-    function getProductIconFromDB(name) {
-      if (!name) return null;
-      if (!productIconCache) {
-        // 内联产品图标映射（从 product_db.json 提取的核心产品图标匹配）
-        productIconCache = [
-          // 手机
-          { match: /iphone|iphome|苹果.*手机|华为.*手机|小米.*手机|oppo|vivo|samsung.*galaxy|一加|真我|荣耀.*手机/ig, icon: '📱' },
-          // 电脑
-          { match: /macbook|mac ?(pro|air|mini|studio|book)|thinkpad|xps|surface|拯救者|外星人|rog|天选|小新/ig, icon: '💻' },
-          // 平板
-          { match: /ipad|matepad|galaxy tab|surface pro|联想.*pad|小米.*pad|pro ?12\.?9|pro ?11/ig, icon: '📱' },
-          // 耳机
-          { match: /airpods|wh-1000|xm[456]|sony.*耳机|bose|freebuds|buds ?pro|buds ?live|galaxy.*buds|sony.*wh|sony.*wf|sony.*1000/ig, icon: '🎧' },
-          // 手表
-          { match: /apple watch|galaxy watch|watch ?(ultra|gt|pro)|手环|band ?[0-9]/ig, icon: '⌚' },
-          // 显示器/电视
-          { match: /显示器|monitor|电视|tv|投影|projector/ig, icon: '🖥️' },
-          // 键盘
-          { match: /键盘|keyboard/ig, icon: '⌨️' },
-          // 鼠标
-          { match: /鼠标|mouse/ig, icon: '🖱️' },
-          // 相机
-          { match: /相机|camera|镜头|lens|gopro|insta360|索尼.*相机|尼康|canon|eos/ig, icon: '📷' },
-          // 游戏机
-          { match: /ps[45]|switch|xbox|steam deck|掌机/ig, icon: '🎮' },
-          // 音箱
-          { match: /homepod|echo|jbl|bose.*音响|sonos|soundbar/ig, icon: '🔊' },
-          // 存储
-          { match: /ssd|硬盘|nas|u盘|sd卡|tf卡|存储/ig, icon: '💾' },
-          // 路由器
-          { match: /路由|router|mesh|wifi[0-9]?/ig, icon: '🌐' },
-          // 打印机
-          { match: /打印|printer|扫描|scanner/ig, icon: '🖨️' },
-        ];
-      }
-      for (const entry of productIconCache) {
-        if (entry.match.test(name)) return entry.icon;
-      }
-      return null;
-    }
+    const MDI_TO_EMOJI = {
+      'mdi:cellphone': '📱', 'mdi:cellphone-iphone': '📱', 'mdi:cellphone-android': '📱',
+      'mdi:laptop': '💻', 'mdi:tablet': '📱',
+      'mdi:watch': '⌚', 'mdi:headphones': '🎧',
+      'mdi:camera': '📷', 'mdi:camera-lens': '🔘',
+      'mdi:television': '🖥️', 'mdi:monitor': '🖥️', 'mdi:projector': '📽️',
+      'mdi:keyboard': '⌨️', 'mdi:mouse': '🖱️',
+      'mdi:gamepad': '🎮', 'mdi:virtual-reality': '🥽',
+      'mdi:car': '🚗', 'mdi:bike-electric': '🛵',
+      'mdi:air-conditioner': '❄️', 'mdi:fridge': '🧊',
+      'mdi:washing-machine': '🧺', 'mdi:dishwasher': '🍽️',
+      'mdi:robot-vacuum': '🤖',
+      'mdi:microwave': '♨️', 'mdi:toaster-oven': '🍞',
+      'mdi:stove': '🔥', 'mdi:rice-cooker': '🍚',
+      'mdi:printer': '🖨️', 'mdi:router-wireless': '🌐',
+      'mdi:harddisk': '💾', 'mdi:nas': '💾',
+      'mdi:bed': '🛏️', 'mdi:table': '🪑',
+      'mdi:seat': '🪑', 'mdi:bookshelf': '📚',
+      'mdi:wardrobe-outline': '🧥',
+      'mdi:book-open-variant': '📚',
+      'mdi:camcorder': '📹', 'mdi:gimbal': '🎬', 'mdi:quadcopter': '🛸',
+      'mdi:scooter-electric': '🛵',
+      'mdi:handcuffs': '🔗',
+    };
 
     function getProductIcon(name) {
       if (!name) return '📦';
-      const n = name.toLowerCase();
-      // Vehicles
-      if (n.includes('车') || n.includes('car') || n.includes('tesla') || n.includes('model 3')
-        || n.includes('model y') || n.includes('model s') || n.includes('model x')
-        || n.includes('byd') || n.includes('比亚迪') || n.includes('奇瑞') || n.includes('艾瑞泽')
-        || n.includes('瑞虎') || n.includes('风云') || n.includes('星途') || n.includes('捷途')
-        || n.includes('蔚来') || n.includes('理想') || n.includes('小鹏') || n.includes('极氪')
-        || n.includes('问界') || n.includes('奔驰') || n.includes('宝马') || n.includes('奥迪')
-        || n.includes('大众') || n.includes('丰田') || n.includes('本田') || n.includes('保时捷')
-        || n.includes('雅迪') || n.includes('九号') || n.includes('小牛') || n.includes('爱玛')
-        || n.includes('电瓶车') || n.includes('摩托')) return '🚗';
-      // Phones
-      if (n.includes('iphone') || n.includes('手机') || n.includes('华为') || n.includes('小米')
-        || n.includes('samsung') || n.includes('三星') || n.includes('oppo') || n.includes('vivo')
-        || n.includes('realme') || n.includes('一加') || n.includes('oneplus')) return '📱';
-      // Computers
-      if (n.includes('macbook') || n.includes('笔记本') || n.includes('电脑') || n.includes('thinkpad')
-        || n.includes('联想') || n.includes('dell') || n.includes('surface') || n.includes('rog')
-        || n.includes('华硕') || n.includes('hp') || n.includes('chromebook')
-        || n.includes('台式机') || n.includes('主机') || n.includes('mac mini') || n.includes('imac'))
-        return '💻';
-      // Tablets
-      if (n.includes('ipad') || n.includes('平板') || n.includes('tab')) return '📱';
-      // Headphones
-      if (n.includes('airpods') || n.includes('耳机') || n.includes('earphone') || n.includes('headphone')
-        || n.includes('buds') || n.includes('freebuds') || n.includes('wh-1000')) return '🎧';
-      // Watches
-      if (n.includes('手表') || n.includes('watch') || n.includes('手环') || n.includes('band')
-        || n.includes('gt ') || n.includes('gtr')) return '⌚';
-      // Displays / TVs
-      if (n.includes('电视') || n.includes('tv') || n.includes('显示器') || n.includes('monitor')
-        || n.includes('屏幕') || n.includes('投影') || n.includes('projector')) return '🖥️';
-      // Furniture
-      if (n.includes('桌') || n.includes('椅') || n.includes('床') || n.includes('柜') || n.includes('沙发')
-        || n.includes('家具') || n.includes('书架') || n.includes('床头柜')) return '🪑';
-      // Keyboards
-      if (n.includes('键盘') || n.includes('keyboard')) return '⌨️';
-      // Mice
-      if (n.includes('鼠标') || n.includes('mouse')) return '🖱️';
-      // Cameras
-      if (n.includes('相机') || n.includes('camera') || n.includes('镜头') || n.includes('摄像机')
-        || n.includes('gopro') || n.includes('insta')) return '📷';
-      // Gaming
-      if (n.includes('游戏') || n.includes('ps ') || n.includes('ps4') || n.includes('ps5')
-        || n.includes('switch') || n.includes('xbox') || n.includes('steam') || n.includes('deck')
-        || n.includes('手柄') || n.includes('controller')) return '🎮';
-      // Bags
-      if (n.includes('包') || n.includes('bag') || n.includes('背包') || n.includes('书包')
-        || n.includes('手提') || n.includes('挎包')) return '🎒';
-      // Shoes
-      if (n.includes('鞋') || n.includes('shoe') || n.includes('sneaker') || n.includes('跑鞋')
-        || n.includes('运动鞋')) return '👟';
-      // Clothes
-      if (n.includes('衣') || n.includes('服') || n.includes('shirt') || n.includes('jacket')
-        || n.includes('hoodie') || n.includes('裤') || n.includes('外套') || n.includes('羽绒')
-        || n.includes('短袖')) return '👕';
-      // Vehicles
-      if (n.includes('车') || n.includes('car') || n.includes('bike') || n.includes('电动车')
-        || n.includes('电动') || n.includes('摩托') || n.includes('自行车')) return '🚗';
-      // Books
-      if (n.includes('书') || n.includes('book') || n.includes('杂志') || n.includes('kindle')) return '📚';
-      // Home appliances - matching "空调" with air conditioner icon
-      if (n.includes('空调') || n.includes('冰箱') || n.includes('洗衣机') || n.includes('家电')
-        || n.includes('热水器') || n.includes('微波炉') || n.includes('烤箱') || n.includes('洗碗机')
-        || n.includes('抽油烟机') || n.includes('电饭煲') || n.includes('电磁炉')
-        || n.includes('净水器') || n.includes('空气净化') || n.includes('风扇') || n.includes('吸尘器')
-        || n.includes('扫地机') || n.includes('拖地') || n.includes('烘干机')
-        || n.includes('咖啡机') || n.includes('豆浆机') || n.includes('破壁机')) return '🏠';
-      // Lights
-      if (n.includes('灯') || n.includes('light') || n.includes('台灯') || n.includes('灯泡')) return '💡';
-      // Chargers / Cables
-      if (n.includes('充电') || n.includes('充电器') || n.includes('cable') || n.includes('数据线')
-        || n.includes('线') || n.includes('转换器') || n.includes('hub') || n.includes('扩展坞')
-        || n.includes('移动电源') || n.includes('充电宝') || n.includes('无线充')) return '🔌';
-      // Speakers
-      if (n.includes('音箱') || n.includes('speaker') || n.includes('音响') || n.includes('soundbar')
-        || n.includes('homepod') || n.includes('echo') || n.includes('jbl') || n.includes('bose')) return '🔊';
-      // Storage
-      if (n.includes('硬盘') || n.includes('ssd') || n.includes('nas')
-        || n.includes('u盘') || n.includes('存储') || n.includes('sd卡') || n.includes('tf卡')
-        || n.includes('内存')) return '💾';
-      // Router/Network
-      if (n.includes('路由器') || n.includes('router') || n.includes('交换机') || n.includes('wifi')
-        || n.includes('mesh') || n.includes('网线')) return '🌐';
-      // Printer
-      if (n.includes('打印') || n.includes('printer') || n.includes('扫描') || n.includes('scanner')
-        || n.includes('复印')) return '🖨️';
-      // Food/Drink
-      if (n.includes('咖啡') || n.includes('coffee') || n.includes('杯子') || n.includes('杯')
-        || n.includes('水壶') || n.includes('保温') || n.includes('饭盒')) return '☕';
-      // Musical instruments
-      if (n.includes('吉他') || n.includes('guitar') || n.includes('钢琴') || n.includes('piano')
-        || n.includes('乐器') || n.includes('小提琴') || n.includes('电子琴')) return '🎸';
-      // Sports
-      if (n.includes('球') || n.includes('拍') || n.includes('运动') || n.includes('健身')
-        || n.includes('瑜伽') || n.includes('哑铃')) return '⚽';
-      // Pet
-      if (n.includes('猫') || n.includes('狗') || n.includes('宠物') || n.includes('cat')
-        || n.includes('dog') || n.includes('粮') || n.includes('笼')) return '🐾';
-      // product_db.json 匹配
-      const dbIcon = getProductIconFromDB(name);
-      if (dbIcon) return dbIcon;
+      // 1) 优先用 product_db 匹配（数据驱动，精确）
+      const pd = productDB.value;
+      if (pd && pd.length) {
+        const n = name.toLowerCase().trim();
+        // 完全匹配
+        let hit = pd.find(p => p.name && p.name.toLowerCase() === n);
+        if (hit && hit.icon && MDI_TO_EMOJI[hit.icon]) return MDI_TO_EMOJI[hit.icon];
+        // 包含匹配（产品名包含在输入名中，或反之）
+        hit = pd.find(p => {
+          if (!p.name) return false;
+          const pn = p.name.toLowerCase();
+          return n.includes(pn) || pn.includes(n);
+        });
+        if (hit && hit.icon && MDI_TO_EMOJI[hit.icon]) return MDI_TO_EMOJI[hit.icon];
+      }
+      // 2) fallback: 按分类名称匹配
+      let n2 = name.toLowerCase();
+      if (n2.includes('手表') || n2.includes('watch') || n2.includes('手环')) return '⌚';
+      if (n2.includes('手机') || n2.includes('iphone')) return '📱';
+      if (n2.includes('电脑') || n2.includes('笔记本') || n2.includes('macbook')) return '💻';
+      if (n2.includes('平板') || n2.includes('ipad')) return '📱';
+      if (n2.includes('耳机') || n2.includes('音响') || n2.includes('音箱')) return '🎧';
+      if (n2.includes('电视') || n2.includes('显示器') || n2.includes('投影')) return '🖥️';
+      if (n2.includes('汽车') || n2.includes('轿车') || n2.includes('tesla') || n2.includes('car')) return '🚗';
+      if (n2.includes('电动') || n2.includes('电动车') || n2.includes('摩托车')) return '🛵';
+      if (n2.includes('相机') || n2.includes('镜头')) return '📷';
+      if (n2.includes('游戏') || n2.includes('switch') || n2.includes('ps5')) return '🎮';
+      if (n2.includes('冰箱') || n2.includes('空调') || n2.includes('洗衣机') || n2.includes('家电')) return '🏠';
+      if (n2.includes('灯') || n2.includes('台灯')) return '💡';
+      if (n2.includes('键盘')) return '⌨️';
+      if (n2.includes('鼠标')) return '🖱️';
+      if (n2.includes('路由器') || n2.includes('wifi')) return '🌐';
+      if (n2.includes('包') || n2.includes('背包')) return '🎒';
+      if (n2.includes('鞋')) return '👟';
+      if (n2.includes('服') || n2.includes('衣')) return '👕';
+      if (n2.includes('书')) return '📚';
+      if (n2.includes('吉他') || n2.includes('钢琴')) return '🎸';
       return '📦';
     }
 
@@ -3100,6 +3031,7 @@ const AppComp = {
 
     // ===== Initialization =====
     onMounted(async () => {
+      await loadProductDB();
       await Promise.all([loadCategories(), loadChannels()]);
       await loadAssets();
       // Hide skeleton loading

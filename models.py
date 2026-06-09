@@ -150,6 +150,19 @@ class Maintenance(Base):
     created_at = Column(DateTime, default=datetime.datetime.utcnow)
 
 
+class Product(Base):
+    __tablename__ = "products"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String(200), nullable=False, index=True)
+    brand = Column(String(50), nullable=True)
+    category = Column(String(50), nullable=True)  # 品类名（手机/手表/电脑...）
+    price = Column(Float, nullable=True)          # 参考价
+    year = Column(Integer, nullable=True)         # 发布年份
+    icon = Column(String(50), nullable=True)      # mdi:xxx
+    icon_url = Column(String(200), nullable=True)
+    keywords = Column(Text, nullable=True)        # JSON 数组 ["关键词1", "关键词2"]
+    created_at = Column(DateTime, default=datetime.datetime.utcnow)
+
 class WishItem(Base):
     __tablename__ = "wish_items"
     id = Column(Integer, primary_key=True, autoincrement=True)
