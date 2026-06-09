@@ -419,7 +419,7 @@ def create_wish(data: WishCreate, db: Session = Depends(get_db)):
     db.refresh(w)
     return {"id": w.id, "name": w.name, "target_price": w.target_price,
             "target_date": w.target_date.isoformat() if w.target_date else None,
-            "price": w.price,
+            "price": w.price, "note": w.note,
             "category_id": w.category_id,
             "channel_id": w.channel_id,
             "is_done": False}
@@ -476,6 +476,7 @@ def update_wish(wish_id: int, data: WishUpdate, db: Session = Depends(get_db)):
             "target_date": w.target_date.isoformat() if w.target_date else None,
             "category_id": w.category_id,
             "channel_id": w.channel_id,
+            "note": w.note,
             "category_name": w.category.name if w.category else None,
             "channel_name": w.channel.name if w.channel else None,
             "is_done": w.is_done}

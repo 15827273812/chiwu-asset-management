@@ -89,7 +89,7 @@ html, body {
 /* ===== Cards ===== */
 .card {
   background: var(--card-bg); border-radius: var(--radius);
-  box-shadow: var(--shadow); padding: 16px; margin: 0 16px 8px;
+  box-shadow: var(--shadow); padding: 16px; margin: 0 0 8px;
   transition: transform 0.15s;
   width: 100%; overflow: hidden;
 }
@@ -201,7 +201,7 @@ html, body {
   will-change: transform; transform: translateX(0);
 }
 .swipe-wrap.show-delete .swipe-inner { transform: translateX(-180px); }
-.swipe-content { flex: 0 0 100%; background: var(--card-bg); border-radius: var(--radius); }
+.swipe-content { flex: 0 0 100%; border-radius: var(--radius); overflow: hidden; padding: 0 16px; }
 .swipe-actions { flex: 0 0 180px; display: flex; align-items: stretch; }
 .swipe-btn {
   flex: 1; display: flex; align-items: center; justify-content: center;
@@ -249,7 +249,7 @@ html, body {
 .wish-summary-divider { width: 1px; height: 36px; background: var(--border); }
 
 /* Wish Card */
-.wish-card { display: flex; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
+.wish-card { display: flex; align-items: flex-start; gap: 12px; }
 .wish-icon { font-size: 28px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 /* Swipe Btn Info */
