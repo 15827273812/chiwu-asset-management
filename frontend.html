@@ -183,20 +183,24 @@ body {
 /* ===== Loading ===== */
 .loading { text-align: center; padding: 40px; color: var(--text-secondary); font-size: 14px; }
 
-/* ===== Swipe delete ===== */
+/* ===== Swipe slide (WeChat-style) ===== */
 .swipe-wrap { position: relative; overflow: hidden; }
-.swipe-actions {
-  position: absolute; right: 0; top: 0; height: 100%;
-  display: flex; align-items: center; gap: 0;
-  transform: translateX(100%); transition: transform 0.2s;
+.swipe-inner {
+  display: flex; align-items: stretch;
+  transition: transform 0.25s ease;
+  will-change: transform; transform: translateX(0);
 }
-.swipe-wrap.show-delete .swipe-actions { transform: translateX(0); }
+.swipe-wrap.show-delete .swipe-inner { transform: translateX(-180px); }
+.swipe-content { flex: 0 0 100%; background: var(--card-bg); border-radius: var(--radius); }
+.swipe-actions { flex: 0 0 180px; display: flex; align-items: stretch; }
 .swipe-btn {
-  height: 100%; display: flex; align-items: center; padding: 0 20px;
+  flex: 1; display: flex; align-items: center; justify-content: center;
   font-size: 14px; color: #fff; border: none; cursor: pointer;
+  padding: 0 8px; white-space: nowrap;
 }
-.swipe-btn-danger { background: var(--danger); border-radius: 0 12px 12px 0; }
-.swipe-btn-primary { background: var(--primary); border-radius: 12px 0 0 12px; }
+.swipe-btn-danger { background: var(--danger); }
+.swipe-btn-primary { background: var(--primary); }
+.swipe-btn-info { background: #3b82f6; }
 
 /* ===== Stats ===== */
 .stats-overview { margin: 0 16px 12px; }
@@ -224,12 +228,19 @@ body {
 .wish-info .wish-name { font-size: 15px; font-weight: 500; }
 
 /* Wish Summary Card */
-.wish-summary-card { margin-bottom: 12px; }
-.wish-summary-row { display: flex; align-items: center; justify-content: space-around; }
+.wish-summary-card { margin-bottom: 12px; padding: 16px; }
+.wish-summary-row-main { text-align: center; margin-bottom: 12px; }
+.wish-summary-val-main { font-size: 32px; font-weight: 800; color: var(--primary); }
+.wish-summary-lbl-main { font-size: 13px; color: var(--text-secondary); margin-top: 2px; }
+.wish-summary-row-sub { display: flex; align-items: center; justify-content: space-around; border-top: 1px solid var(--border); padding-top: 12px; }
 .wish-summary-item { text-align: center; flex: 1; }
-.wish-summary-val { font-size: 24px; font-weight: 700; }
+.wish-summary-val { font-size: 22px; font-weight: 700; }
 .wish-summary-lbl { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
-.wish-summary-divider { width: 1px; height: 40px; background: var(--border); }
+.wish-summary-divider { width: 1px; height: 36px; background: var(--border); }
+
+/* Wish Card */
+.wish-card { display: flex; align-items: flex-start; gap: 12px; position: relative; z-index: 1; }
+.wish-icon { font-size: 28px; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
 
 /* Swipe Btn Info */
 .swipe-btn-info { background: #3b82f6; }
@@ -827,27 +838,35 @@ body {
       <!-- List View -->
       <div v-if="layoutView === 'list'">
         <div v-for="a in filteredAssets" :key="a.id" class="swipe-wrap" :id="'swipe-' + a.id">
-          <div class="swipe-actions">
-            <button class="swipe-btn swipe-btn-danger" @click="deleteAsset(a.id)">删除</button>
-          </div>
-          <div class="card" @click="openDetail(a)">
-            <div class="card-top-row">
-              <div style="font-size:16px;font-weight:600">{{ a.category_icon || '📦' }} {{ a.name }}</div>
-              <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span>
-            </div>
-            <div style="display:flex;justify-content:space-between;align-items:flex-start">
-              <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
-                <img v-if="a.image" :src="a.image" class="list-thumb-sm" alt="">
-                <span class="price-sm">¥{{ Number(a.purchase_price || 0).toLocaleString() }}</span>
-                <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
-                <span v-if="a.warranty_months > 0" class="tag-sm" :class="'tag-' + (a.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:10px">{{ a.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
+          <div class="swipe-inner"
+               @touchstart="swipeTouchStart($event, 'swipe-' + a.id)"
+               @touchmove="swipeTouchMove($event, 'swipe-' + a.id)"
+               @touchend="swipeTouchEnd($event, 'swipe-' + a.id)">
+            <div class="swipe-content">
+              <div class="card" @click="openDetail(a)">
+                <div class="card-top-row">
+                  <div style="font-size:16px;font-weight:600">{{ a.category_icon || '📦' }} {{ a.name }}</div>
+                  <span class="tag" :class="'tag-' + a.status" style="font-size:11px">{{ statusLabel(a.status) }}</span>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:flex-start">
+                  <div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
+                    <img v-if="a.image" :src="a.image" class="list-thumb-sm" alt="">
+                    <span class="price-sm">¥{{ Number(a.purchase_price || 0).toLocaleString() }}</span>
+                    <span style="font-size:12px;color:var(--text-secondary)">{{ a.purchase_date }}</span>
+                    <span v-if="a.warranty_months > 0" class="tag-sm" :class="'tag-' + (a.warranty_status === 'active' ? 'active' : 'discarded')" style="font-size:10px">{{ a.warranty_status === 'active' ? '保障中' : '已过期' }}</span>
+                  </div>
+                  <div style="text-align:right;margin-top:4px">
+                    <div class="price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
+                    <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">{{ a.holding_days }}天</div>
+                  </div>
+                </div>
               </div>
-              <div style="text-align:right;margin-top:4px">
-                <div class="price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
-                <div style="font-size:11px;color:var(--text-secondary);margin-top:2px">{{ a.holding_days }}天</div>
-              </div>
+            </div>
+            <div class="swipe-actions">
+              <button class="swipe-btn swipe-btn-danger" @click.stop="deleteAsset(a.id)">删除</button>
             </div>
           </div>
+
         </div>
       </div>
 
@@ -962,12 +981,11 @@ body {
 
     <!-- 顶部概览卡片 -->
     <div class="card wish-summary-card">
-      <div class="wish-summary-row">
-        <div class="wish-summary-item">
-          <div class="wish-summary-val">¥{{ formatK(wishTotalValue) }}</div>
-          <div class="wish-summary-lbl">心愿总值</div>
-        </div>
-        <div class="wish-summary-divider"></div>
+      <div class="wish-summary-row-main">
+        <div class="wish-summary-val-main">¥{{ formatK(wishTotalValue) }}</div>
+        <div class="wish-summary-lbl-main">心愿总值</div>
+      </div>
+      <div class="wish-summary-row-sub">
         <div class="wish-summary-item">
           <div class="wish-summary-val">{{ wishes.length }}</div>
           <div class="wish-summary-lbl">心愿数量</div>
@@ -987,22 +1005,29 @@ body {
     </div>
     <div v-else>
       <div v-for="w in wishes" :key="w.id" class="swipe-wrap" :id="'swipe-wish-' + w.id">
-        <div class="swipe-actions">
-          <button class="swipe-btn swipe-btn-info" @click="editWish(w)">编辑</button>
-          <button class="swipe-btn swipe-btn-primary" v-if="!w.is_done" @click="convertWish(w)">转化</button>
-          <button class="swipe-btn swipe-btn-danger" @click="deleteWish(w.id)">删除</button>
-        </div>
-        <div class="card" style="display:flex;align-items:flex-start;gap:12px">
-          <div class="wish-checkbox" :class="{done: w.is_done}" @click="toggleWish(w)">{{ w.is_done ? '✓' : '' }}</div>
-          <div class="wish-info">
-            <div class="wish-name" :class="{'done-text': w.is_done}">{{ w.name }}</div>
-            <div class="wish-meta">
-              <span v-if="w.price">价值 ¥{{ w.price }}</span>
-              <span v-if="w.target_price">目标 ¥{{ w.target_price }}</span>
-              <span v-if="w.target_date">期限 {{ w.target_date }}</span>
-              <span v-if="w.converted_asset_id" style="color:var(--success)">已转化</span>
+        <div class="swipe-inner"
+             @touchstart="swipeTouchStart($event, 'swipe-wish-' + w.id)"
+             @touchmove="swipeTouchMove($event, 'swipe-wish-' + w.id)"
+             @touchend="swipeTouchEnd($event, 'swipe-wish-' + w.id)">
+          <div class="swipe-content">
+            <div class="card wish-card">
+              <div class="wish-icon">{{ getProductIcon(w.name) }}</div>
+              <div class="wish-info">
+                <div class="wish-name" :class="{'done-text': w.is_done}">{{ w.name }}</div>
+                <div class="wish-meta">
+                  <span v-if="w.price">价值 ¥{{ w.price }}</span>
+                  <span v-if="w.target_price">目标 ¥{{ w.target_price }}</span>
+                  <span v-if="w.target_date">期限 {{ w.target_date }}</span>
+                  <span v-if="w.converted_asset_id" style="color:var(--success)">已转化</span>
+                </div>
+                <div v-if="w.note" style="font-size:12px;color:var(--text-secondary);margin-top:4px">{{ w.note }}</div>
+              </div>
             </div>
-            <div v-if="w.note" style="font-size:12px;color:var(--text-secondary);margin-top:4px">{{ w.note }}</div>
+          </div>
+          <div class="swipe-actions">
+            <button class="swipe-btn swipe-btn-info" @click.stop="editWish(w)">编辑</button>
+            <button class="swipe-btn swipe-btn-primary" v-if="!w.is_done" @click.stop="convertWish(w)">转化</button>
+            <button class="swipe-btn swipe-btn-danger" @click.stop="deleteWish(w.id)">删除</button>
           </div>
         </div>
       </div>
@@ -1056,7 +1081,7 @@ body {
           <div v-if="idx < filteredTimeline.length - 1" class="timeline-connector"></div>
         </div>
         <div class="timeline-card">
-          <div class="card" @click="openDetail(a)">
+          <div class="card" @click="toggleSwipe('swipe-' + a.id); openDetail(a)">
             <div>
               <span class="timeline-icon">{{ a.category_icon || '📦' }}</span>
               <span class="timeline-card-content">
@@ -1418,9 +1443,18 @@ body {
     <div class="sheet">
       <div class="sheet-handle"></div>
       <h2>{{ wishEditId ? '编辑心愿' : '新建心愿' }}</h2>
-      <div class="form-group">
+      <div class="form-group" style="position:relative">
         <label>名称 *</label>
-        <input type="text" v-model="wishForm.name" placeholder="想要什么?">
+        <input type="text" v-model="wishForm.name" placeholder="想要什么?" @input="searchProductSuggestWish">
+        <div v-if="wishSuggestResults.length > 0" class="suggest-dropdown" @click.stop>
+          <div v-for="s in wishSuggestResults" :key="s.name" class="suggest-item" @mousedown.prevent="selectWishSuggest(s)">
+            <div>
+              <span class="suggest-name">{{ s.name }}</span>
+              <span class="suggest-brand">{{ s.brand }}</span>
+            </div>
+            <span class="suggest-price">¥{{ s.price }}</span>
+          </div>
+        </div>
       </div>
       <div class="form-group">
         <label>产品价格 (¥)</label>
@@ -2269,11 +2303,121 @@ const AppComp = {
     const wishTotalValue = computed(() => {
       return wishes.value.reduce((s, w) => s + (w.price || 0), 0);
     });
-    const wishDoneCount = computed(() => {
+        const wishDoneCount = computed(() => {
       return wishes.value.filter(w => w.is_done).length;
     });
 
-    async function loadWishes() {
+    // ===== Wish Product Suggest =====
+    const wishSuggestResults = ref([]);
+    let wishSuggestTimer = null;
+
+    async function searchProductSuggestWish() {
+      const q = wishForm.name;
+      if (!q || q.length < 1) { wishSuggestResults.value = []; return; }
+      if (wishSuggestTimer) clearTimeout(wishSuggestTimer);
+      wishSuggestTimer = setTimeout(async () => {
+        try {
+          const res = await fetch(API_BASE + '/api/search-products?q=' + encodeURIComponent(q));
+          if (res.ok) {
+            wishSuggestResults.value = await res.json();
+          }
+        } catch (e) { /* ignore */ }
+      }, 200);
+    }
+
+    function selectWishSuggest(p) {
+      wishForm.name = p.name;
+      if (p.price) wishForm.price = p.price;
+      if (p.icon) wishForm.icon = p.icon;
+      wishSuggestResults.value = [];
+    }
+
+    // ===== Swipe Touch (WeChat-style) =====
+    const swipeTouch = reactive({ startX: 0, currentId: null, moved: false });
+
+    function swipeTouchStart(e, id) {
+      swipeTouch.startX = e.touches[0].clientX;
+      swipeTouch.currentId = id;
+      swipeTouch.moved = false;
+      // Close any other open swipes
+      document.querySelectorAll('.swipe-wrap.show-delete').forEach(el => {
+        if (el.id !== id) el.classList.remove('show-delete');
+      });
+    }
+
+    function swipeTouchMove(e, id) {
+      if (swipeTouch.currentId !== id) return;
+      const dx = swipeTouch.startX - e.touches[0].clientX;
+      if (dx > 5 && dx < 180) {
+        swipeTouch.moved = true;
+        const inner = document.querySelector('#' + id + ' .swipe-inner');
+        if (inner) {
+          inner.style.transform = 'translateX(-' + Math.round(dx) + 'px)';
+          inner.style.transition = 'none';
+        }
+      }
+    }
+
+    function swipeTouchEnd(e, id) {
+      if (swipeTouch.currentId !== id) return;
+      const wrap = document.getElementById(id);
+      if (!wrap) return;
+      const inner = wrap.querySelector('.swipe-inner');
+      
+      if (!swipeTouch.moved) {
+        // Tap: close if open
+        if (wrap.classList.contains('show-delete')) {
+          wrap.classList.remove('show-delete');
+          if (inner) { inner.style.transform = ''; inner.style.transition = ''; }
+        }
+        swipeTouch.currentId = null;
+        return;
+      }
+      
+      const dx = swipeTouch.startX - (e.changedTouches ? e.changedTouches[0].clientX : 0);
+      if (dx > 60) {
+        wrap.classList.add('show-delete');
+      }
+      if (inner) { inner.style.transform = ''; inner.style.transition = ''; }
+      swipeTouch.currentId = null;
+    }
+    
+    // Tap outside to close
+    document.addEventListener('click', function(e) {
+      const wrap = e.target.closest('.swipe-wrap');
+      document.querySelectorAll('.swipe-wrap.show-delete').forEach(el => {
+        if (!wrap || el.id !== wrap.id) {
+          el.classList.remove('show-delete');
+          const inner = el.querySelector('.swipe-inner');
+          if (inner) { inner.style.transform = ''; inner.style.transition = ''; }
+        }
+      });
+    });
+    
+
+
+    // ===== Product Icon Helper =====
+    function getProductIcon(name) {
+      if (!name) return '📦';
+      const n = name.toLowerCase();
+      if (n.includes('iphone') || n.includes('手机') || n.includes('华为') || n.includes('小米')) return '📱';
+      if (n.includes('macbook') || n.includes('笔记本') || n.includes('电脑')) return '💻';
+      if (n.includes('ipad') || n.includes('平板')) return '📱';
+      if (n.includes('switch') || n.includes('游戏') || n.includes('ps5')) return '🎮';
+      if (n.includes('耳机') || n.includes('airpods') || n.includes('ear')) return '🎧';
+      if (n.includes('相机') || n.includes('镜头') || n.includes('camera')) return '📷';
+      if (n.includes('手表') || n.includes('watch')) return '⌚';
+      if (n.includes('风扇') || n.includes('空调') || n.includes('冰箱') || n.includes('洗衣机')) return '🔧';
+      if (n.includes('沙发') || n.includes('桌子') || n.includes('床')) return '🛋️';
+      if (n.includes('车') || n.includes('汽车') || n.includes('bike')) return '🚗';
+      if (n.includes('书')) return '📖';
+      if (n.includes('衣服') || n.includes('鞋') || n.includes('bag') || n.includes('包')) return '👟';
+      if (n.includes('电视') || n.includes('显示器')) return '🖥️';
+      if (n.includes('音响') || n.includes('sound')) return '🔊';
+      return '📦';
+    }
+
+        async function loadWishes() {
       wishesLoading.value = true;
       try { wishes.value = await api('/wishes'); }
       catch (e) { console.error('Load wishes error:', e); }
@@ -2504,8 +2648,10 @@ const AppComp = {
       isCategoryVisible, toggleCategoryVisibility,
       // Wishes
       wishes, wishesLoading, showWishForm, wishEditId, wishForm,
-      wishTotalValue, wishDoneCount,
-      openWishForm, editWish, submitWishForm, deleteWish, toggleWish, convertWish,
+      wishTotalValue, wishDoneCount, wishSuggestResults,
+      openWishForm, editWish, searchProductSuggestWish, selectWishSuggest,
+      submitWishForm, deleteWish, toggleWish, convertWish,
+      swipeTouchStart, swipeTouchMove, swipeTouchEnd, getProductIcon,
       // Settings
       deleteCategory, deleteChannel, exportJSON,
       // Helpers
