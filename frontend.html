@@ -2143,8 +2143,9 @@ const AppComp = {
       // Reset input so same file can be selected again
       e.target.value = '';
 
-      // ===== AI 识图：调用千问 API 自动填充表单 =====
-      try {
+      // ===== AI 识图：只有新增资产才调 API =====
+      if (!formEditId.value) {
+        try {
         const form = new FormData();
         form.append('file', file);
         const res = await fetch(API_BASE + '/api/ai-recognize', {
@@ -2196,8 +2197,9 @@ const AppComp = {
             }
           }
         }
-      } catch(e) {
-        console.error('AI 识图失败（不影响图片保存）:', e);
+        } catch(e) {
+          console.error('AI 识图失败（不影响图片保存）:', e);
+        }
       }
     }
 
