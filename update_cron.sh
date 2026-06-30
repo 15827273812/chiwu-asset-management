@@ -12,7 +12,7 @@ except:
 # 只更新更新时间为实时变化
 os.environ['UPDATED'] = 'done'
 # 重启服务
-pkill -f 'uvicorn.*8809' 2>/dev/null
+pkill -f 'uvicorn.*8808' 2>/dev/null
 # 写最后的更新时间
 with open('last_update.txt', 'w') as f:
     import datetime

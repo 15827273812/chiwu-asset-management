@@ -2324,38 +2324,64 @@ const AppComp = {
       if (imageInput.value) imageInput.value.click();
     }
     async function onImageSelected(e) {
-      const file = e.target.files[0];
-      if (!file) return;
-      // Resize/crop to keep under 200KB
-      const reader = new FileReader();
-      reader.onload = function(ev) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          let w = img.width, h = img.height;
-          const maxDim = 600;
-          if (w > maxDim || h > maxDim) {
-            const scale = Math.min(maxDim / w, maxDim / h);
-            w = Math.round(w * scale);
-            h = Math.round(h * scale);
-          }
-          canvas.width = w;
-          canvas.height = h;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, w, h);
-          formData.image = canvas.toDataURL('image/jpeg', 0.6);
-        };
-        img.src = ev.target.result;
-      };
-      reader.readAsDataURL(file);
+      const rawFile = e.target.files[0];
+      if (!rawFile) return;
       // Reset input so same file can be selected again
       e.target.value = '';
 
-      // ===== AI 识图：只有新增资产才调 API =====
+      // ===== 压缩图片（Promise 化，确保完成后才继续，5秒超时兜底） =====
+      const compressedBlob = await Promise.race([
+        new Promise((resolve) => {
+          const reader = new FileReader();
+          reader.onload = function(ev) {
+            const img = new Image();
+            img.onload = function() {
+              try {
+                const canvas = document.createElement('canvas');
+                let w = img.width, h = img.height;
+                const maxDim = 600;
+                if (w > maxDim || h > maxDim) {
+                  const scale = Math.min(maxDim / w, maxDim / h);
+                  w = Math.round(w * scale);
+                  h = Math.round(h * scale);
+                }
+                canvas.width = w;
+                canvas.height = h;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(img, 0, 0, w, h);
+                // 保存到预览
+                formData.image = canvas.toDataURL('image/jpeg', 0.6);
+                // 转成 Blob 用于上传
+                if (canvas.toBlob) {
+                  canvas.toBlob(resolve, 'image/jpeg', 0.6);
+                } else {
+                  resolve(null); // 不支持 toBlob 就用原图
+                }
+              } catch(e) {
+                console.error('Canvas压缩失败:', e);
+                resolve(null);
+              }
+            };
+            img.onerror = function() {
+              console.error('图片解码失败');
+              resolve(null);
+            };
+            img.src = ev.target.result;
+          };
+          reader.onerror = function() {
+            console.error('文件读取失败');
+            resolve(null);
+          };
+          reader.readAsDataURL(rawFile);
+        }),
+        new Promise(r => setTimeout(() => { console.warn('压缩超时，使用原图'); r(null); }, 5000))
+      ]);
+
+      // ===== AI 识图：只有新增资产才调 API（用压缩后的小图） =====
       if (!formEditId.value) {
         try {
         const form = new FormData();
-        form.append('file', file);
+        form.append('file', compressedBlob || rawFile, 'photo.jpg');
         const res = await fetch(API_BASE + '/api/ai-recognize', {
           method: 'POST',
           body: form

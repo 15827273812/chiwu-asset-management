@@ -501,6 +501,22 @@ async def ai_recognize(file: UploadFile = File(...)):
     """接收图片，用千问 VL API 识别产品信息"""
     try:
         contents = await file.read()
+        # 图片超过 500KB 就压缩
+        if len(contents) > 500 * 1024:
+            try:
+                from PIL import Image as PILImage
+                import io
+                pil = PILImage.open(io.BytesIO(contents))
+                # 缩放到最长边 800px
+                w, h = pil.size
+                if max(w, h) > 800:
+                    scale = 800 / max(w, h)
+                    pil = pil.resize((int(w*scale), int(h*scale)), PILImage.LANCZOS)
+                buf = io.BytesIO()
+                pil.save(buf, "JPEG", quality=70)
+                contents = buf.getvalue()
+            except ImportError:
+                pass  # 没有 PIL 就用原图
         b64 = base64.b64encode(contents).decode()
         mime = file.content_type or "image/jpeg"
         data_url = f"data:{mime};base64,{b64}"

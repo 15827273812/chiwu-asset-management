@@ -1,5 +1,16 @@
 import os, json, datetime
 import uvicorn
+
+# 加载 .env 文件（如果有），让 api.py 能读到环境变量
+_env_path = os.path.join(os.path.dirname(__file__), ".env")
+if os.path.isfile(_env_path):
+    with open(_env_path) as _f:
+        for _line in _f:
+            _line = _line.strip()
+            if _line and not _line.startswith("#") and "=" in _line:
+                _k, _v = _line.split("=", 1)
+                os.environ.setdefault(_k.strip(), _v.strip())
+
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
@@ -86,4 +97,4 @@ h1{{font-size:22px;margin-bottom:4px}}; .s{{color:#888;font-size:13px;margin-bot
 </body></html>"""
 
 if __name__ == "__main__":
-    uvicorn.run("main:app", host="0.0.0.0", port=8809, reload=False)
+    uvicorn.run("main:app", host="0.0.0.0", port=8808, reload=False)
