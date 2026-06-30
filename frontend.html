@@ -2288,8 +2288,9 @@ const AppComp = {
           all = all.concat(items);
         }
         allAssetsCache = all;
-        // 关键：全量数据写入 assets（响应式 ref），computed 自动重算
-        assets.value = all;
+        // 只更新缓存，不覆盖 assets.value（防止覆盖新增记录）
+        // assets 里已有的记录不应被旧数据冲掉
+        // 统计和筛选会通过 allAssetsCache 计算
         assetCacheReady = true;
         assetTotal.value = allAssetsCache.length;
       } catch(e) { console.error('Cache load error:', e); }
@@ -2329,56 +2330,55 @@ const AppComp = {
       // Reset input so same file can be selected again
       e.target.value = '';
 
-      // ===== 压缩图片（Promise 化，确保完成后才继续，5秒超时兜底） =====
-      const compressedBlob = await Promise.race([
-        new Promise((resolve) => {
+      // ===== 压缩图片：canvas → dataURL → Blob，3秒超时 =====
+      let compressedBlob = null;
+      let previewSet = false;
+      try {
+        const img = await new Promise((resolve, reject) => {
           const reader = new FileReader();
-          reader.onload = function(ev) {
-            const img = new Image();
-            img.onload = function() {
-              try {
-                const canvas = document.createElement('canvas');
-                let w = img.width, h = img.height;
-                const maxDim = 600;
-                if (w > maxDim || h > maxDim) {
-                  const scale = Math.min(maxDim / w, maxDim / h);
-                  w = Math.round(w * scale);
-                  h = Math.round(h * scale);
-                }
-                canvas.width = w;
-                canvas.height = h;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(img, 0, 0, w, h);
-                // 保存到预览
-                formData.image = canvas.toDataURL('image/jpeg', 0.6);
-                // 转成 Blob 用于上传
-                if (canvas.toBlob) {
-                  canvas.toBlob(resolve, 'image/jpeg', 0.6);
-                } else {
-                  resolve(null); // 不支持 toBlob 就用原图
-                }
-              } catch(e) {
-                console.error('Canvas压缩失败:', e);
-                resolve(null);
-              }
-            };
-            img.onerror = function() {
-              console.error('图片解码失败');
-              resolve(null);
-            };
-            img.src = ev.target.result;
+          reader.onload = (ev) => {
+            const i = new Image();
+            i.onload = () => resolve(i);
+            i.onerror = () => reject('decode_fail');
+            i.src = ev.target.result;
           };
-          reader.onerror = function() {
-            console.error('文件读取失败');
-            resolve(null);
-          };
+          reader.onerror = () => reject('read_fail');
           reader.readAsDataURL(rawFile);
-        }),
-        new Promise(r => setTimeout(() => { console.warn('压缩超时，使用原图'); r(null); }, 5000))
-      ]);
+        });
+        const canvas = document.createElement('canvas');
+        let w = img.width, h = img.height;
+        const maxDim = 600;
+        if (w > maxDim || h > maxDim) {
+          const scale = Math.min(maxDim / w, maxDim / h);
+          w = Math.round(w * scale);
+          h = Math.round(h * scale);
+        }
+        canvas.width = w;
+        canvas.height = h;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0, w, h);
+        formData.image = canvas.toDataURL('image/jpeg', 0.6);
+        previewSet = true;
+        // dataURL → Blob（兼容所有浏览器）
+        const bin = atob(formData.image.split(',')[1]);
+        const arr = new Uint8Array(bin.length);
+        for (let i = 0; i < bin.length; i++) arr[i] = bin.charCodeAt(i);
+        compressedBlob = new Blob([arr], { type: 'image/jpeg' });
+      } catch(e) {
+        console.error('压缩失败，用原图:', e);
+        if (!previewSet) {
+          // 至少有预览（不解码，直接用原始base64）
+          const reader = new FileReader();
+          formData.image = await new Promise(r => { reader.onload = (ev) => r(ev.target.result); reader.readAsDataURL(rawFile); });
+        }
+      }
 
       // ===== AI 识图：只有新增资产才调 API（用压缩后的小图） =====
       if (!formEditId.value) {
+        // 每次新拍照先清空旧AI字段，让新结果全覆盖
+        formData.name = '';
+        formData.category_id = null;
+        formData.purchase_price = null;
         try {
         const form = new FormData();
         form.append('file', compressedBlob || rawFile, 'photo.jpg');
@@ -2410,30 +2410,35 @@ const AppComp = {
                 if (catsRes.ok) {
                   const cats = await catsRes.json();
                   const catName = data.category || data.brand;
+                  // 先在所有子分类中精确查找
                   for (const c of cats) {
-                    if (c.children && c.children.length > 0) {
-                      // 先检查父分类名是否匹配
-                      if (c.name.includes(catName) || catName.includes(c.name)) {
-                        // 父分类匹配上了 —— 尝试在子分类中找名称最接近的
-                        let matchedChild = null;
-                        for (const child of c.children) {
-                          if (child.name.includes(catName) || catName.includes(child.name)) {
-                            matchedChild = child;
-                            break;
-                          }
+                    if (c.children) {
+                      for (const child of c.children) {
+                        if (child.name === catName || catName.includes(child.name) || child.name.includes(catName)) {
+                          formData.category_id = child.id;
+                          break;
                         }
-                        formData.category_id = matchedChild ? matchedChild.id : c.children[0].id;
-                        break;
                       }
-                    } else if (c.name.includes(catName) || catName.includes(c.name)) {
-                      formData.category_id = c.id;
                     }
                     if (formData.category_id) break;
+                  }
+                  // 没匹配到子分类，再匹配父分类
+                  if (!formData.category_id) {
+                    for (const c of cats) {
+                      if (c.name.includes(catName) || catName.includes(c.name)) {
+                        if (c.children && c.children.length > 0) {
+                          formData.category_id = c.children[0].id;
+                        } else {
+                          formData.category_id = c.id;
+                        }
+                        break;
+                      }
+                    }
                   }
                 }
               } catch(e) { /* 分类匹配失败不影响 */ }
             }
-            if (data.price && !formData.purchase_price) {
+            if (data.price) {
               formData.purchase_price = data.price;
             }
           }
@@ -2584,9 +2589,12 @@ const AppComp = {
       showSuggest.value = false;
     }
 
+    let savingAsset = false;
     async function submitAssetForm() {
+      if (savingAsset) return; // 防重复提交
       closeAllSwipe();
       if (!formData.name.trim()) { alert('请输入资产名称'); return; }
+      savingAsset = true;
       const body = {
         name: formData.name.trim(),
         category_id: formData.category_id || null,
@@ -2618,10 +2626,20 @@ const AppComp = {
           timelineVersion.value++;  // 通知时间轴刷新
         } else {
           const created = await api('/assets', { method: 'POST', body: JSON.stringify(body) });
-          // 新增：前端直接插入已创建的资产到列表
           calcWarrantyStatus(created);
-          assets.value.unshift(created);
-          if (allAssetsCache.length) allAssetsCache.unshift(created);
+          // 防止重复插入（id 已存在则替换，不存在则追加）
+          const existIdx = assets.value.findIndex(a => a.id === created.id);
+          if (existIdx === -1) {
+            assets.value.unshift(created);
+          } else {
+            assets.value[existIdx] = created;
+          }
+          const cacheIdx = allAssetsCache.findIndex(a => a.id === created.id);
+          if (cacheIdx === -1) {
+            if (allAssetsCache.length) allAssetsCache.unshift(created);
+          } else {
+            allAssetsCache[cacheIdx] = created;
+          }
           assetTotal.value++;
           timelineVersion.value++;  // 通知时间轴刷新
         }
@@ -2630,6 +2648,7 @@ const AppComp = {
           openDetail(detailAsset.value);
         }
       } catch (e) { alert('保存失败: ' + e.message); }
+      finally { savingAsset = false; }
     }
 
     // ===== Delete Asset =====
