@@ -841,7 +841,7 @@ html, body {
             <select v-model="advFilterCat">
               <option value="">全部</option>
               <optgroup v-for="cat in visibleCategoryList" :key="cat.id" :label="cat.icon + ' ' + cat.name">
-                <option v-for="sub in (cat.children || [])" :key="sub.id" :value="sub.id">{{ sub.icon }} {{ sub.name }}</option>
+                <option v-for="sub in (cat.children || [])" :key="sub.id" :value="sub.id">{{ catIcon(sub.icon) }} {{ sub.name }}</option>
               </optgroup>
             </select>
           </div>
@@ -883,7 +883,7 @@ html, body {
             <div class="swipe-content">
               <div class="card" @click="openDetail(a)">
                 <div class="card-top-row">
-                  <div style="font-size:16px;font-weight:600">{{ getProductIcon(a.name) || a.category_icon }} {{ a.name }}</div>
+                  <div style="font-size:16px;font-weight:600">{{ getProductIcon(a.name) || catIcon(a.category_icon) }} {{ a.name }}</div>
                 </div>
                 <div style="display:flex;align-items:flex-start;gap:8px">
                   <div style="flex:1;min-width:0;display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-top:4px">
@@ -916,7 +916,7 @@ html, body {
           <div class="asset-grid-item">
             <div class="grid-thumb-wrap">
               <img v-if="a.image" :src="a.image" class="grid-thumb" alt="">
-              <div v-else class="grid-icon">{{ getProductIcon(a.name) || a.category_icon }}</div>
+              <div v-else class="grid-icon">{{ getProductIcon(a.name) || catIcon(a.category_icon) }}</div>
             </div>
             <div class="grid-name">{{ a.name }}</div>
             <div class="grid-price">¥{{ Number(a.current_value || a.purchase_price || 0).toLocaleString() }}</div>
@@ -1062,7 +1062,7 @@ html, body {
           <div class="swipe-content">
             <div class="card wish-card">
               <img v-if="w.image" :src="w.image" style="width:44px;height:44px;border-radius:8px;object-fit:cover;flex-shrink:0;margin-top:2px">
-              <div v-else class="wish-icon">{{ getProductIcon(w.name) || w.category_icon }}</div>
+              <div v-else class="wish-icon">{{ getProductIcon(w.name) || catIcon(w.category_icon) }}</div>
               <div class="wish-info">
                 <div class="wish-name" :class="{'done-text': w.is_done}">{{ w.name }}</div>
                 <div class="wish-meta">
@@ -1108,7 +1108,7 @@ html, body {
           <label>分类</label>
           <select v-model="timelineFilterCat">
             <option value="">全部</option>
-            <option v-for="cat in visibleCategoryList" :key="cat.id" :value="cat.id">{{ cat.icon }} {{ cat.name }}</option>
+            <option v-for="cat in visibleCategoryList" :key="cat.id" :value="cat.id">{{ catIcon(cat.icon) }} {{ cat.name }}</option>
           </select>
         </div>
         <div class="filter-group">
@@ -1142,7 +1142,7 @@ html, body {
           <div class="card" @click="toggleSwipe('swipe-' + a.id); openDetail(a)">
             <div style="display:flex;align-items:center;gap:10px">
               <img v-if="a.image" :src="a.image" style="width:36px;height:36px;border-radius:6px;object-fit:cover;flex-shrink:0">
-              <span v-else class="timeline-icon">{{ getProductIcon(a.name) || a.category_icon }}</span>
+              <span v-else class="timeline-icon">{{ getProductIcon(a.name) || catIcon(a.category_icon) }}</span>
               <span class="timeline-card-content">
                 <strong>{{ a.name }}</strong>
                 <span style="color:var(--text-secondary)"> · {{ a.purchase_date }}</span>
@@ -1216,7 +1216,7 @@ html, body {
                 'background:var(--bg);color:var(--text)'
               "
             >
-              <span>{{ cat.icon }} {{ cat.name }}</span>
+              <span>{{ catIcon(cat.icon) }} {{ cat.name }}</span>
             </div>
           </template>
         </div>
@@ -1245,7 +1245,7 @@ html, body {
                 {{ (cat.children || []).length > 0 ? '▾' : '' }}
               </span>
               <div>
-                <div class="setting-label">{{ cat.icon }} {{ cat.name }}</div>
+                <div class="setting-label">{{ catIcon(cat.icon) }} {{ cat.name }}</div>
                 <div class="setting-desc">{{ cat.asset_count }} 个资产</div>
               </div>
             </div>
@@ -1254,7 +1254,7 @@ html, body {
           <!-- Children (shown when parent is expanded) -->
           <div v-if="isCatCollapsed(cat.id)" v-for="sub in (cat.children || [])" :key="sub.id" class="setting-item" style="padding-left:32px;padding-top:4px;padding-bottom:4px;border-bottom:none">
             <div>
-              <div class="setting-label" style="font-size:14px">{{ sub.icon }} {{ sub.name }}</div>
+              <div class="setting-label" style="font-size:14px">{{ catIcon(sub.icon) }} {{ sub.name }}</div>
               <div class="setting-desc">{{ sub.asset_count }} 个资产 · 子分类</div>
             </div>
             <button style="background:none;border:none;color:var(--danger);font-size:13px;cursor:pointer" @click="deleteCategory(sub.id)">删除</button>
@@ -1313,7 +1313,7 @@ html, body {
       <div class="detail-grid">
         <div class="detail-item">
           <div class="label">分类</div>
-          <div class="value">{{ getProductIcon(detailAsset?.name) || detailAsset?.category_icon }} {{ detailAsset?.category_name || '未分类' }}</div>
+          <div class="value">{{ getProductIcon(detailAsset?.name) || catIcon(detailAsset?.category_icon) }} {{ detailAsset?.category_name || '未分类' }}</div>
         </div>
         <div class="detail-item">
           <div class="label">渠道</div>
@@ -1437,7 +1437,7 @@ html, body {
           <select v-model="formData.category_id">
             <option :value="null">请选择</option>
             <optgroup v-for="cat in visibleCategoryList" :key="cat.id" :label="cat.icon + ' ' + cat.name">
-              <option v-for="sub in (cat.children || [])" :key="sub.id" :value="sub.id">{{ sub.icon }} {{ sub.name }}</option>
+              <option v-for="sub in (cat.children || [])" :key="sub.id" :value="sub.id">{{ catIcon(sub.icon) }} {{ sub.name }}</option>
             </optgroup>
           </select>
         </div>
@@ -1571,12 +1571,12 @@ html, body {
         <div v-if="showWishCategoryPicker" class="category-picker" @click.stop>
           <div class="cat-list-scroll">
             <div v-for="cat in categories" :key="cat.id" class="cat-group">
-              <div class="cat-parent" @click="selectWishCategory(cat.id, cat.name + ' ' + (cat.icon||''))">
-                <span>{{ cat.icon }} {{ cat.name }}</span>
+              <div class="cat-parent" @click="selectWishCategory(cat.id, cat.name + ' ' + (catIcon(cat.icon)||''))">
+                <span>{{ catIcon(cat.icon) }} {{ cat.name }}</span>
                 <span style="font-size:11px;color:var(--text-secondary)">{{ cat.asset_count }}</span>
               </div>
-              <div v-for="ch in (cat.children||[])" :key="ch.id" class="cat-child" @click.stop="selectWishCategory(ch.id, (cat.icon||'') + ' ' + ch.name)">
-                <span>{{ cat.icon }} {{ ch.name }}</span>
+              <div v-for="ch in (cat.children||[])" :key="ch.id" class="cat-child" @click.stop="selectWishCategory(ch.id, (catIcon(cat.icon)||'') + ' ' + ch.name)">
+                <span>{{ catIcon(cat.icon) }} {{ ch.name }}</span>
               </div>
             </div>
           </div>
@@ -1929,10 +1929,10 @@ const AppComp = {
       const catMap = {};
       statsFilteredAssets.value.forEach(a => {
         const catName = a.category_name || '未分类';
-        const catIcon = a.category_icon || '📦';
+        const catIcn = a.category_icon || '📦';
         const val = Number(a.current_value) || Number(a.purchase_price) || 0;
         if (!catMap[catName]) {
-          catMap[catName] = { name: catName, value: 0, icon: catIcon };
+          catMap[catName] = { name: catName, value: 0, icon: catIcn };
         }
         catMap[catName].value += val;
       });
@@ -2895,6 +2895,10 @@ const AppComp = {
       'mdi:handcuffs': '🔗',
     };
 
+    function catIcon(icon) {
+      if (!icon) return '📦';
+      return MDI_TO_EMOJI[icon] || icon;
+    }
     function getProductIcon(name) {
       if (!name) return '📦';
       // 1) 优先用 product_db 匹配（数据驱动，精确）
@@ -2934,7 +2938,7 @@ const AppComp = {
       if (n2.includes('服') || n2.includes('衣')) return '👕';
       if (n2.includes('书')) return '📚';
       if (n2.includes('吉他') || n2.includes('钢琴')) return '🎸';
-      return '📦';
+      return null;
     }
 
         async function loadWishes() {
@@ -2981,7 +2985,7 @@ const AppComp = {
       wishForm.note = w.note || '';
       wishForm.category_id = w.category_id || null;
       wishForm.channel_id = w.channel_id || null;
-      wishCategoryName.value = w.category_name ? (w.category_icon || '') + ' ' + w.category_name : '';
+      wishCategoryName.value = w.category_name ? (catIcon(w.category_icon) || '') + ' ' + w.category_name : '';
       showWishForm.value = true;
     }
 
@@ -3306,7 +3310,7 @@ const AppComp = {
       openWishForm, editWish, searchProductSuggestWish, selectWishSuggest,
       toggleWishCategoryPicker, selectWishCategory, showWishCategoryPicker, wishCategoryName,
       submitWishForm, deleteWish, toggleWish, convertWish,
-      swipeTouchStart, swipeTouchMove, swipeTouchEnd, getProductIcon,
+      swipeTouchStart, swipeTouchMove, swipeTouchEnd, getProductIcon, catIcon,
       // Settings
       deleteCategory, deleteChannel, exportExcel,
       // Helpers
