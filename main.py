@@ -11,6 +11,10 @@ app.include_router(api_router)
 
 init_db()
 
+STATIC_DIR = os.path.join(os.path.dirname(__file__), "static")
+if os.path.isdir(STATIC_DIR):
+    app.mount("/static", StaticFiles(directory=STATIC_DIR), name="static")
+
 FRONTEND_PATH = os.path.join(os.path.dirname(__file__), "frontend.html")
 
 @app.get("/", response_class=HTMLResponse)

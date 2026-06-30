@@ -685,7 +685,11 @@ def get_stats(db: Session = Depends(get_db)):
 
 
 @router.get("/products", response_model=list[ProductOut])
-def list_products(q: Optional[str] = Query(None, max_length=100), db: Session = Depends(get_db)):
+def list_products(
+    q: Optional[str] = Query(None, max_length=100),
+    page_size: int = Query(0, ge=0, le=200),
+    db: Session = Depends(get_db)
+):
     query = db.query(Product)
     if q:
         like = f"%{q}%"
@@ -694,5 +698,8 @@ def list_products(q: Optional[str] = Query(None, max_length=100), db: Session = 
             Product.brand.like(like) |
             Product.keywords.like(like)
         )
-    products = query.order_by(Product.id).all()
+    if page_size > 0:
+        products = query.order_by(Product.id).limit(page_size).all()
+    else:
+        products = query.order_by(Product.id).all()
     return products

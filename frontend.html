@@ -4,8 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
 <title>持物 ChiWu</title>
-<script src="https://cdn.jsdelivr.net/npm/vue@3/dist/vue.global.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-plus/dist/index.min.css">
+<script src="/static/vue.global.prod.js"></script>
+<link rel="stylesheet" href="/static/element-plus.min.css">
 <style>
 [v-cloak] #app-loading { display: flex; }
 [v-cloak] { display: none !important; }
@@ -1651,11 +1651,12 @@ const AppComp = {
     const channels = ref([]);
     const productDB = ref([]);
     let productDBLoaded = false;
+    // loadProductDB: 只在AI识别/搜索时按需加载，不阻塞首屏
     async function loadProductDB() {
       if (productDBLoaded) return;
       productDBLoaded = true;
       try {
-        const res = await fetch(API_BASE + '/api/products');
+        const res = await fetch(API_BASE + '/api/products?page_size=50');
         if (res.ok) productDB.value = await res.json();
       } catch(e) { console.error('Load product DB error:', e); }
     }
@@ -3067,7 +3068,8 @@ const AppComp = {
 
     // ===== Initialization =====
     onMounted(async () => {
-      await loadProductDB();
+      // loadProductDB 延迟加载（只在需要时触发），首屏不阻塞
+      // await loadProductDB(); 
       await Promise.all([loadCategories(), loadChannels()]);
       await loadAssets();
       // Hide skeleton loading
